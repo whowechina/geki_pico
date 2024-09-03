@@ -1,3 +1,4 @@
 (sym_lib_table
-  (lib (name "geki_main")(type "KiCad")(uri "${KIPRJMOD}/geki_main.kicad_sym")(options "")(descr ""))
+  (version 7)
+  (lib (name "geki_main")(type "KiCad")(uri "D:/Code/geki_pico/PCB/Lib/geki_main.kicad_sym")(options "")(descr ""))
 )
