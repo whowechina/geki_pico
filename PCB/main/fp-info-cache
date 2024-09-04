@@ -1,4 +1,4 @@
-23999603990561409
+24004780304711939
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -97825,6 +97825,13 @@ Varistor VF
 2
 2
 geki_main
+8002A_TAP
+surface-mounted straight pin header, 1x06, 2.00mm pitch, single row, style 1 (pin 1 left)
+Surface mounted pin header SMD 1x06 2.00mm single row style1 pin1 left
+0
+6
+6
+geki_main
 ANT_2P
 Through hole straight pin header, 1x05, 2.54mm pitch, single row
 Through hole pin header THT 1x05 2.54mm single row
@@ -97971,6 +97978,20 @@ mounting hole 3.2mm no annular m3
 0
 1
 1
+geki_main
+Solder_2P
+Through hole straight pin header, 1x05, 2.54mm pitch, single row
+Through hole pin header THT 1x05 2.54mm single row
+0
+2
+2
+geki_main
+Solder_2P_S
+Through hole straight pin header, 1x05, 2.54mm pitch, single row
+Through hole pin header THT 1x05 2.54mm single row
+0
+2
+2
 geki_main
 Solder_3P
 Through hole straight pin header, 1x05, 2.54mm pitch, single row
