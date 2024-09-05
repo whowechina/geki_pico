@@ -64,7 +64,7 @@
 			)
 		)
 	)
-	(attr through_hole)
+	(attr smd)
 	(fp_rect
 		(start -2.8 -2.79)
 		(end 2.8 2.71)

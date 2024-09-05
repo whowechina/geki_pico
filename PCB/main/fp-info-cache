@@ -1,4 +1,4 @@
-24004780304711939
+24006554779071417
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -97957,6 +97957,13 @@ Switch
 0
 2
 2
+geki_main
+SS49E_Bend
+TO-92Flat package, often used for hall sensors, drill 0.75mm (see e.g. http://www.ti.com/lit/ds/symlink/drv5023.pdf)
+to-92Flat hall sensor
+0
+3
+3
 geki_main
 SW_Kailh_Choc_V1V2_1.00u_LED
 Kailh Choc keyswitch CPG1350 V1 CPG1353 V2 with 1.00u keycap
