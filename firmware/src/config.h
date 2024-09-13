@@ -44,10 +44,11 @@ typedef struct __attribute__((packed)) {
 
 typedef struct {
     uint16_t fps[2];
+    bool key_stuck;
 } geki_runtime_t;
 
 extern geki_cfg_t *geki_cfg;
-extern geki_runtime_t *geki_runtime;
+extern geki_runtime_t geki_runtime;
 
 void config_init();
 void config_changed(); // Notify the config has changed

@@ -24,24 +24,9 @@
  */
 
 #include "usb_descriptors.h"
-
+#include "pico/unique_id.h"
 #include "tusb.h"
 
-/* A combination of interfaces must have a unique product id, since PC will save
- * device driver after the first plug. Same VID/PID with different interface e.g
- * MSC (first), then CDC (later) will possibly cause system error on PC.
- *
- * Auto ProductID layout's Bitmap:
- *   [MSB]         HID | MSC | CDC          [LSB]
- */
-#define _PID_MAP(itf, n) ((CFG_TUD_##itf) << (n))
-#define USB_PID                                                      \
-    (0x4000 | _PID_MAP(CDC, 0) | _PID_MAP(MSC, 1) | _PID_MAP(HID, 2) | \
-     _PID_MAP(MIDI, 3) | _PID_MAP(VENDOR, 4))
-
-//--------------------------------------------------------------------+
-// Device Descriptors
-//--------------------------------------------------------------------+
 tusb_desc_device_t desc_device_joy = {
     .bLength = sizeof(tusb_desc_device_t),
     .bDescriptorType = TUSB_DESC_DEVICE,
@@ -51,8 +36,8 @@ tusb_desc_device_t desc_device_joy = {
     .bDeviceProtocol = 0x00,
     .bMaxPacketSize0 = CFG_TUD_ENDPOINT0_SIZE,
 
-    .idVendor = 0x0f0d,
-    .idProduct = 0x0092,
+    .idVendor = 0x0ca3,
+    .idProduct = 0x0021,
     .bcdDevice = 0x0100,
 
     .iManufacturer = 1,
@@ -76,11 +61,6 @@ uint8_t const desc_hid_report_joy[] = {
     GEKI_PICO_REPORT_DESC_JOYSTICK,
 };
 
-uint8_t const desc_hid_report_led[] = {
-    GEKI_PICO_LED_HEADER,
-    GEKI_PICO_LED_FOOTER
-};
-
 uint8_t const desc_hid_report_nkro[] = {
     GEKI_PICO_REPORT_DESC_NKRO,
 };
@@ -94,8 +74,6 @@ uint8_t const* tud_hid_descriptor_report_cb(uint8_t itf)
         case 0:
             return desc_hid_report_joy;
         case 1:
-            return desc_hid_report_led;
-        case 2:
             return desc_hid_report_nkro;
         default:
             return NULL;
@@ -105,20 +83,19 @@ uint8_t const* tud_hid_descriptor_report_cb(uint8_t itf)
 // Configuration Descriptor
 //--------------------------------------------------------------------+
 
-enum { ITF_NUM_JOY, ITF_NUM_LED, ITF_NUM_NKRO,
-       ITF_NUM_CLI, ITF_NUM_CLI_DATA,
+enum { ITF_NUM_JOY, ITF_NUM_NKRO,
+       ITF_NUM_CLI, ITF_NUM_CLI_DATA, ITF_NUM_AIME, ITF_NUM_AIME_DATA,
        ITF_NUM_TOTAL };
 
 #define CONFIG_TOTAL_LEN (TUD_CONFIG_DESC_LEN + \
                           TUD_HID_INOUT_DESC_LEN * 1 + \
-                          TUD_HID_DESC_LEN * 2 + \
-                          TUD_CDC_DESC_LEN * 1)
+                          TUD_HID_DESC_LEN * 1 + \
+                          TUD_CDC_DESC_LEN * 2)
 
 #define EPNUM_JOY_OUT 0x01
 #define EPNUM_JOY_IN 0x81
 
-#define EPNUM_LED 0x86
-#define EPNUM_KEY 0x87
+#define EPNUM_NKRO 0x87
 
 #define EPNUM_CLI_NOTIF 0x89
 #define EPNUM_CLI_OUT   0x0a
@@ -140,16 +117,16 @@ uint8_t const desc_configuration_joy[] = {
                        sizeof(desc_hid_report_joy), EPNUM_JOY_OUT, EPNUM_JOY_IN,
                        CFG_TUD_HID_EP_BUFSIZE, 1),
 
-    TUD_HID_DESCRIPTOR(ITF_NUM_LED, 5, HID_ITF_PROTOCOL_NONE,
-                       sizeof(desc_hid_report_led), EPNUM_LED,
-                       CFG_TUD_HID_EP_BUFSIZE, 4),
-
-    TUD_HID_DESCRIPTOR(ITF_NUM_NKRO, 6, HID_ITF_PROTOCOL_NONE,
-                       sizeof(desc_hid_report_nkro), EPNUM_KEY,
+    TUD_HID_DESCRIPTOR(ITF_NUM_NKRO, 5, HID_ITF_PROTOCOL_NONE,
+                       sizeof(desc_hid_report_nkro), EPNUM_NKRO,
                        CFG_TUD_HID_EP_BUFSIZE, 1),
 
-    TUD_CDC_DESCRIPTOR(ITF_NUM_CLI, 7, EPNUM_CLI_NOTIF,
+    TUD_CDC_DESCRIPTOR(ITF_NUM_CLI, 6, EPNUM_CLI_NOTIF,
                        8, EPNUM_CLI_OUT, EPNUM_CLI_IN, 64),
+
+    TUD_CDC_DESCRIPTOR(ITF_NUM_AIME, 7, EPNUM_AIME_NOTIF,
+                       8, EPNUM_AIME_OUT, EPNUM_AIME_IN, 64),
+
 };
 
 // Invoked when received GET CONFIGURATION DESCRIPTOR
@@ -162,17 +139,17 @@ uint8_t const* tud_descriptor_configuration_cb(uint8_t index) {
 //--------------------------------------------------------------------+
 // String Descriptors
 //--------------------------------------------------------------------+
+static char serial_number_str[24] = "123456\0";
 
-// array of pointer to string descriptors
-const char *string_desc_arr[] = {
+static const char *string_desc_arr[] = {
     (const char[]){0x09, 0x04},  // 0: is supported language is English (0x0409)
-    "WHowe",                     // 1: Manufacturer
-    "Geki Pico Controller",    // 2: Product
-    "123456",                    // 3: Serial
-    "Geki Pico Joystick",
-    "Geki Pico LED",
+    "SEGA", // 1: Manufacturer
+    "Geki Pico", // 2: Product
+    serial_number_str, // 3: Serials, use chip ID
+    "I/O CONTROL BD;15257;01;90;1831;6679A;00;GOUT=14_ADIN=8,E_ROTIN=4_COININ=2_SWIN=2,E_UQ1=41,6;",
     "Geki Pico NKRO",
-    "Geki Pico CLI Port",
+    "Geki Pico CLI",
+    "Mai Pico AIME Port",
 };
 
 // Invoked when received GET STRING DESCRIPTOR request
@@ -180,39 +157,24 @@ const char *string_desc_arr[] = {
 // enough for transfer to complete
 uint16_t const* tud_descriptor_string_cb(uint8_t index, uint16_t langid)
 {
-    static uint16_t _desc_str[64];
+    static uint16_t _desc_str[128];
 
     if (index == 0) {
         memcpy(&_desc_str[1], string_desc_arr[0], 2);
         _desc_str[0] = (TUSB_DESC_STRING << 8) | (2 + 2);
         return _desc_str;
     }
-    
-    const size_t base_num = sizeof(string_desc_arr) / sizeof(string_desc_arr[0]);
-    const char *colors[] = {"Blue", "Red", "Green"};
-    char str[64];
 
-    if (index < base_num) {
-        strcpy(str, string_desc_arr[index]);
-    } else if (index < base_num + 48 + 45) {
-        const char *names[] = {"Key ", "Splitter "};
-        int led = index - base_num;
-        int id = led / 6 + 1;
-        int type = led / 3 % 2;
-        int brg = led % 3;
-        sprintf(str, "%s%02d %s", names[type], id, colors[brg]);
-    } else if (index < base_num + 48 + 45 + 18) {
-        int led = index - base_num - 48 - 45;
-        int id = led / 3 + 1;
-        int brg = led % 3;
-        sprintf(str, "Tower %02d %s", id, colors[brg]);
-    } else {
-        sprintf(str, "Unknown %d", index);
+    if (index == 3) {
+        pico_unique_board_id_t board_id;
+        pico_get_unique_board_id(&board_id);
+        sprintf(serial_number_str, "%016llx", *(uint64_t *)&board_id);
     }
 
+    const char *str = string_desc_arr[index];
     uint8_t chr_count = strlen(str);
-    if (chr_count > 63) {
-        chr_count = 63;
+    if (chr_count > count_of(_desc_str)) {
+        chr_count = count_of(_desc_str);
     }
 
     // Convert ASCII string into UTF-16

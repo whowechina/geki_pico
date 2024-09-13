@@ -53,7 +53,7 @@ static geki_cfg_t default_cfg = {
     },
 };
 
-geki_runtime_t *geki_runtime;
+geki_runtime_t geki_runtime;
 
 static void config_loaded()
 {

@@ -6,10 +6,7 @@
 
 enum {
     REPORT_ID_JOYSTICK = 1,
-    REPORT_ID_LED_SLIDER_16 = 4,
-    REPORT_ID_LED_SLIDER_15 = 5,
-    REPORT_ID_LED_TOWER_6 = 6,
-    REPORT_ID_LED_COMPRESSED = 11,
+    REPORT_ID_OUTPUT = 16,
 };
 
 // because they are missing from tusb_hid.h
@@ -20,57 +17,99 @@ enum {
 #define HID_STRING_MAXIMUM(x) HID_REPORT_ITEM(x, 9, RI_TYPE_LOCAL, 1)
 #define HID_STRING_MAXIMUM_N(x, n) HID_REPORT_ITEM(x, 9, RI_TYPE_LOCAL, n)
 
-// Joystick Report Descriptor Template - Based off Drewol/rp2040-gamecon
-// Button Map | X | Y
-//HID_REPORT_ID(REPORT_ID_JOYSTICK)
-
-#define GEKI_PICO_REPORT_DESC_JOYSTICK                                          \
+// Joystick Report Descriptor to Emulate IO4
+#define GEKI_PICO_REPORT_DESC_JOYSTICK                                         \
     HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                    \
-    HID_USAGE(HID_USAGE_DESKTOP_GAMEPAD),                                     \
+    HID_USAGE(HID_USAGE_DESKTOP_JOYSTICK),                                     \
     HID_COLLECTION(HID_COLLECTION_APPLICATION),                                \
-        HID_LOGICAL_MIN(0), HID_LOGICAL_MAX(1),                                \
-        HID_PHYSICAL_MIN(0), HID_PHYSICAL_MAX(1),                              \
-        HID_REPORT_SIZE(1), HID_REPORT_COUNT(16),                              \
-        HID_USAGE_PAGE(HID_USAGE_PAGE_BUTTON),                                 \
-        HID_USAGE_MIN(1), HID_USAGE_MAX(16),                                   \
-        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+        HID_REPORT_ID(REPORT_ID_JOYSTICK)                                      \
                                                                                \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
         HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
-        HID_LOGICAL_MAX(7),                                                    \
-        HID_PHYSICAL_MAX_N(315, 2),                                            \
-        HID_REPORT_SIZE(4), HID_REPORT_COUNT(1),                               \
-        0x65, 0x14, /* Unit */                                                 \
-        HID_USAGE(HID_USAGE_DESKTOP_HAT_SWITCH),                               \
-        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE | HID_NO_NULL_POSITION),\
-        0x65, 0x00, /* Unit None */                                            \
-        HID_REPORT_COUNT(1),                                                   \
-        HID_INPUT(HID_CONSTANT | HID_ARRAY | HID_ABSOLUTE),                 \
-                                                                               \
-        HID_LOGICAL_MAX_N(0xff, 2), HID_PHYSICAL_MAX_N(0xff, 2), /* Analog */  \
-        HID_USAGE(HID_USAGE_DESKTOP_X), HID_USAGE(HID_USAGE_DESKTOP_Y),        \
-        HID_USAGE(HID_USAGE_DESKTOP_Z), HID_USAGE(HID_USAGE_DESKTOP_RZ),       \
-        HID_REPORT_SIZE(8), HID_REPORT_COUNT(4),                               \
+        HID_USAGE(HID_USAGE_DESKTOP_X),                                        \
         HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
                                                                                \
-        HID_USAGE_PAGE_N(HID_USAGE_PAGE_VENDOR, 2),                            \
-        HID_USAGE(0x20),                                                       \
-        HID_REPORT_COUNT(1),                                                   \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
+        HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
+        HID_USAGE(HID_USAGE_DESKTOP_Y),                                        \
         HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
                                                                                \
-        HID_USAGE_N(0x2621, 2),                                                \
-        HID_REPORT_COUNT(8),                                                   \
-        HID_OUTPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                    \
-    HID_COLLECTION_END
-        
-//HID_USAGE_PAGE_N(9761, 2), HID_REPORT_COUNT(8), HID_OUTPUT(2),
-
-#define GEKI_PICO_LED_HEADER \
-    HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP), HID_USAGE(0x00),                   \
-    HID_COLLECTION(HID_COLLECTION_APPLICATION),                                \
-        HID_REPORT_COUNT(1), HID_REPORT_SIZE(8),                                \
-        HID_INPUT(HID_CONSTANT | HID_VARIABLE | HID_ABSOLUTE)
-
-#define GEKI_PICO_LED_FOOTER \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
+        HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
+        HID_USAGE(HID_USAGE_DESKTOP_X),                                        \
+        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+                                                                               \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
+        HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
+        HID_USAGE(HID_USAGE_DESKTOP_Y),                                        \
+        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+                                                                               \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
+        HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
+        HID_USAGE(HID_USAGE_DESKTOP_X),                                        \
+        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+                                                                               \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
+        HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
+        HID_USAGE(HID_USAGE_DESKTOP_Y),                                        \
+        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+                                                                               \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
+        HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
+        HID_USAGE(HID_USAGE_DESKTOP_X),                                        \
+        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+                                                                               \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
+        HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
+        HID_USAGE(HID_USAGE_DESKTOP_Y),                                        \
+        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+                                                                               \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
+        HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
+        HID_USAGE(HID_USAGE_DESKTOP_RX),                                       \
+        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+                                                                               \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
+        HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
+        HID_USAGE(HID_USAGE_DESKTOP_RY),                                       \
+        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+                                                                               \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
+        HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
+        HID_USAGE(HID_USAGE_DESKTOP_RX),                                       \
+        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+                                                                               \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
+        HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
+        HID_USAGE(HID_USAGE_DESKTOP_RY),                                       \
+        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+                                                                               \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
+        HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
+        HID_USAGE(HID_USAGE_DESKTOP_SLIDER),                                   \
+        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+                                                                               \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(16),                              \
+        HID_USAGE_PAGE(HID_USAGE_PAGE_DESKTOP),                                \
+        HID_USAGE(HID_USAGE_DESKTOP_SLIDER),                                   \
+        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+                                                                               \
+        HID_REPORT_COUNT(48), HID_REPORT_SIZE(1),                              \
+        HID_USAGE_MIN_N(1, 2), HID_USAGE_MAX_N(48, 2),                         \
+        HID_INPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                     \
+                                                                               \
+        HID_REPORT_COUNT(1), HID_REPORT_SIZE(232),                             \
+        HID_INPUT(HID_CONSTANT | HID_ABSOLUTE),                                \
+                                                                               \
+        HID_USAGE_PAGE_N(0xffa0, 2),                                           \
+        HID_USAGE(0x00),                                                       \
+        HID_REPORT_ID(REPORT_ID_OUTPUT)                                        \
+        HID_COLLECTION(HID_COLLECTION_APPLICATION),                            \
+            HID_USAGE(0x00),                                                   \
+            HID_LOGICAL_MIN(0), HID_LOGICAL_MAX(255),                          \
+            HID_REPORT_COUNT(63), HID_REPORT_SIZE(8),                          \
+            HID_OUTPUT(HID_DATA | HID_VARIABLE | HID_ABSOLUTE),                \
+        HID_COLLECTION_END,                                                    \
     HID_COLLECTION_END
 
 #define GEKI_PICO_REPORT_DESC_NKRO                                               \

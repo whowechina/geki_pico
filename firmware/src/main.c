@@ -28,91 +28,13 @@
 #include "cli.h"
 #include "commands.h"
 
+#include "hid.h"
+
 #include "light.h"
 #include "button.h"
 #include "gimbal.h"
 #include "wad.h"
 #include "sound.h"
-
-struct __attribute__((packed)) {
-    uint16_t buttons;
-    uint8_t HAT;
-	uint8_t lx;
-	uint8_t ly;
-	uint8_t rx;
-	uint8_t ry;
-    uint8_t vendor;
-} hid_joy;
-
-struct __attribute__((packed)) {
-    uint8_t modifier;
-    uint8_t keymap[15];
-} hid_nkro, sent_hid_nkro;
-
-void report_usb_hid()
-{
-    if (tud_hid_ready()) {
-        hid_joy.HAT = 0x08;
-        hid_joy.vendor = 0;
-        if (geki_cfg->hid.joy) {
-            tud_hid_n_report(0x00, 0, &hid_joy, sizeof(hid_joy));
-        }
-        if (geki_cfg->hid.nkro &&
-            (memcmp(&hid_nkro, &sent_hid_nkro, sizeof(hid_nkro)) != 0)) {
-            sent_hid_nkro = hid_nkro;
-            tud_hid_n_report(0x02, 0, &sent_hid_nkro, sizeof(sent_hid_nkro));
-        }
-    }
-}
-
-#define SWITCH_BIT_Y       (1U <<  0)
-#define SWITCH_BIT_B       (1U <<  1)
-#define SWITCH_BIT_A       (1U <<  2)
-#define SWITCH_BIT_X       (1U <<  3)
-#define SWITCH_BIT_L       (1U <<  4)
-#define SWITCH_BIT_R       (1U <<  5)
-#define SWITCH_BIT_ZL      (1U <<  6)
-#define SWITCH_BIT_ZR      (1U <<  7)
-#define SWITCH_BIT_MINUS   (1U <<  8)
-#define SWITCH_BIT_PLUS    (1U <<  9)
-#define SWITCH_BIT_L3      (1U << 10)
-#define SWITCH_BIT_R3      (1U << 11)
-#define SWITCH_BIT_HOME    (1U << 12)
-
-static void gen_joy_report()
-{
-    hid_joy.lx = gimbal_read();
-
-    uint16_t button = button_read();
-    hid_joy.buttons = 0;
-    hid_joy.buttons |= (button & 0x01) ? SWITCH_BIT_L : 0;
-    hid_joy.buttons |= (button & 0x02) ? SWITCH_BIT_R : 0;
-    if (button & 0x08) {
-        hid_joy.buttons |= (button & 0x04) ? SWITCH_BIT_MINUS : 0;
-        hid_joy.buttons |= (button & 0x10) ? SWITCH_BIT_PLUS : 0;
-    } else {
-        hid_joy.buttons |= (button & 0x04) ? SWITCH_BIT_B : 0;
-        hid_joy.buttons |= (button & 0x10) ? SWITCH_BIT_A : 0;
-    }
-}
-
-const uint8_t keycode_table[128][2] = { HID_ASCII_TO_KEYCODE };
-const uint8_t keymap[38 + 1] = NKRO_KEYMAP; // 32 keys, 6 air keys, 1 terminator
-static void gen_nkro_report()
-{
-    for (int i = 0; i < 6; i++) {
-        uint8_t code = keycode_table[keymap[32 + i]][1];
-        uint8_t byte = code / 8;
-        uint8_t bit = code % 8;
-        if (hid_joy.buttons & (1 << i)) {
-            hid_nkro.keymap[byte] |= (1 << bit);
-        } else {
-            hid_nkro.keymap[byte] &= ~(1 << bit);
-        }
-    }
-}
-
-static uint64_t last_hid_time = 0;
 
 static void run_lights()
 {
@@ -173,8 +95,8 @@ static void run_lights()
 
 static void run_sound()
 {
-    sound_set(0, wad_read_left());
-    sound_set(1, wad_read_right());
+    //sound_set(0, wad_read_left());
+    //sound_set(1, wad_read_right());
 }
 
 static mutex_t core1_io_lock;
@@ -204,10 +126,9 @@ static void core0_loop()
 
         button_update();
         wad_update();
-        gen_joy_report();
-        gen_nkro_report();
-        report_usb_hid();
-    
+
+        hid_update();
+
         sleep_us(900);
     }
 }
@@ -295,8 +216,5 @@ void tud_hid_set_report_cb(uint8_t itf, uint8_t report_id,
                            hid_report_type_t report_type, uint8_t const *buffer,
                            uint16_t bufsize)
 {
-    if (report_type == HID_REPORT_TYPE_OUTPUT) {
-        last_hid_time = time_us_64();
-        return;
-    } 
+    hid_proc(buffer, bufsize);
 }
