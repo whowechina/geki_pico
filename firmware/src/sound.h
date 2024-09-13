@@ -11,6 +11,7 @@
 #include "hardware/flash.h"
 
 void sound_init();
+void sound_toggle(bool on);
 void sound_set(int id, bool on);
 
 #endif
