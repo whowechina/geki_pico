@@ -95,8 +95,8 @@ static void run_lights()
 
 static void run_sound()
 {
-    //sound_set(0, wad_read_left());
-    //sound_set(1, wad_read_right());
+    sound_set(0, wad_read_left());
+    sound_set(1, wad_read_right());
 }
 
 static mutex_t core1_io_lock;

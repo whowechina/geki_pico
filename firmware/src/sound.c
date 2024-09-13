@@ -55,6 +55,7 @@ void sound_init()
         gpio_set_function(gpio, GPIO_FUNC_PWM);
         slice_num[i] = pwm_gpio_to_slice_num(gpio);
         pwm_clear_irq(slice_num[i]);
+        pwm_set_irq_enabled(slice_num[i], true);
     }
     irq_set_exclusive_handler(PWM_IRQ_WRAP, pwm_interrupt_handler); 
     irq_set_enabled(PWM_IRQ_WRAP, true);
@@ -67,8 +68,6 @@ void sound_init()
         pwm_init(slice_num[i], &cfg, true);
         pwm_set_gpio_level(sound_gpio[i], 0);
     }
-
-    sound_toggle(false);
 }
 
 void sound_toggle(bool on)
