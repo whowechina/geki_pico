@@ -596,6 +596,203 @@
 				)
 			)
 		)
+		(symbol "Connector_Generic:Conn_02x02_Odd_Even"
+			(pin_names
+				(offset 1.016) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 1.27 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_02x02_Odd_Even"
+				(at 1.27 -5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generic connector, double row, 02x02, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_2x??_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Conn_02x02_Odd_Even_1_1"
+				(rectangle
+					(start -1.27 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 1.27)
+					(end 3.81 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(rectangle
+					(start 3.81 -2.413)
+					(end 2.54 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 3.81 0.127)
+					(end 2.54 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 0 180)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -2.54 0)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 -2.54 180)
+					(length 3.81)
+					(name "Pin_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "Device:C"
 			(pin_numbers hide)
 			(pin_names
@@ -3973,6 +4170,12 @@
 		(uuid "06c3c5e5-849f-4e5f-b2a5-811898e2904c")
 	)
 	(junction
+		(at 314.325 144.78)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "09f61624-7f90-40a0-8047-6a1fbc2018b6")
+	)
+	(junction
 		(at 158.75 170.18)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4043,6 +4246,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "21986980-087e-481e-ba92-1bf22ca4f8d9")
+	)
+	(junction
+		(at 311.785 123.19)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "266c2045-6973-439b-aa78-785abd12b657")
 	)
 	(junction
 		(at 196.85 185.42)
@@ -4567,6 +4776,12 @@
 		(uuid "c77d2edf-2bee-4b7c-ad3a-33b555fb14a5")
 	)
 	(junction
+		(at 223.52 60.96)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c7f76c27-4d9b-47e6-a8f3-6ecca8f44526")
+	)
+	(junction
 		(at 315.595 89.535)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4643,6 +4858,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "e580d061-8eb1-40fa-bd5a-fdc141f2f4e2")
+	)
+	(junction
+		(at 196.215 35.56)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e628a722-2e16-4363-b0a3-2cfc4d0cbbd6")
 	)
 	(junction
 		(at 196.85 199.39)
@@ -4995,6 +5216,16 @@
 		)
 		(uuid "113a5723-b992-4056-9a1e-c806d23524a5")
 	)
+	(wire
+		(pts
+			(xy 223.52 49.53) (xy 223.52 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1146343e-06e3-4529-878e-b7ed48ebf3c5")
+	)
 	(polyline
 		(pts
 			(xy 180.34 208.915) (xy 226.06 208.915)
@@ -5098,6 +5329,16 @@
 	)
 	(wire
 		(pts
+			(xy 223.52 60.96) (xy 236.22 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1b502280-4970-47c7-9a32-c6d58f015f73")
+	)
+	(wire
+		(pts
 			(xy 133.35 170.18) (xy 146.05 170.18)
 		)
 		(stroke
@@ -5145,6 +5386,16 @@
 			(type default)
 		)
 		(uuid "216251f6-41f7-4dca-9a35-76e6d9282a24")
+	)
+	(wire
+		(pts
+			(xy 241.3 35.56) (xy 196.215 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "216e5520-3cc7-43ff-b04d-cd991654cde5")
 	)
 	(wire
 		(pts
@@ -5589,6 +5840,16 @@
 	)
 	(wire
 		(pts
+			(xy 236.22 46.99) (xy 241.3 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4fbcfc56-9c45-4709-887c-af975e864173")
+	)
+	(wire
+		(pts
 			(xy 164.465 41.275) (xy 164.465 53.975)
 		)
 		(stroke
@@ -5616,6 +5877,16 @@
 			(type default)
 		)
 		(uuid "51247cc8-0358-4a08-b797-a7b9be522bf3")
+	)
+	(wire
+		(pts
+			(xy 220.98 46.99) (xy 223.52 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "52d9171b-2578-4515-a024-430990e9dc61")
 	)
 	(wire
 		(pts
@@ -5919,6 +6190,16 @@
 	)
 	(wire
 		(pts
+			(xy 311.785 123.19) (xy 320.675 123.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "714556bd-38da-496b-b162-585a89221ed9")
+	)
+	(wire
+		(pts
 			(xy 177.8 148.59) (xy 190.5 148.59)
 		)
 		(stroke
@@ -6037,6 +6318,16 @@
 			(type default)
 		)
 		(uuid "7fdb0fca-b1ff-43cd-a431-2c0da97f9d58")
+	)
+	(wire
+		(pts
+			(xy 311.785 123.19) (xy 311.785 137.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "812434ab-fe34-4150-8f9a-69c8e03279b7")
 	)
 	(wire
 		(pts
@@ -6222,6 +6513,16 @@
 	)
 	(wire
 		(pts
+			(xy 236.22 49.53) (xy 236.22 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8ff4240c-a874-4e07-b704-6b0c9bd9f880")
+	)
+	(wire
+		(pts
 			(xy 53.975 56.515) (xy 57.785 56.515)
 		)
 		(stroke
@@ -6229,6 +6530,16 @@
 			(type default)
 		)
 		(uuid "918fb36b-e485-4e2a-9838-bfa58903ee54")
+	)
+	(wire
+		(pts
+			(xy 314.325 130.81) (xy 314.325 144.78)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "91bfcd90-687c-4673-8deb-d4a69dd8a2e3")
 	)
 	(wire
 		(pts
@@ -6393,6 +6704,16 @@
 	)
 	(wire
 		(pts
+			(xy 320.675 130.81) (xy 314.325 130.81)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a0c01b0e-d236-4894-837a-6d52414df166")
+	)
+	(wire
+		(pts
 			(xy 120.65 199.39) (xy 133.35 199.39)
 		)
 		(stroke
@@ -6551,6 +6872,16 @@
 			(type default)
 		)
 		(uuid "a9b14be6-5336-48bf-91e4-3dfb2c9063c3")
+	)
+	(wire
+		(pts
+			(xy 220.98 45.085) (xy 220.98 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ac39eb2d-64e7-4f24-af80-090593f96925")
 	)
 	(wire
 		(pts
@@ -6855,6 +7186,16 @@
 	)
 	(wire
 		(pts
+			(xy 311.785 120.015) (xy 311.785 123.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ca1aff4c-2888-46dc-91f8-e327602268cf")
+	)
+	(wire
+		(pts
 			(xy 344.805 51.435) (xy 349.885 51.435)
 		)
 		(stroke
@@ -7123,6 +7464,16 @@
 			(type default)
 		)
 		(uuid "e0e2749c-36a1-480d-b234-359b6449c4ff")
+	)
+	(wire
+		(pts
+			(xy 241.3 46.99) (xy 241.3 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e159880e-698c-46a8-8b10-f84e4ebd4aa3")
 	)
 	(wire
 		(pts
@@ -7602,6 +7953,17 @@
 		)
 		(uuid "1672ecd4-34a7-4372-aef3-f56bd6b6adef")
 	)
+	(label "SCL1"
+		(at 320.675 125.73 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify right bottom)
+		)
+		(uuid "398cc340-6633-4c11-8ab5-9fb30c8c6e87")
+	)
 	(label "SDA1"
 		(at 320.675 142.24 180)
 		(fields_autoplaced yes)
@@ -7821,6 +8183,17 @@
 			(justify right bottom)
 		)
 		(uuid "cbe0aca8-568c-45ca-9457-c5c18d39e058")
+	)
+	(label "SDA1"
+		(at 320.675 128.27 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify right bottom)
+		)
+		(uuid "ccef7bb3-f663-4023-b278-4f3a77a00d2e")
 	)
 	(label "K1"
 		(at 177.8 133.35 0)
@@ -9133,71 +9506,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
-		(at 196.215 35.56 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "2e4be529-55fc-45d9-9233-03b16103802d")
-		(property "Reference" "#PWR06"
-			(at 196.215 39.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 196.215 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 196.215 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 196.215 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 196.215 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "464617b0-1979-4537-a985-89b14155fb4e")
-		)
-		(instances
-			(project "geki_main"
-				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
-					(reference "#PWR06")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 142.875 123.19 0)
 		(unit 1)
@@ -9489,6 +9797,71 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+5V")
+		(at 306.07 234.315 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "355f71ee-0c52-4314-883b-75977b97a2c1")
+		(property "Reference" "#PWR015"
+			(at 306.07 238.125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+VHALL"
+			(at 306.07 230.505 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 306.07 234.315 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 306.07 234.315 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 306.07 234.315 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "681b0cb9-4fcf-45a8-b76a-ada4f42cf4ee")
+		)
+		(instances
+			(project "geki_main"
+				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
+					(reference "#PWR015")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "geki_main:WS2812B_Unified")
 		(at 107.95 235.585 0)
 		(unit 1)
@@ -9712,6 +10085,71 @@
 			(project "geki_main"
 				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
 					(reference "D34")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 223.52 60.96 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3aeda853-91b1-4ef1-8b94-512c549ae136")
+		(property "Reference" "#PWR011"
+			(at 223.52 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 223.647 65.3542 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 223.52 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 223.52 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 223.52 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "61abb719-a4c8-4832-a054-aafd4005da57")
+		)
+		(instances
+			(project "geki_main"
+				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
+					(reference "#PWR011")
 					(unit 1)
 				)
 			)
@@ -11227,6 +11665,80 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector_Generic:Conn_01x04")
+		(at 325.755 125.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "712eb3fa-2983-4757-9772-e5c83db211ed")
+		(property "Reference" "PN532"
+			(at 331.47 126.365 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Conn_01x04"
+			(at 331.47 127 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "geki_main:Solder_4P"
+			(at 325.755 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 325.755 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 325.755 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "9e4e80ae-be36-44ed-ab29-934def16f64d")
+		)
+		(pin "1"
+			(uuid "a7ecd3ab-aed2-4d78-b762-6f446c2e06e2")
+		)
+		(pin "4"
+			(uuid "00a87719-23ae-4cca-a343-9d43ff87cfbd")
+		)
+		(pin "2"
+			(uuid "42bb8e39-07b6-4aae-8f10-d10b4bb83d32")
+		)
+		(instances
+			(project "geki_main"
+				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
+					(reference "PN532")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+5V")
 		(at 334.01 29.845 0)
 		(unit 1)
@@ -11791,7 +12303,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 311.785 137.16 0)
+		(at 311.785 120.015 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -11799,7 +12311,7 @@
 		(dnp no)
 		(uuid "7cc51c5c-d07a-4802-842c-b4042b7f77b7")
 		(property "Reference" "#PWR014"
-			(at 311.785 140.97 0)
+			(at 311.785 123.825 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11808,7 +12320,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 307.975 135.89 0)
+			(at 307.975 118.745 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11816,7 +12328,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 311.785 137.16 0)
+			(at 311.785 120.015 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11825,7 +12337,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 311.785 137.16 0)
+			(at 311.785 120.015 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11834,7 +12346,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 311.785 137.16 0)
+			(at 311.785 120.015 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13027,6 +13539,71 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+5V")
+		(at 196.215 35.56 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a236e587-abd9-48ef-9518-c58047ab9967")
+		(property "Reference" "#PWR06"
+			(at 196.215 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+VHALL"
+			(at 196.215 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 196.215 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 196.215 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 196.215 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "78f198ac-da7a-4fe5-a82f-4af7f1a7c5c5")
+		)
+		(instances
+			(project "geki_main"
+				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
+					(reference "#PWR06")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "geki_main:WS2812B_Unified")
 		(at 146.05 207.01 0)
 		(unit 1)
@@ -13296,6 +13873,80 @@
 			(project ""
 				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
 					(reference "#PWR0106")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_02x02_Odd_Even")
+		(at 228.6 49.53 0)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b30c06cb-c349-4f9c-be46-d583337138ad")
+		(property "Reference" "U6"
+			(at 227.33 55.245 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "DC/DC"
+			(at 227.965 52.705 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "geki_main:DCDC_3to5"
+			(at 228.6 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 228.6 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 228.6 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6fecad01-ec29-4bb9-9bc8-14181916f2b8")
+		)
+		(pin "2"
+			(uuid "cd3ae80c-02e2-48b8-b65a-acac7a47acd7")
+		)
+		(pin "3"
+			(uuid "ce132e76-5cef-495f-b3cf-46a0ec7f12f3")
+		)
+		(pin "4"
+			(uuid "e880460c-0921-461b-99ae-06f7d95ba83f")
+		)
+		(instances
+			(project "geki_main"
+				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
+					(reference "U6")
 					(unit 1)
 				)
 			)
@@ -15039,6 +15690,71 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3V3")
+		(at 220.98 45.085 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "eb01bf84-69c3-4ed9-8d1c-3ce3b2688002")
+		(property "Reference" "#PWR012"
+			(at 220.98 48.895 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 217.17 43.815 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 220.98 45.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 220.98 45.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 220.98 45.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "65e76a50-d0c6-4599-a1d9-fe73312e0449")
+		)
+		(instances
+			(project "geki_main"
+				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
+					(reference "#PWR012")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "geki_main:WS2812B_Unified")
 		(at 133.35 235.585 0)
 		(unit 1)
@@ -15330,71 +16046,6 @@
 			(project ""
 				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
 					(reference "SW5")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5V")
-		(at 306.07 234.315 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "f1c3f3f5-35a1-4381-a9c2-f4fc335dabc9")
-		(property "Reference" "#PWR015"
-			(at 306.07 238.125 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 306.07 230.505 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 306.07 234.315 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 306.07 234.315 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 306.07 234.315 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "666ffb65-2197-4d75-9586-10dca0f509e6")
-		)
-		(instances
-			(project "geki_main"
-				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
-					(reference "#PWR015")
 					(unit 1)
 				)
 			)
