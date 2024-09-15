@@ -30,11 +30,15 @@ void pwm_interrupt_handler()
 {
     for (int i = 0; i < 2; i++) {
         pwm_clear_irq(slice_num[i]);
+
+        uint8_t gpio = sound_gpio[i];
+
         if (!active[i]) {
             wav_pos[i] = 0;
+            pwm_set_gpio_level(gpio, 0);
             continue;
         }
-        uint8_t gpio = sound_gpio[i];
+
         int len = wav_len[i];
         const uint8_t *data = wav_data[i];
         if (wav_pos[i] < (len << 3) - 1) { 

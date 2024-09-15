@@ -13,22 +13,13 @@
 
 #include "gimbal.h"
 
+#include "nfc.h"
+#include "aime.h"
+
 #include "usb_descriptors.h"
 
 #define SENSE_LIMIT_MAX 9
 #define SENSE_LIMIT_MIN -9
-
-static void disp_axis()
-{
-}
-
-static void disp_hid()
-{
-    printf("[HID]\n");
-    printf("  Joy: %s, NKRO: %s.\n", 
-           geki_cfg->hid.joy ? "on" : "off",
-           geki_cfg->hid.nkro ? "on" : "off" );
-}
 
 static inline int sprintf_hsv_rgb(char *buf, const rgb_hsv_t *color)
 {
@@ -69,12 +60,6 @@ static void disp_light()
     printf("    aux_off: %s\n", color_str(&geki_cfg->light.aux_off, false));
 }
 
-static void disp_sound()
-{
-    printf("[Sound]\n");
-    printf("  Status: %s.\n", geki_cfg->sound.enabled ? "on" : "off");
-}
-
 static void disp_gimbal()
 {
     printf("[Gimbal]\n");
@@ -84,39 +69,61 @@ static void disp_gimbal()
             geki_cfg->gimbal.min, geki_cfg->gimbal.max);
 }
 
+static void disp_sound()
+{
+    printf("[Sound]\n");
+    printf("  Status: %s.\n", geki_cfg->sound.enabled ? "on" : "off");
+}
+
+static void disp_hid()
+{
+    printf("[HID]\n");
+    printf("  Joy: %s, NKRO: %s.\n", 
+           geki_cfg->hid.joy ? "on" : "off",
+           geki_cfg->hid.nkro ? "on" : "off" );
+}
+
+static void disp_aime()
+{
+    printf("[AIME]\n");
+    printf("   NFC Module: %s\n", nfc_module_name());
+    printf("  Virtual AIC: %s\n", geki_cfg->aime.virtual_aic ? "ON" : "OFF");
+    printf("         Mode: %d\n", geki_cfg->aime.mode);
+}
+
 void handle_display(int argc, char *argv[])
 {
-    const char *usage = "Usage: display [axis|light|sound|hid|gimbal]\n";
+    const char *usage = "Usage: display [light|sound|hid|gimbal|aime]\n";
     if (argc > 1) {
         printf(usage);
         return;
     }
 
     if (argc == 0) {
-        disp_axis();
         disp_light();
         disp_gimbal();
         disp_sound();
         disp_hid();
+        disp_aime();
         return;
     }
 
-    const char *choices[] = {"axis", "light", "gimbal", "sound", "hid"};
+    const char *choices[] = {"light", "gimbal", "sound", "hid", "aime"};
     switch (cli_match_prefix(choices, count_of(choices), argv[0])) {
         case 0:
-            disp_axis();
-            break;
-        case 1:
             disp_light();
             break;
-        case 2:
+        case 1:
             disp_gimbal();
             break;
-        case 3:
+        case 2:
             disp_sound();
             break;
-        case 4:
+        case 3:
             disp_hid();
+            break;
+        case 4:
+            disp_aime();
             break;
         default:
             printf(usage);
@@ -376,6 +383,75 @@ static void handle_factory_reset()
     printf("Factory reset done.\n");
 }
 
+static void handle_nfc()
+{
+    nfc_init();
+    printf("NFC module: %s\n", nfc_module_name());
+    nfc_rf_field(true);
+    nfc_card_t card = nfc_detect_card();
+    nfc_rf_field(false);
+    printf("Card: %s", nfc_card_type_str(card.card_type));
+    for (int i = 0; i < card.len; i++) {
+        printf(" %02x", card.uid[i]);
+    }
+    printf("\n");
+}
+
+static bool handle_aime_mode(const char *mode)
+{
+    if (strcmp(mode, "0") == 0) {
+        geki_cfg->aime.mode = 0;
+    } else if (strcmp(mode, "1") == 0) {
+        geki_cfg->aime.mode = 1;
+    } else {
+        return false;
+    }
+    aime_sub_mode(geki_cfg->aime.mode);
+    config_changed();
+    return true;
+}
+
+static bool handle_aime_virtual(const char *onoff)
+{
+    if (strcasecmp(onoff, "on") == 0) {
+        geki_cfg->aime.virtual_aic = 1;
+    } else if (strcasecmp(onoff, "off") == 0) {
+        geki_cfg->aime.virtual_aic = 0;
+    } else {
+        return false;
+    }
+    aime_virtual_aic(geki_cfg->aime.virtual_aic);
+    config_changed();
+    return true;
+}
+
+static void handle_aime(int argc, char *argv[])
+{
+    const char *usage = "Usage:\n"
+                        "    aime mode <0|1>\n"
+                        "    aime virtual <on|off>\n";
+    if (argc != 2) {
+        printf("%s", usage);
+        return;
+    }
+
+    const char *commands[] = { "mode", "virtual" };
+    int match = cli_match_prefix(commands, 2, argv[0]);
+    
+    bool ok = false;
+    if (match == 0) {
+        ok = handle_aime_mode(argv[1]);
+    } else if (match == 1) {
+        ok = handle_aime_virtual(argv[1]);
+    }
+
+    if (ok) {
+        disp_aime();
+    } else {
+        printf("%s", usage);
+    }
+}
+
 void commands_init()
 {
     cli_register("display", handle_display, "Display all config.");
@@ -386,4 +462,6 @@ void commands_init()
     cli_register("sound", handle_sound, "Enable/disable sound.");
     cli_register("save", handle_save, "Save config to flash.");
     cli_register("factory", handle_factory_reset, "Reset everything to default.");
+    cli_register("nfc", handle_nfc, "NFC debug.");
+    cli_register("aime", handle_aime, "AIME settings.");
 }

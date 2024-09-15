@@ -52,6 +52,7 @@ void airkey_init()
         gpio_init(scl);
         gpio_init(sda);
 
+        i2c_init(tof_ports[i], TOF_I2C_FREQ);
         gpio_set_function(scl, GPIO_FUNC_I2C);
         gpio_set_function(sda, GPIO_FUNC_I2C);
 

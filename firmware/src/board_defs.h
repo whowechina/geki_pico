@@ -13,10 +13,13 @@
 #define SOUND_DEF { 8, 6 }
 #define TOF_PORT_DEF { i2c1, i2c0 }
 #define TOF_GPIO_DEF { 18, 19, 0, 1 }
+#define TOF_I2C_FREQ 400*1000
 
 #define AXIS_MUX_PIN_A 21
 #define AXIS_MUX_PIN_B 20
 #define ADC_CHANNEL 0
+
+#define PN532_I2C_PORT i2c1
 
 #define NKRO_KEYMAP "awsdjikl123"
 #else
