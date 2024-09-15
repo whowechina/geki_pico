@@ -11,8 +11,8 @@
 
 #define BUTTON_DEF { 12, 11, 10, 5, 4, 3, 13, 2 }
 #define SOUND_DEF { 8, 6 }
-#define WAD_DEF { i2c1, i2c0 }
-#define WAD_GPIO_DEF { 18, 19, 0, 1 }
+#define TOF_PORT_DEF { i2c1, i2c0 }
+#define TOF_GPIO_DEF { 18, 19, 0, 1 }
 
 #define AXIS_MUX_PIN_A 21
 #define AXIS_MUX_PIN_B 20

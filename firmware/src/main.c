@@ -33,7 +33,7 @@
 #include "light.h"
 #include "button.h"
 #include "gimbal.h"
-#include "wad.h"
+#include "airkey.h"
 #include "sound.h"
 
 static void run_lights()
@@ -72,7 +72,7 @@ static void run_lights()
         light_set(36, 0);
     }
 
-    if (wad_read_left()) {
+    if (airkey_get(0)) {
         light_set(1, 0x804000);
         light_set(2, 0x804000);
         light_set(3, 0x804000);
@@ -82,7 +82,7 @@ static void run_lights()
         light_set(3, 0);
     }
 
-    if (wad_read_right()) {
+    if (airkey_get(1)) {
         light_set(33, 0x004080);
         light_set(34, 0x004080);
         light_set(35, 0x004080);
@@ -95,8 +95,8 @@ static void run_lights()
 
 static void run_sound()
 {
-    sound_set(0, wad_read_left());
-    sound_set(1, wad_read_right());
+    sound_set(0, airkey_get(0));
+    sound_set(1, airkey_get(1));
 }
 
 static mutex_t core1_io_lock;
@@ -125,7 +125,7 @@ static void core0_loop()
         cli_fps_count(0);
 
         button_update();
-        wad_update();
+        airkey_update();
 
         hid_update();
 
@@ -175,7 +175,7 @@ void init()
     light_init();
     button_init();
     gimbal_init();
-    wad_init();
+    airkey_init();
     sound_init();
 
     cli_init("geki_pico>", "\n   << Geki Pico Controller >>\n"

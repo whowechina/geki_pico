@@ -7,7 +7,7 @@
 #include "usb_descriptors.h"
 #include "button.h"
 #include "gimbal.h"
-#include "wad.h"
+#include "airkey.h"
 #include "config.h"
 #include "hid.h"
 
@@ -53,10 +53,10 @@ static void report_usb_hid()
                     hid_joy.buttons[group] |= (1 << bit);
                 }
             }
-            if (wad_read_left()) {
+            if (airkey_get(0)) {
                 hid_joy.buttons[wad_left.group] |= (1 << wad_left.bit);
             }
-            if (wad_read_right()) {
+            if (airkey_get(1)) {
                 hid_joy.buttons[wad_right.group] |= (1 << wad_right.bit);
             }
 
