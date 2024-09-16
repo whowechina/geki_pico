@@ -29,10 +29,10 @@ static struct {
     uint16_t out_low;
     uint16_t out_high;
 } key_defs[] = {
-    { 0, 120, 250, 100, 270 },
-    { 1, 120, 250, 100, 270 },
-    { 0, 400, 500, 380, 520 },
-    { 1, 400, 500, 380, 520 }
+    { 0, 50, 200, 30, 220 },
+    { 1, 50, 200, 30, 220 },
+    { 0, 300, 400, 280, 430 },
+    { 1, 300, 400, 280, 430 }
 };
 
 #define AIRKEY_NUM (count_of(key_defs))
@@ -71,9 +71,11 @@ static bool readings[AIRKEY_NUM];
 
 static void tof_read()
 {
+    printf("\n");
     for (int i = 0; i < TOF_NUM; i++) {
         vl53l0x_use(i);
         tof_dist[i] = readRangeContinuousMillimeters(i);
+        printf(" %4d", tof_dist[i]);
     }
 }
 

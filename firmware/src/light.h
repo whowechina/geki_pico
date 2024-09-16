@@ -19,6 +19,9 @@ uint32_t rgb32(uint32_t r, uint32_t g, uint32_t b, bool gamma_fix);
 uint32_t rgb32_from_hsv(uint8_t h, uint8_t s, uint8_t v);
 uint32_t load_color(const rgb_hsv_t *color);
 
+void light_set_main(uint8_t index, uint32_t color);
+void light_set_aux(uint8_t index, uint32_t color);
+
 void light_set(uint8_t index, uint32_t color);
 void light_unset(uint8_t index);
 

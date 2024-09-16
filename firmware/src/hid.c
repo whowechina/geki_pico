@@ -9,6 +9,8 @@
 #include "gimbal.h"
 #include "airkey.h"
 #include "config.h"
+#include "light.h"
+
 #include "hid.h"
 
 struct __attribute__((packed)) {
@@ -26,48 +28,72 @@ struct __attribute__((packed)) {
     uint8_t keymap[15];
 } hid_nkro;
 
-const static struct {
-    uint8_t group;
-    uint8_t bit;
-} button_to_io4_map[] = {
-    { 0, 0 }, { 0, 5 }, { 0, 4 }, // Left ABC
-    { 0, 1 }, { 1, 0 }, { 0, 15 }, // Right ABC
-    { 1, 14 }, { 0, 13 }, // AUX 12
-}, wad_left = { 1, 15 }, wad_right =  { 0, 14 };
+static void gen_hid_analogs()
+{
+    hid_joy.adcs[0] = gimbal_read() << 8;
+}
+static void gen_hid_buttons()
+{
+    const static struct {
+        uint8_t group;
+        uint8_t bit;
+    } button_to_io4_map[] = {
+        { 0, 0 }, { 0, 5 }, { 0, 4 }, // Left ABC
+        { 0, 1 }, { 1, 0 }, { 0, 15 }, // Right ABC
+        { 1, 14 }, { 0, 13 }, // AUX 12
+    }, wad_left = { 1, 15 }, wad_right =  { 0, 14 };
 
+    uint16_t buttons = button_read();
 
+    hid_joy.buttons[0] = 0;
+    hid_joy.buttons[1] = 0;
+
+    for (int i = 0; i < button_num(); i++) {
+        uint8_t group = button_to_io4_map[i].group;
+        uint8_t bit = button_to_io4_map[i].bit;
+        if (buttons & (1 << i)) {
+            if (!airkey_get(3)) {
+                hid_joy.buttons[group] |= (1 << bit);
+            }
+        }
+    }
+    if (!airkey_get(0)) {
+        hid_joy.buttons[wad_left.group] |= (1 << wad_left.bit);
+    }
+    if (!airkey_get(1)) {
+        hid_joy.buttons[wad_right.group] |= (1 << wad_right.bit);
+    }
+}
+
+static void gen_hid_coins()
+{
+    static uint8_t last_gimbal = 0;
+    uint8_t gimbal = gimbal_read();
+    static int dec_count = 0;
+
+    if (airkey_get(3)) {
+        if (gimbal < last_gimbal) {
+            dec_count++;
+        } else if (gimbal > last_gimbal) {
+            dec_count = 0;
+        }
+
+        if (dec_count > 100) {
+            dec_count = 0;
+            hid_joy.chutes[0] += 0x100;
+        }
+    }
+
+    last_gimbal = gimbal;
+}
 static void report_usb_hid()
 {
     if (tud_hid_ready()) {
         if (geki_cfg->hid.joy || geki_runtime.key_stuck) {
-            hid_joy.adcs[0] = (gimbal_read() - 128) << 8;
-
-            static uint16_t last_buttons = 0;
-            uint16_t buttons = button_read();
-            hid_joy.buttons[0] = 0;
-            hid_joy.buttons[1] = 0;
-            for (int i = 0; i < button_num(); i++) {
-                uint8_t group = button_to_io4_map[i].group;
-                uint8_t bit = button_to_io4_map[i].bit;
-                if (buttons & (1 << i)) {
-                    hid_joy.buttons[group] |= (1 << bit);
-                }
-            }
-            if (airkey_get(0)) {
-                hid_joy.buttons[wad_left.group] |= (1 << wad_left.bit);
-            }
-            if (airkey_get(1)) {
-                hid_joy.buttons[wad_right.group] |= (1 << wad_right.bit);
-            }
-
-            if ((last_buttons ^ buttons) & (1 << 11)) {
-                if (buttons & (1 << 11)) {
-                   // just pressed coin button
-                   hid_joy.chutes[0] += 0x100;
-                }
-            }
+            gen_hid_analogs();
+            gen_hid_buttons();
+            gen_hid_coins();
             tud_hid_n_report(0, REPORT_ID_JOYSTICK, &hid_joy, sizeof(hid_joy));
-            last_buttons = buttons;
         }
         if (geki_cfg->hid.nkro && !geki_runtime.key_stuck) {
             tud_hid_n_report(1, 0, &hid_nkro, sizeof(hid_nkro));
@@ -108,6 +134,24 @@ typedef struct __attribute__((packed)) {
     uint8_t payload[62];
 } hid_output_t;
 
+static void update_led(const uint8_t data[4])
+{
+    const uint8_t led_bit[18] = { 30, 31, 28, 26, 27, 29, 23, 25, 24, 20, 22, 21, 17, 19, 18, 14, 16, 15 };
+
+    uint32_t leds = (data[0] << 24) | (data[1] << 16) |
+                   (data[2] << 8) | data[3];
+
+    uint8_t rgbs[18];
+    for (uint8_t i = 0; i < 18; i++) {
+        rgbs[i] = ((leds >> led_bit[i]) & 1) ? 0xff : 0x00;
+    }
+
+    for (uint8_t i = 0; i < 6; i++) {
+        uint32_t color = rgb32(rgbs[i * 3 + 1], rgbs[i * 3 + 2], rgbs[i * 3], false);
+        light_set_main(i, color);
+    }
+}
+
 void hid_proc(const uint8_t *data, uint8_t len)
 {
     hid_output_t *output = (hid_output_t *)data;
@@ -116,14 +160,17 @@ void hid_proc(const uint8_t *data, uint8_t len)
             case 0x01: // Set Timeout
             case 0x02: // Set Sampling Count
                 hid_joy.system_status = 0x30;
+                printf("USB set timeout/sampling\n");
                 break;
             case 0x03: // Clear Board Status
                 hid_joy.chutes[0] = 0;
                 hid_joy.chutes[1] = 0;
                 hid_joy.system_status = 0x00;
+                printf("USB clear status\n");
                 break;
             case 0x04: // Set General Output
                 // LED
+                update_led(output->payload);
                 break;
             case 0x41: // I don't know what this is
                 break;
@@ -131,5 +178,5 @@ void hid_proc(const uint8_t *data, uint8_t len)
                 printf("USB unknown cmd: %d\n", output->cmd);
                 break;
         }
-    }
+    } 
 }

@@ -41,63 +41,67 @@
 
 static void run_lights()
 {
-    int gimbal = gimbal_read();
-    gimbal = gimbal * 5 / 256;
+    int gimbal = 255 - gimbal_read();
+    uint16_t button = button_read();
 
+    gimbal = gimbal * 5 / 256;
     for (int i = 0; i < 5; i++) {
         light_set(16 + i, (i == gimbal) ? 0x00ff00 : 0);
     }
 
+    light_set_aux(0, button & 0x40 ? rgb32(0x80, 0, 0, false) : 0);
+    light_set_aux(1, button & 0x80 ? 0x808080 : 0);
+
+    if (airkey_get(3)) {
+        uint32_t phase = (time_us_32() >> 16) % 3;
+        light_set(1, phase == 0 ? 0x808080 : 0);
+        light_set(2, phase == 1 ? 0x808080 : 0);
+        light_set(3, phase == 2 ? 0x808080 : 0);
+        light_set(33, phase == 0 ? 0x808080 : 0);
+        light_set(34, phase == 1 ? 0x808080 : 0);
+        light_set(35, phase == 2 ? 0x808080 : 0);
+    } else {
+        if (airkey_get(0)) {
+            light_set(1, 0x804000);
+            light_set(2, 0x804000);
+            light_set(3, 0x804000);
+        } else {
+            light_set(1, 0);
+            light_set(2, 0);
+            light_set(3, 0);
+        }
+
+        if (airkey_get(1)) {
+            light_set(33, 0x004080);
+            light_set(34, 0x004080);
+            light_set(35, 0x004080);
+        } else {
+            light_set(33, 0);
+            light_set(34, 0);
+            light_set(35, 0);
+        }
+    }
+
+    return;
+
     uint32_t colors[6] = {0x400000, 0x004000, 0x000040,
                           0x400000, 0x004000, 0x000040 };
-    uint16_t button = button_read();
     for (int i = 0; i < 6; i++) {
         uint32_t color = colors[i];
         if (button & (1 << i)) {
             color = 0x808080;
         }
-        int index = 4 + i * 4 + (i > 2 ? 5 : 0);
-        light_set(index, color);
-        light_set(index + 1, color);
-        light_set(index + 2, color);
-        light_set(index + 3, color);
-    }
-
-    if (button & 0x40) {
-        light_set(0, 0x808080);
-    } else {
-        light_set(0, 0);
-    }
-
-    if (button & 0x80) {
-        light_set(36, 0x808080);
-    } else {
-        light_set(36, 0);
-    }
-
-    if (airkey_get(0)) {
-        light_set(1, 0x804000);
-        light_set(2, 0x804000);
-        light_set(3, 0x804000);
-    } else {
-        light_set(1, 0);
-        light_set(2, 0);
-        light_set(3, 0);
-    }
-
-    if (airkey_get(1)) {
-        light_set(33, 0x004080);
-        light_set(34, 0x004080);
-        light_set(35, 0x004080);
-    } else {
-        light_set(33, 0);
-        light_set(34, 0);
-        light_set(35, 0);
+        light_set_main(i, color);
     }
 }
-
 static void run_sound()
 {
+    if (airkey_get(3)) {
+        sound_set(0, false);
+        sound_set(1, false);
+        return;
+    }
+
     sound_set(0, airkey_get(0));
     sound_set(1, airkey_get(1));
 }
@@ -159,22 +163,21 @@ static void core0_loop()
 /* if certain key pressed when booting, enter update mode */
 static void update_check()
 {
-    const uint8_t pins[] = BUTTON_DEF; // keypad 00 and *
-    bool all_pressed = true;
-    for (int i = 0; i < 2; i++) {
-        uint8_t gpio = pins[sizeof(pins) - 2 + i];
+    const uint8_t pins[] = BUTTON_DEF;
+    int pressed = 0;
+    for (int i = 0; i < count_of(pins); i++) {
+        uint8_t gpio = pins[i];
         gpio_init(gpio);
         gpio_set_function(gpio, GPIO_FUNC_SIO);
         gpio_set_dir(gpio, GPIO_IN);
         gpio_pull_up(gpio);
         sleep_ms(1);
-        if (gpio_get(gpio)) {
-            all_pressed = false;
-            break;
+        if (!gpio_get(gpio)) {
+            pressed++;
         }
     }
 
-    if (all_pressed) {
+    if (pressed >= 4) {
         sleep_ms(100);
         reset_usb_boot(0, 2);
         return;

@@ -23,13 +23,6 @@
 static uint32_t buf_rgb[37]; // left 3 + right 3 + button 4 * 7 + indicator 5
 static bool bind[37] = { 0 };
 
-#define _MAP_LED(x) _MAKE_MAPPER(x)
-#define _MAKE_MAPPER(x) MAP_LED_##x
-#define MAP_LED_RGB { c1 = r; c2 = g; c3 = b; }
-#define MAP_LED_GRB { c1 = g; c2 = r; c3 = b; }
-
-#define REMAP_BUTTON_RGB _MAP_LED(BUTTON_RGB_ORDER)
-#define REMAP_TT_RGB _MAP_LED(TT_RGB_ORDER)
 
 static inline uint32_t _rgb32(uint32_t c1, uint32_t c2, uint32_t c3, bool gamma_fix)
 {
@@ -44,7 +37,7 @@ static inline uint32_t _rgb32(uint32_t c1, uint32_t c2, uint32_t c3, bool gamma_
 
 uint32_t rgb32(uint32_t r, uint32_t g, uint32_t b, bool gamma_fix)
 {
-#if BUTTON_RGB_ORDER == GRB
+#if RGB_ORDER == GRB
     return _rgb32(g, r, b, gamma_fix);
 #else
     return _rgb32(r, g, b, gamma_fix);
@@ -119,6 +112,7 @@ void light_init()
 
 static void light_effect()
 {
+    return;
     static uint32_t loop = 0;
     loop++;
 
@@ -151,6 +145,30 @@ void light_set(uint8_t index, uint32_t color)
     }
     buf_rgb[index] = apply_level(color);
     bind[index] = true;
+}
+
+void light_set_main(uint8_t index, uint32_t color)
+{
+    if (index < 3) {
+        light_set(index * 4 + 4, color);
+        light_set(index * 4 + 5, color);
+        light_set(index * 4 + 6, color);
+        light_set(index * 4 + 7, color);
+    } else if (index < 6) {
+        light_set(index * 4 + 9, color);
+        light_set(index * 4 + 10, color);
+        light_set(index * 4 + 11, color);
+        light_set(index * 4 + 12, color);
+    }
+}
+
+void light_set_aux(uint8_t index, uint32_t color)
+{
+    if (index == 0) {
+        light_set(0, color);
+    } else if (index == 1) {
+        light_set(36, color);
+    }
 }
 
 void light_unset(uint8_t index)
