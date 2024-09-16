@@ -20,9 +20,9 @@
 #include "board_defs.h"
 #include "config.h"
 
-static uint32_t buf_rgb[37]; // left 3 + right 3 + button 4 * 7 + indicator 5
-static bool bind[37] = { 0 };
+#define HID_TIMEOUT 300*1000*1000
 
+static uint32_t buf_rgb[37]; // left 3 + right 3 + button 4 * 7 + indicator 5
 
 static inline uint32_t _rgb32(uint32_t c1, uint32_t c2, uint32_t c3, bool gamma_fix)
 {
@@ -110,20 +110,6 @@ void light_init()
     ws2812_program_init(pio0, 0, offset, RGB_PIN, 800000, false);
 }
 
-static void light_effect()
-{
-    return;
-    static uint32_t loop = 0;
-    loop++;
-
-    for (int i = 0; i < count_of(buf_rgb); i++) {
-        uint32_t hue = (loop + i * 255 / count_of(buf_rgb)) % 255;
-        if (!bind[i]) {
-            buf_rgb[i] = rgb32_from_hsv(hue, 255, 255);
-        }
-    }
-}
-
 void light_update()
 {
     static uint64_t last = 0;
@@ -134,7 +120,6 @@ void light_update()
 
     last = now;
 
-    light_effect();
     drive_led();
 }
 
@@ -144,11 +129,20 @@ void light_set(uint8_t index, uint32_t color)
         return;
     }
     buf_rgb[index] = apply_level(color);
-    bind[index] = true;
 }
 
-void light_set_main(uint8_t index, uint32_t color)
+void light_set_main(uint8_t index, uint32_t color, bool hid)
 {
+    static uint64_t hid_timeout = 0;
+    uint64_t now = time_us_64();
+    if (!hid && (now < hid_timeout)) {
+        return;
+    }
+
+    if (hid) {
+        hid_timeout = time_us_64() + HID_TIMEOUT;
+    }
+
     if (index < 3) {
         light_set(index * 4 + 4, color);
         light_set(index * 4 + 5, color);
@@ -171,11 +165,30 @@ void light_set_aux(uint8_t index, uint32_t color)
     }
 }
 
-void light_unset(uint8_t index)
+void light_set_wad(uint8_t index, uint32_t color)
 {
-    if (index >= count_of(buf_rgb)) {
-        return;
+    if (index == 0) {
+        light_set(1, color);
+        light_set(2, color);
+        light_set(3, color);
+    } else if (index == 1) {
+        light_set(33, color);
+        light_set(34, color);
+        light_set(35, color);
     }
+}
 
-    bind[index] = false;
+void light_set_pos(uint8_t pos, uint32_t color)
+{
+    pos = pos * 5 / 256;
+    for (int i = 0; i < 5; i++) {
+        light_set(16 + i, (i == pos) ? color : 0);
+    }
+}
+
+void light_set_aime(uint32_t color)
+{
+    for (int i = 0; i < 5; i++) {
+        light_set(16 + i, color);
+    }
 }

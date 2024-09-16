@@ -13,6 +13,8 @@
 
 #include "gimbal.h"
 
+extern uint8_t RING_DATA[];
+
 #include "nfc.h"
 #include "aime.h"
 
@@ -72,7 +74,7 @@ static void disp_gimbal()
 static void disp_sound()
 {
     printf("[Sound]\n");
-    printf("  Status: %s.\n", geki_cfg->sound.enabled ? "on" : "off");
+    printf("  Volume: %d\n", geki_cfg->sound.volume);
 }
 
 static void disp_hid()
@@ -353,25 +355,6 @@ static void handle_color(int argc, char *argv[])
     disp_light();
 }
 
-static void handle_sound(int argc, char *argv[])
-{
-    const char *usage = "Usage: sound <on|off>\n";
-    if (argc != 1) {
-        printf(usage);
-        return;
-    }
-
-    int on_off = cli_match_prefix((const char *[]){"off", "on"}, 2, argv[0]);
-    if (on_off < 0) {
-        printf(usage);
-        return;
-    }
-
-    geki_cfg->sound.enabled = on_off;
-    config_changed();
-    disp_sound();
-}
-
 static void handle_save()
 {
     save_request(true);
@@ -452,6 +435,25 @@ static void handle_aime(int argc, char *argv[])
     }
 }
 
+static void handle_volume(int argc, char *argv[])
+{
+    const char *usage = "Usage: sound <0..255>\n";
+    if (argc != 1) {
+        printf(usage);
+        return;
+    }
+
+    int vol = cli_extract_non_neg_int(argv[0], 0);
+
+    if ((vol >= 0) && (vol <= 255)) {
+        geki_cfg->sound.volume = vol;
+        config_changed();
+        disp_sound();
+    } else {
+        printf(usage);
+    }
+}
+
 void commands_init()
 {
     cli_register("display", handle_display, "Display all config.");
@@ -459,7 +461,7 @@ void commands_init()
     cli_register("color", handle_color, "Set LED color.");
     cli_register("hid", handle_hid, "Set HID mode.");
     cli_register("gimbal", handle_gimbal, "Calibrate the gimbals.");
-    cli_register("sound", handle_sound, "Enable/disable sound.");
+    cli_register("volume", handle_volume, "Sound feedback volume settings.");
     cli_register("save", handle_save, "Save config to flash.");
     cli_register("factory", handle_factory_reset, "Reset everything to default.");
     cli_register("nfc", handle_nfc, "NFC debug.");

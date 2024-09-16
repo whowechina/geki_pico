@@ -44,7 +44,7 @@ static geki_cfg_t default_cfg = {
         .reserved = { 0 },
     },
     .sound = {
-        .enabled = true,
+        .volume = 127,
         .reserved = { 0 },
     },
     .hid = {

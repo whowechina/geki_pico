@@ -71,11 +71,9 @@ static bool readings[AIRKEY_NUM];
 
 static void tof_read()
 {
-    printf("\n");
     for (int i = 0; i < TOF_NUM; i++) {
         vl53l0x_use(i);
         tof_dist[i] = readRangeContinuousMillimeters(i);
-        printf(" %4d", tof_dist[i]);
     }
 }
 

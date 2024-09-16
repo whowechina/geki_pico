@@ -33,7 +33,7 @@ typedef struct __attribute__((packed)) {
         uint8_t reserved[15];
     } light;
     struct {
-        bool enabled;
+        uint8_t volume;
         uint8_t reserved[3];
     } sound;
     struct {

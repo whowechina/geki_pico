@@ -14,7 +14,6 @@
 #include "hardware/pwm.h"
 
 #include "ring.h"
-#include "music.h"
 
 #include "config.h"
 #include "board_defs.h"
@@ -22,8 +21,8 @@
 static const uint8_t sound_gpio[2] = SOUND_DEF;
 static int slice_num[2];
 static int wav_pos[2];
-static const int wav_len[2] = { sizeof(MUSIC_DATA), sizeof(RING_DATA)};
-static const uint8_t *wav_data[2] = { MUSIC_DATA, RING_DATA};
+static const int wad_sound_len = sizeof(RING_DATA);
+static const uint8_t *wad_sound = RING_DATA;
 static bool active[2];
 
 void pwm_interrupt_handler()
@@ -39,14 +38,21 @@ void pwm_interrupt_handler()
             continue;
         }
 
-        int len = wav_len[i];
-        const uint8_t *data = wav_data[i];
-        if (wav_pos[i] < (len << 3) - 1) { 
-            pwm_set_gpio_level(gpio, data[wav_pos[i] >> 3]);
-            wav_pos[i]++;
-        } else {
+        int pos = wav_pos[i] >> 3;
+        if (pos >= wad_sound_len) {
+            pos = 0;
             wav_pos[i] = 0;
         }
+    
+        static int amplitude = 0;
+        if (wav_pos[i] & 0x07) {
+           amplitude = wad_sound[pos] * geki_cfg->sound.volume / 200;
+           if (amplitude > 250) {
+               amplitude = 250;
+           }
+        }
+        pwm_set_gpio_level(gpio, amplitude);
+        wav_pos[i]++;
     }
 }
 
@@ -65,7 +71,7 @@ void sound_init()
     irq_set_enabled(PWM_IRQ_WRAP, true);
 
     pwm_config cfg = pwm_get_default_config();
-    pwm_config_set_clkdiv(&cfg, 8.0f); 
+    pwm_config_set_clkdiv(&cfg, 4.0f); // 8.0f: 11kHz, 4.0f: 22kHz, 2.0f: 44kHz
     pwm_config_set_wrap(&cfg, 250); 
 
     for (int i = 0; i < 2; i++) {
@@ -83,7 +89,7 @@ void sound_toggle(bool on)
 
 void sound_set(int id, bool on)
 {
-    if (!geki_cfg->sound.enabled) {
+    if (!geki_cfg->sound.volume) {
         active[id] = false;
         return;
     }

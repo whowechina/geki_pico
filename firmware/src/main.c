@@ -41,59 +41,33 @@
 
 static void run_lights()
 {
-    int gimbal = 255 - gimbal_read();
+    light_set_pos(255 - gimbal_read(), rgb32(0xff, 0, 0, false));
+
     uint16_t button = button_read();
 
-    gimbal = gimbal * 5 / 256;
-    for (int i = 0; i < 5; i++) {
-        light_set(16 + i, (i == gimbal) ? 0x00ff00 : 0);
-    }
+    light_set_aux(0, button & 0x40 ? 0xc0c0c0 : rgb32(0x60, 0, 0, false));
+    light_set_aux(1, button & 0x80 ? 0xc0c0c0 : rgb32(0x50, 0x50, 0, false));
 
-    light_set_aux(0, button & 0x40 ? rgb32(0x80, 0, 0, false) : 0);
-    light_set_aux(1, button & 0x80 ? 0x808080 : 0);
+    uint32_t phase = time_us_32() >> 15;
 
     if (airkey_get(3)) {
-        uint32_t phase = (time_us_32() >> 16) % 3;
-        light_set(1, phase == 0 ? 0x808080 : 0);
-        light_set(2, phase == 1 ? 0x808080 : 0);
-        light_set(3, phase == 2 ? 0x808080 : 0);
-        light_set(33, phase == 0 ? 0x808080 : 0);
-        light_set(34, phase == 1 ? 0x808080 : 0);
-        light_set(35, phase == 2 ? 0x808080 : 0);
-    } else {
-        if (airkey_get(0)) {
-            light_set(1, 0x804000);
-            light_set(2, 0x804000);
-            light_set(3, 0x804000);
-        } else {
-            light_set(1, 0);
-            light_set(2, 0);
-            light_set(3, 0);
+        uint32_t phase = (time_us_32() >> 15) % 3;
+        for (int i = 0; i < 3; i++) {
+            light_set(1 + i, phase % 3 == i ? 0x808080 : 0);
+            light_set(33 + i, phase % 3 == i ? 0x808080 : 0);
         }
-
-        if (airkey_get(1)) {
-            light_set(33, 0x004080);
-            light_set(34, 0x004080);
-            light_set(35, 0x004080);
-        } else {
-            light_set(33, 0);
-            light_set(34, 0);
-            light_set(35, 0);
+    } else {
+        for (int i = 0; i < 2; i++) {
+            light_set_wad(i, airkey_get(i) ? rgb32(0x80, 0, 0xff, false) : 0);
         }
     }
 
-    return;
-
-    uint32_t colors[6] = {0x400000, 0x004000, 0x000040,
-                          0x400000, 0x004000, 0x000040 };
     for (int i = 0; i < 6; i++) {
-        uint32_t color = colors[i];
-        if (button & (1 << i)) {
-            color = 0x808080;
-        }
-        light_set_main(i, color);
+        uint32_t color = rgb32_from_hsv(phase + i * 40, 0xff, 0x80);
+        light_set_main(i, button & (1 << i) ? 0xffffff : color, false);
     }
 }
+
 static void run_sound()
 {
     if (airkey_get(3)) {

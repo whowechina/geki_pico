@@ -41,22 +41,35 @@ static void gen_hid_buttons()
         { 0, 0 }, { 0, 5 }, { 0, 4 }, // Left ABC
         { 0, 1 }, { 1, 0 }, { 0, 15 }, // Right ABC
         { 1, 14 }, { 0, 13 }, // AUX 12
-    }, wad_left = { 1, 15 }, wad_right =  { 0, 14 };
+    },
+    wad_left = { 1, 15 },
+    wad_right =  { 0, 14 },
+    key_test = { 0, 9 },
+    key_service = { 0, 6 };
 
     uint16_t buttons = button_read();
 
     hid_joy.buttons[0] = 0;
     hid_joy.buttons[1] = 0;
 
+    if (airkey_get(3)) {
+        if (buttons & 0x40) {
+            hid_joy.buttons[key_test.group] |= (1 << key_test.bit);
+        }
+        if (buttons & 0x80) {
+            hid_joy.buttons[key_service.group] |= (1 << key_service.bit);
+        }
+        return;
+    }
+
     for (int i = 0; i < button_num(); i++) {
         uint8_t group = button_to_io4_map[i].group;
         uint8_t bit = button_to_io4_map[i].bit;
         if (buttons & (1 << i)) {
-            if (!airkey_get(3)) {
-                hid_joy.buttons[group] |= (1 << bit);
-            }
+            hid_joy.buttons[group] |= (1 << bit);
         }
     }
+
     if (!airkey_get(0)) {
         hid_joy.buttons[wad_left.group] |= (1 << wad_left.bit);
     }
@@ -78,7 +91,7 @@ static void gen_hid_coins()
             dec_count = 0;
         }
 
-        if (dec_count > 100) {
+        if (dec_count > 60) {
             dec_count = 0;
             hid_joy.chutes[0] += 0x100;
         }
@@ -136,19 +149,18 @@ typedef struct __attribute__((packed)) {
 
 static void update_led(const uint8_t data[4])
 {
-    const uint8_t led_bit[18] = { 30, 31, 28, 26, 27, 29, 23, 25, 24, 20, 22, 21, 17, 19, 18, 14, 16, 15 };
+    const uint8_t led_bit[18] = { 30, 31, 28, 26, 27, 29, 23, 25, 24,
+                                  20, 22, 21, 17, 19, 18, 14, 16, 15 };
 
     uint32_t leds = (data[0] << 24) | (data[1] << 16) |
                    (data[2] << 8) | data[3];
 
-    uint8_t rgbs[18];
-    for (uint8_t i = 0; i < 18; i++) {
-        rgbs[i] = ((leds >> led_bit[i]) & 1) ? 0xff : 0x00;
-    }
-
     for (uint8_t i = 0; i < 6; i++) {
-        uint32_t color = rgb32(rgbs[i * 3 + 1], rgbs[i * 3 + 2], rgbs[i * 3], false);
-        light_set_main(i, color);
+        bool r = leds & (1 << led_bit[i * 3 + 1]);
+        bool g = leds & (1 << led_bit[i * 3 + 2]);
+        bool b = leds & (1 << led_bit[i * 3]);
+        uint32_t color = rgb32(r ? 0xff : 0, g ? 0xff : 0, b ? 0xff : 0, false);
+        light_set_main(i, color, true);
     }
 }
 
