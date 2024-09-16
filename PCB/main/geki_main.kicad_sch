@@ -4170,12 +4170,6 @@
 		(uuid "06c3c5e5-849f-4e5f-b2a5-811898e2904c")
 	)
 	(junction
-		(at 314.325 144.78)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "09f61624-7f90-40a0-8047-6a1fbc2018b6")
-	)
-	(junction
 		(at 158.75 170.18)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4246,12 +4240,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "21986980-087e-481e-ba92-1bf22ca4f8d9")
-	)
-	(junction
-		(at 311.785 123.19)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "266c2045-6973-439b-aa78-785abd12b657")
 	)
 	(junction
 		(at 196.85 185.42)
@@ -5198,6 +5186,16 @@
 	)
 	(wire
 		(pts
+			(xy 349.885 154.94) (xy 350.52 154.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0fc2431c-d947-47f9-9330-174d295ec546")
+	)
+	(wire
+		(pts
 			(xy 120.65 214.63) (xy 133.35 214.63)
 		)
 		(stroke
@@ -5507,6 +5505,16 @@
 			(type default)
 		)
 		(uuid "2cf645e4-dade-47b5-a05e-f2f94db0a513")
+	)
+	(wire
+		(pts
+			(xy 350.52 142.875) (xy 356.235 142.875)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2d8c534c-9db3-48f3-9291-33a0a512bf1b")
 	)
 	(wire
 		(pts
@@ -5980,6 +5988,16 @@
 	)
 	(wire
 		(pts
+			(xy 353.695 145.415) (xy 353.695 140.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "59966edd-e59c-4776-9752-c107464c404c")
+	)
+	(wire
+		(pts
 			(xy 55.245 48.895) (xy 55.245 53.975)
 		)
 		(stroke
@@ -6190,13 +6208,13 @@
 	)
 	(wire
 		(pts
-			(xy 311.785 123.19) (xy 320.675 123.19)
+			(xy 350.52 154.94) (xy 350.52 142.875)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "714556bd-38da-496b-b162-585a89221ed9")
+		(uuid "72a47dd9-756d-4044-8efa-3627325469a8")
 	)
 	(wire
 		(pts
@@ -6318,16 +6336,6 @@
 			(type default)
 		)
 		(uuid "7fdb0fca-b1ff-43cd-a431-2c0da97f9d58")
-	)
-	(wire
-		(pts
-			(xy 311.785 123.19) (xy 311.785 137.16)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "812434ab-fe34-4150-8f9a-69c8e03279b7")
 	)
 	(wire
 		(pts
@@ -6533,16 +6541,6 @@
 	)
 	(wire
 		(pts
-			(xy 314.325 130.81) (xy 314.325 144.78)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "91bfcd90-687c-4673-8deb-d4a69dd8a2e3")
-	)
-	(wire
-		(pts
 			(xy 95.25 170.18) (xy 107.95 170.18)
 		)
 		(stroke
@@ -6701,16 +6699,6 @@
 			(type default)
 		)
 		(uuid "9f99a88e-3c49-43b9-8cc5-225a70a28ac1")
-	)
-	(wire
-		(pts
-			(xy 320.675 130.81) (xy 314.325 130.81)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a0c01b0e-d236-4894-837a-6d52414df166")
 	)
 	(wire
 		(pts
@@ -6882,6 +6870,16 @@
 			(type default)
 		)
 		(uuid "ac39eb2d-64e7-4f24-af80-090593f96925")
+	)
+	(wire
+		(pts
+			(xy 356.235 145.415) (xy 353.695 145.415)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ac4063ed-ca3f-4c5a-a79d-a9e0c45cd644")
 	)
 	(wire
 		(pts
@@ -7186,7 +7184,7 @@
 	)
 	(wire
 		(pts
-			(xy 311.785 120.015) (xy 311.785 123.19)
+			(xy 311.785 136.525) (xy 311.785 137.16)
 		)
 		(stroke
 			(width 0)
@@ -8096,6 +8094,17 @@
 		)
 		(uuid "8184e96f-8381-4e16-ac63-63925a297faa")
 	)
+	(label "SDA1"
+		(at 356.235 147.955 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify right bottom)
+		)
+		(uuid "86fa3682-2968-4cbf-a320-350a0bde9673")
+	)
 	(label "AUDIO_R"
 		(at 95.885 98.425 180)
 		(fields_autoplaced yes)
@@ -8128,6 +8137,17 @@
 			(justify right bottom)
 		)
 		(uuid "9b53c829-dfb8-449f-80dd-68c21227da18")
+	)
+	(label "SCL1"
+		(at 356.235 150.495 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify right bottom)
+		)
+		(uuid "b5a377cf-f4c0-4bca-8b94-52e646d13a30")
 	)
 	(label "K2"
 		(at 190.5 133.35 0)
@@ -8840,6 +8860,80 @@
 			(project "geki_main"
 				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
 					(reference "#PWR07")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x04")
+		(at 361.315 145.415 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1946fb5c-66eb-429b-a22b-a954473cf1d4")
+		(property "Reference" "PN532"
+			(at 366.395 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Conn_01x04"
+			(at 367.03 146.685 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
+			(at 361.315 145.415 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 361.315 145.415 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 361.315 145.415 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "b640b287-2f8e-4c5f-9fa4-ca0a148d2fa2")
+		)
+		(pin "1"
+			(uuid "de989c1e-2216-49e2-9b3c-da263d42dcec")
+		)
+		(pin "4"
+			(uuid "a7dafa36-a1e0-466f-9640-d59a22938be5")
+		)
+		(pin "2"
+			(uuid "351900f9-9645-43e3-957d-af0e7870af81")
+		)
+		(instances
+			(project "geki_main"
+				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
+					(reference "PN532")
 					(unit 1)
 				)
 			)
@@ -10674,6 +10768,71 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 349.885 154.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "43a8fb95-10c7-4fcf-a2b3-99d1cade8892")
+		(property "Reference" "#PWR018"
+			(at 349.885 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 350.012 159.3342 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 349.885 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 349.885 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 349.885 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b911e209-0e85-46b0-8204-981ec8ffe40d")
+		)
+		(instances
+			(project "geki_main"
+				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
+					(reference "#PWR018")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+3.3VADC")
 		(at 174.625 36.195 0)
 		(unit 1)
@@ -11665,80 +11824,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Generic:Conn_01x04")
-		(at 325.755 125.73 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "712eb3fa-2983-4757-9772-e5c83db211ed")
-		(property "Reference" "PN532"
-			(at 331.47 126.365 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Conn_01x04"
-			(at 331.47 127 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "geki_main:Solder_4P"
-			(at 325.755 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 325.755 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 325.755 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "9e4e80ae-be36-44ed-ab29-934def16f64d")
-		)
-		(pin "1"
-			(uuid "a7ecd3ab-aed2-4d78-b762-6f446c2e06e2")
-		)
-		(pin "4"
-			(uuid "00a87719-23ae-4cca-a343-9d43ff87cfbd")
-		)
-		(pin "2"
-			(uuid "42bb8e39-07b6-4aae-8f10-d10b4bb83d32")
-		)
-		(instances
-			(project "geki_main"
-				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
-					(reference "PN532")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+5V")
 		(at 334.01 29.845 0)
 		(unit 1)
@@ -12303,7 +12388,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 311.785 120.015 0)
+		(at 311.785 136.525 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -12311,7 +12396,7 @@
 		(dnp no)
 		(uuid "7cc51c5c-d07a-4802-842c-b4042b7f77b7")
 		(property "Reference" "#PWR014"
-			(at 311.785 123.825 0)
+			(at 311.785 140.335 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12320,7 +12405,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 307.975 118.745 0)
+			(at 307.975 135.255 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12328,7 +12413,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 311.785 120.015 0)
+			(at 311.785 136.525 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12337,7 +12422,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 311.785 120.015 0)
+			(at 311.785 136.525 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12346,7 +12431,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 311.785 120.015 0)
+			(at 311.785 136.525 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14330,6 +14415,71 @@
 			(project "geki_main"
 				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
 					(reference "C9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 353.695 140.97 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c6bfa2af-d257-407c-bb1f-e570b9dd0c35")
+		(property "Reference" "#PWR019"
+			(at 353.695 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 349.885 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 353.695 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 353.695 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 353.695 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "80301dbd-2315-475c-936d-399571e6507b")
+		)
+		(instances
+			(project "geki_main"
+				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
+					(reference "#PWR019")
 					(unit 1)
 				)
 			)
