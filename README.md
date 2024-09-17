@@ -171,9 +171,10 @@ You need to rotate 135 degrees on Z axis to fit the bed.
   9. Install the main button caps and the aux button caps onto the switches.
   10. Now it looks like this. Please note that in the picture it is the PCB v1. I've done some optimizations in the later version.  
     <img src="doc/almost_done.jpg" width="80%">
-  11. Put the support part on the bottom part, then put the top part on the support part.
-  12. Align these parts and use M3\*20mm screws to fix them together. You may need to carefully adjust the position of the ToF sensors so the IR covers fit into the windows on the support part.
-  13. Finally screw the lever handle into the lever shaft.  
+  11. Now it's the perfect chance to adjust the lever resistance. Slowly and gently turn the M2 screws to adjust the tension on the sliding surface. You may need to turn all the screws evenly.
+  12. Put the support part on the bottom part, then put the top part on the support part.
+  13. Align these parts and use M3\*20mm screws to fix them together. You may need to carefully adjust the position of the ToF sensors so the IR covers fit into the windows on the support part.
+  14. Finally screw the lever handle into the lever shaft.  
     <img src="doc/finally_done.jpg" width="80%">
 
 ### Firmware
