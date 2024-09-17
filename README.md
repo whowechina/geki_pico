@@ -165,7 +165,7 @@ You need to rotate 135 degrees on Z axis to fit the bed.
   4. Wire (solder) the speakers to the main PCB, each needs 2 wires.
   5. Use VHB tape to fix the speakers on the floor of the bottom part.
   6. Install the main PCB to the bottom part, no screws needed.
-  7. Bend the hall-effect sensor (SS49E) so it stays on top of the lever magnets. Remember to leave a tiny gap so the shaft can move freely.    
+  7. Bend the hall-effect sensor (SS49E) so it stays on top of the lever magnets. Remember to leave a tiny gap so the shaft can move freely.  
     <img src="doc/lever_hall_1.jpg" width="40%"> <img src="doc/lever_hall_2.jpg" width="48%">
   8. Solder the PN532 module, 8002A modules to the main PCB if you haven't done it yet.
   9. Install the main button caps and the aux button caps onto the switches.
@@ -183,7 +183,13 @@ You need to rotate 135 degrees on Z axis to fit the bed.
 * If it's already running Geki Pico firmware, you can either use "update" in command line or hold down at least 4 buttons while connecting to USB to enter update mode.
 * To access the command line, you can use this Web Serial Terminal to connect to the USB serial port of the Geki Pico. (Note: "?" is for help)  
   https://googlechromelabs.github.io/serial-terminal/
-* **NOTE:** You need to calibrate the lever by "lever calibrate" command after you flash the firmware.
+
+### Usage
+* You need to calibrate the lever by "lever calibrate" command after you flash the firmware.
+* If you feel the lever direction is in correct, you can use "lever invert \<on|off\>" command to change it.
+* Volume of sound feedback can be set by "volume \<0~255\>" command.
+* To emulate IO4 TEST/SERVICE/COIN, you can put your hand at higher position over the right ToF sensor. When you see the WAD lights flashing, the AUX buttons become TEST and SERVICE, swing the lever for "INSERT COINS".
+* AIME is on a secondary COM port. You can set mode or toggle virtual AIC function.
 
 ## CAD Source File
 I'm using OnShape free subscription. It's powerful but it can't archive original designs to local, so I can only share the link here. STL/DXF/DWG files are exported from this online document.  

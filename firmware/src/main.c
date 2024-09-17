@@ -35,13 +35,13 @@
 
 #include "light.h"
 #include "button.h"
-#include "gimbal.h"
+#include "lever.h"
 #include "airkey.h"
 #include "sound.h"
 
 static void run_lights()
 {
-    light_set_pos(255 - gimbal_read(), rgb32(0xff, 0, 0, false));
+    light_set_pos(255 - lever_read(), rgb32(0xff, 0, 0, false));
 
     uint16_t button = button_read();
 
@@ -174,7 +174,7 @@ void init()
 
     light_init();
     button_init();
-    gimbal_init();
+    lever_init();
     airkey_init();
     sound_init();
 

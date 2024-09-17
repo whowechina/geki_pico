@@ -11,7 +11,7 @@
 #include "save.h"
 #include "cli.h"
 
-#include "gimbal.h"
+#include "lever.h"
 
 extern uint8_t RING_DATA[];
 
@@ -23,52 +23,18 @@ extern uint8_t RING_DATA[];
 #define SENSE_LIMIT_MAX 9
 #define SENSE_LIMIT_MIN -9
 
-static inline int sprintf_hsv_rgb(char *buf, const rgb_hsv_t *color)
-{
-    return sprintf(buf, "%s(%d,%d,%d)", color->rgb_hsv ? "hsv" : "rgb",
-              color->val[0], color->val[1], color->val[2]);
-}
-
-static const char *color_str(const rgb_hsv_t *color, bool left_right)
-{
-    static char buf[64];
-    int count = 0;
-
-    if (left_right) {
-        count += sprintf(buf + count, "LEFT ");
-    }
-
-    count += sprintf_hsv_rgb(buf + count, color);
-    
-    if (left_right) {
-        count += sprintf(buf + count, ", RIGHT ");
-        count += sprintf_hsv_rgb(buf + count, color + 1);
-    }
-
-    return buf;
-}
-
 static void disp_light()
 {
     printf("[Light]\n");
     printf("  Level: %d.\n", geki_cfg->light.level);
-    printf("  Colors:\n");
-    printf("    base0: %s\n", color_str(geki_cfg->light.base[0], true));
-    printf("    base1: %s\n", color_str(geki_cfg->light.base[0], true));
-    printf("    button: %s\n", color_str(geki_cfg->light.button, true));
-    printf("    boost: %s\n", color_str(geki_cfg->light.boost, true));
-    printf("    steer: %s\n", color_str(geki_cfg->light.steer, true));
-    printf("    aux_on: %s\n", color_str(&geki_cfg->light.aux_on, false));
-    printf("    aux_off: %s\n", color_str(&geki_cfg->light.aux_off, false));
 }
 
-static void disp_gimbal()
+static void disp_lever()
 {
-    printf("[Gimbal]\n");
-    printf("  %s, %s, raw %d-%d.\n",
-            geki_cfg->gimbal.invert ? "invert" : "normal",
-            geki_cfg->gimbal.analog ? "analog" : "digital",
-            geki_cfg->gimbal.min, geki_cfg->gimbal.max);
+    printf("[Lever]\n");
+    printf("  %s, raw %d-%d.\n",
+            geki_cfg->lever.invert ? "invert" : "normal",
+            geki_cfg->lever.min, geki_cfg->lever.max);
 }
 
 static void disp_sound()
@@ -95,7 +61,7 @@ static void disp_aime()
 
 void handle_display(int argc, char *argv[])
 {
-    const char *usage = "Usage: display [light|sound|hid|gimbal|aime]\n";
+    const char *usage = "Usage: display [light|sound|hid|lever|aime]\n";
     if (argc > 1) {
         printf(usage);
         return;
@@ -103,20 +69,20 @@ void handle_display(int argc, char *argv[])
 
     if (argc == 0) {
         disp_light();
-        disp_gimbal();
+        disp_lever();
         disp_sound();
         disp_hid();
         disp_aime();
         return;
     }
 
-    const char *choices[] = {"light", "gimbal", "sound", "hid", "aime"};
+    const char *choices[] = {"light", "lever", "sound", "hid", "aime"};
     switch (cli_match_prefix(choices, count_of(choices), argv[0])) {
         case 0:
             disp_light();
             break;
         case 1:
-            disp_gimbal();
+            disp_lever();
             break;
         case 2:
             disp_sound();
@@ -198,7 +164,7 @@ static void calibrate_range(uint32_t seconds)
     uint64_t start = time_us_64();
 
     while (time_us_64() - start < seconds * 1000000) {
-        uint16_t val = gimbal_raw();
+        uint16_t val = lever_raw();
         printf("%4d\n", val);
         if (val < mins) {
             mins -= (mins - val) / 2;
@@ -208,13 +174,13 @@ static void calibrate_range(uint32_t seconds)
         sleep_ms(7);
     }
 
-    geki_cfg->gimbal.min = mins;
-    geki_cfg->gimbal.max = maxs;
+    geki_cfg->lever.min = mins;
+    geki_cfg->lever.max = maxs;
 }
 
-static void gimbal_calibrate()
+static void lever_calibrate()
 {
-    printf("Slowly move the stick in full range.\n");
+    printf("Slowly swing the lever in full range.\n");
     printf("Now calibrating ...");
     fflush(stdout);
 
@@ -222,9 +188,9 @@ static void gimbal_calibrate()
     printf(" done.\n");
 }
 
-static void gimbal_invert(const char *param)
+static void lever_invert(const char *param)
 {
-    const char *usage = "Usage: gimbal invert <on|off>\n";
+    const char *usage = "Usage: lever invert <on|off>\n";
 
     int invert = cli_match_prefix((const char *[]){"off", "on"}, 2, param);
     if (invert < 0) {
@@ -234,125 +200,33 @@ static void gimbal_invert(const char *param)
 
     printf("param:%s, invert:%d\n", param, invert);
 
-    geki_cfg->gimbal.invert = invert;
+    geki_cfg->lever.invert = invert;
 }
 
-static void gimbal_analog(const char *param)
+static void handle_lever(int argc, char *argv[])
 {
-    const char *usage = "Usage: gimbal analog <on|off>\n";
-    int analog = cli_match_prefix((const char *[]){"off", "on"}, 2, param);
-    if (analog < 0) {
-        printf(usage);
-        return;
-    }
+    const char *usage = "Usage: lever calibrate\n"
+                        "       lever invert <on|off>\n";
 
-    geki_cfg->gimbal.analog = analog;
-}
-
-static void handle_gimbal(int argc, char *argv[])
-{
-    const char *usage = "Usage: gimbal calibrate\n"
-                        "       gimbal invert <on|off>\n"
-                        "       gimbal analog <on|off>\n";
     if (argc == 1) {
         if (strncasecmp(argv[0], "calibrate", strlen(argv[0])) != 0) {
             printf(usage);
             return;
         }
-        gimbal_calibrate();
+        lever_calibrate();
     } else if (argc == 2) {
-        int op = cli_match_prefix((const char *[]){"invert", "analog"}, 2, argv[0]);
-        if (op == 0) {
-            gimbal_invert(argv[1]);
-        } else if (op == 1) {
-            gimbal_analog(argv[1]);
-        } else {
+        if (strncasecmp(argv[0], "invert", strlen(argv[0])) != 0) {
             printf(usage);
             return;
         }
+        lever_invert(argv[1]);
     } else {
         printf(usage);
         return;
     }
 
     config_changed();
-    disp_gimbal();
-}
-
-static bool extract_color(rgb_hsv_t *color, char *argv[4])
-{
-    int rgb_hsv = cli_match_prefix((const char *[]){"rgb", "hsv"}, 2, argv[0]);
-    if (rgb_hsv < 0) {
-        return false;
-    }
-    color->rgb_hsv = rgb_hsv;
-
-    for (int i = 0; i < 3; i++) {
-        int v = cli_extract_non_neg_int(argv[1 + i], 0);
-        if ((v < 0) || (v > 255)) {
-            return false;
-        }
-        color->val[i] = v;
-    }
-
-    return true;
-}
-
-static void handle_color(int argc, char *argv[])
-{
-    const char *usage = "Usage: color <name> [left|right] <rgb|hsv> <0..255> <0..255> <0..255>\n"
-                        "  name: base0 base1 button boost steer aux_on aux_off\n";
-    if ((argc != 5) && (argc != 6)) {
-        printf(usage);
-        return;
-    }
-
-    rgb_hsv_t *names[] = {
-        &geki_cfg->light.aux_on,
-        &geki_cfg->light.aux_off,
-        geki_cfg->light.base[0],
-        geki_cfg->light.base[1],
-        geki_cfg->light.button,
-        geki_cfg->light.boost,
-        geki_cfg->light.steer,
-    };
-    const char *choices[] = {"aux_on", "aux_off", "base0", "base1", "button", "boost", "steer"};
-    static_assert(count_of(choices) == count_of(names));
-
-    int name = cli_match_prefix(choices, count_of(choices), argv[0]);
-    if (name < 0) {
-        printf(usage);
-        return;
-    }
-
-    bool left = true;
-    bool right = true;
-    if (argc == 6) {
-        int left_right = cli_match_prefix((const char *[]){"left", "right"}, 2, argv[1]);
-        if (left_right < 0) {
-            printf(usage);
-            return;
-        }
-        left = (left_right == 0);
-        right = (left_right == 1);
-    }
-
-    rgb_hsv_t color;
-    if (!extract_color(&color, argv + argc - 4)) {
-        printf(usage);
-        return;
-    }
-
-    rgb_hsv_t *target = names[name];
-    if (left) {
-        target[0] = color;
-    }
-    if ((name >= 2) && right) {
-        target[1] = color;
-    }
-
-    config_changed();
-    disp_light();
+    disp_lever();
 }
 
 static void handle_save()
@@ -458,9 +332,8 @@ void commands_init()
 {
     cli_register("display", handle_display, "Display all config.");
     cli_register("level", handle_level, "Set LED brightness level.");
-    cli_register("color", handle_color, "Set LED color.");
     cli_register("hid", handle_hid, "Set HID mode.");
-    cli_register("gimbal", handle_gimbal, "Calibrate the gimbals.");
+    cli_register("lever", handle_lever, "Lever related settings.");
     cli_register("volume", handle_volume, "Sound feedback volume settings.");
     cli_register("save", handle_save, "Save config to flash.");
     cli_register("factory", handle_factory_reset, "Reset everything to default.");

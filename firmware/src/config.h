@@ -19,16 +19,10 @@ typedef struct __attribute__((packed)) {
         uint16_t min;
         uint16_t max;
         uint8_t invert:1;
-        uint8_t threshold:7;
-        uint8_t analog:1;
-    } gimbal;
+        uint8_t reserved:7;
+    } lever;
     struct {
-        rgb_hsv_t base[2][2];
-        rgb_hsv_t button[2];
-        rgb_hsv_t boost[2];
-        rgb_hsv_t steer[2];
-        rgb_hsv_t aux_on;
-        rgb_hsv_t aux_off;
+        rgb_hsv_t colors[12];
         uint8_t level;
         uint8_t reserved[15];
     } light;

@@ -1,10 +1,10 @@
 /*
- * Left and Right Gimbal Inputs
+ * Lever Input
  * WHowe <github.com/whowechina>
  * 
  */
 
-#include "gimbal.h"
+#include "lever.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -20,7 +20,7 @@
 #include "config.h"
 #include "board_defs.h"
 
-void gimbal_init()
+void lever_init()
 {
     gpio_init(AXIS_MUX_PIN_A);
     gpio_set_dir(AXIS_MUX_PIN_A, GPIO_OUT);
@@ -33,11 +33,11 @@ void gimbal_init()
     adc_select_input(ADC_CHANNEL);
 }
 
-uint8_t gimbal_read()
+uint8_t lever_read()
 {
-    uint16_t val = gimbal_average();
-    const uint16_t min = geki_cfg->gimbal.min;
-    const uint16_t max = geki_cfg->gimbal.max;
+    uint16_t val = lever_average();
+    const uint16_t min = geki_cfg->lever.min;
+    const uint16_t max = geki_cfg->lever.max;
 
     if (val < min) {
         val = min;
@@ -51,14 +51,14 @@ uint8_t gimbal_read()
     }
     
     uint8_t result = (val - min) * 255 / range;
-    if (geki_cfg->gimbal.invert) {
+    if (geki_cfg->lever.invert) {
         result = 255 - result;
     }
 
     return result;
 }
 
-uint16_t gimbal_raw()
+uint16_t lever_raw()
 {
     static uint16_t last_read = 2048;
     const uint16_t rate_limit = 5;
@@ -75,18 +75,18 @@ uint16_t gimbal_raw()
     return last_read;
 }
 
-#define GIMBAL_AVERAGE_COUNT 32
-uint16_t gimbal_average()
+#define LEVER_AVERAGE_COUNT 32
+uint16_t lever_average()
 {
-    static uint16_t buf[GIMBAL_AVERAGE_COUNT] = {0};
+    static uint16_t buf[LEVER_AVERAGE_COUNT] = {0};
     static int index = 0;
-    index = (index + 1) % GIMBAL_AVERAGE_COUNT;
-    buf[index] = gimbal_raw();
+    index = (index + 1) % LEVER_AVERAGE_COUNT;
+    buf[index] = lever_raw();
 
     uint32_t sum = 0;
-    for (int i = 0; i < GIMBAL_AVERAGE_COUNT; i++) {
+    for (int i = 0; i < LEVER_AVERAGE_COUNT; i++) {
         sum += buf[i];
     }
 
-    return sum / GIMBAL_AVERAGE_COUNT;
+    return sum / LEVER_AVERAGE_COUNT;
 }

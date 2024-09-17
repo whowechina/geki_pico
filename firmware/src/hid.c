@@ -6,7 +6,7 @@
 #include "tusb.h"
 #include "usb_descriptors.h"
 #include "button.h"
-#include "gimbal.h"
+#include "lever.h"
 #include "airkey.h"
 #include "config.h"
 #include "light.h"
@@ -30,7 +30,7 @@ struct __attribute__((packed)) {
 
 static void gen_hid_analogs()
 {
-    hid_joy.adcs[0] = gimbal_read() << 8;
+    hid_joy.adcs[0] = lever_read() << 8;
 }
 static void gen_hid_buttons()
 {
@@ -80,14 +80,14 @@ static void gen_hid_buttons()
 
 static void gen_hid_coins()
 {
-    static uint8_t last_gimbal = 0;
-    uint8_t gimbal = gimbal_read();
+    static uint8_t last_lever = 0;
+    uint8_t lever = lever_read();
     static int dec_count = 0;
 
     if (airkey_get(3)) {
-        if (gimbal < last_gimbal) {
+        if (lever < last_lever) {
             dec_count++;
-        } else if (gimbal > last_gimbal) {
+        } else if (lever > last_lever) {
             dec_count = 0;
         }
 
@@ -97,7 +97,7 @@ static void gen_hid_coins()
         }
     }
 
-    last_gimbal = gimbal;
+    last_lever = lever;
 }
 static void report_usb_hid()
 {
