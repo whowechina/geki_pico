@@ -143,7 +143,7 @@ You need to rotate 135 degrees on Z axis to fit the bed.
 * Assemble Steps
   1. Print out the parts.  
     <img src="doc/lever_print_1.jpg" width="40%"> <img src="doc/lever_print_2.jpg" width="40%"> 
-  2. Stick PTFE/UHMW tape to the sliding surfaces of the fixer and the shaft. Then trim the tape to match the surface shape. If you have some keyboard switch lubricant, apply a tiny bit on the sliding surfaces. Turn the M2*5mm screws into the bearing fixers halfway, don’t tighten it. Some  
+  2. Stick PTFE/UHMW tape to the sliding surfaces of the fixer and the shaft. Then trim the tape to match the surface shape. If you have some keyboard switch lubricant, apply a tiny bit on the sliding surfaces. Turn the M2*5mm screws into the bearing fixers halfway, don’t and never tighten them.  
     <img src="doc/sliding_surface_1.jpg" width="30%"> <img src="doc/sliding_surface_2.jpg" width="30%"> <img src="doc/sliding_surface_3.jpg" width="15%">
   3. Install the 2 bearings on both sides of the shaft and put it in the base, then use M2*16mm screws to fix the two bearing fixers on the base.  
     <img src="doc/install_shaft_1.jpg" width="25%"> <img src="doc/install_shaft_2.jpg" width="25%">
