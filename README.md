@@ -70,7 +70,7 @@ It's CC-NC. So DIY for yourself and for your friend, don't make money from it.
   https://www.nz-electronics.co.nz/products/4pcs-one-sell-3v-5v-supply-voltage-3w-8002-audio-player-power-amplifier-module-board-pcb-mono  
   https://www.ebay.com.au/itm/225481264605
 
-* 2x VL53L0x ToF sensors with optical cover.  
+* 2x VL53L0x ToF sensors with optical cover. Please note that a scratched or dirty cover impacts the sensor's performance.  
   https://kuriosity.sg/products/time-of-flight-tof-distance-sensor-vl53l0x-200cm-with-optical-cover  
   https://www.smart-prototyping.com/VL53L0X-ToF-Distance-Sensor
 
