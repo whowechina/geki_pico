@@ -18,6 +18,7 @@ Special thanks to community projects and developers.
 
 * Robin Grosset (https://github.com/rgrosset/pico-pwm-audio)
 * GEEKiDoS (https://github.com/GEEKiDoS/ongeeki-firmware)
+* Pololu (https://github.com/pololu/vl53l0x-arduino)
 * RP_Silicon_KiCad: https://github.com/HeadBoffin/RP_Silicon_KiCad
 * Type-C: https://github.com/ai03-2725/Type-C.pretty
 
@@ -188,7 +189,9 @@ You need to rotate 135 degrees on Z axis to fit the bed.
 * You need to calibrate the lever by "lever calibrate" command after you flash the firmware.
 * If you feel the lever direction is in correct, you can use "lever invert \<on|off\>" command to change it.
 * Volume of sound feedback can be set by "volume \<0~255\>" command.
-* To emulate IO4 TEST/SERVICE/COIN, you can put your hand at higher position over the right ToF sensor. When you see the WAD lights flashing, the AUX buttons become TEST and SERVICE, swing the lever for "INSERT COINS".
+* ToF sensors have triggering zones, the purple zones are for the WAD, the orange zone is for SHIFT.  
+  <img src="doc/tof_view_1.png" width="40%"> <img src="doc/tof_view_2.png" width="45%">
+* To emulate IO4 TEST/SERVICE/COIN, you can put your hand in SHIFT zone. When you see the WAD lights flashing, the AUX buttons become TEST and SERVICE, and swinging the lever for "INSERT COINS".
 * AIME is on a secondary COM port. You can set mode or toggle virtual AIC function.
 
 ## CAD Source File
