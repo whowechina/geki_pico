@@ -1,4 +1,4 @@
-# Groove Pico - 节奏过山车风格的迷你控制器
+# Geki Pico - 音击风格的迷你控制器
 [Click here for the English version of this guide.](README.md)
 
 <img src="doc/main.jpg" width="80%">
@@ -183,7 +183,7 @@
 * UF2 文件在 `Production\Firmware` 文件夹下。
 * 全新烧录的话，按住 Pico Pi 的 BOOTSEL 按钮，然后连接 USB 到 PC，会出现一个名为 "RPI-RP2" 的磁盘，将 UF2 固件二进制文件拖入即可。Geki Pico 的底部有一个小孔，它正对着 BOOTSEL 按钮。
 * 如果已经烧录了 Geki Pico 固件，后续你可以在命令行使用 "update" 命令进行更新，或者按住至少 4 个按钮后连接 USB 进入更新模式。
-* 要访问命令行，你可以使用 Web 串口终端工具来连接到 Groove Pico 提供的 USB 串口。（提醒："?" 命令可以查看帮助）  
+* 要访问命令行，你可以使用 Web 串口终端工具来连接到 Geki Pico 提供的 USB 串口。（提醒："?" 命令可以查看帮助）  
   https://googlechromelabs.github.io/serial-terminal/
 
 ### 使用
