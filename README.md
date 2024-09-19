@@ -62,9 +62,9 @@ It's CC-NC. So DIY for yourself and for your friend, don't make money from it.
 * 1x Rasberry Pico Pi Pico or pin-to-pin compatible clones (U1).  
   https://www.raspberrypi.com/products/raspberry-pi-pico
 * 1x USB Type-C socket (918-418K2023S40001 or KH-TYPE-C-16P)
-* 35x WS2812B-4020 side-facing RGB LEDs for the circular gimbal daughter PCBs (D2-D36). Be careful with the orientation when soldering: D2 to D4 and D34 to D36 should be facing sideways, while the others should be facing up.  
+* 35x WS2812B-4020 side-facing RGB LEDs (D2-D36). Be careful with the orientation when soldering: D2 to D4 and D34 to D36 should be facing sideways, while the others should be facing up.  
   https://www.lcsc.com/product-detail/Light-Emitting-Diodes-LED_Worldsemi-WS2812B-4020_C965557.html
-* 2x WS2812B-3528 RGB LEDs for the main PCB (D1, D37).
+* 2x WS2812B-3528 RGB LEDs (D1, D37).
 * 2x 8002A audio mini amplifier board (AMP1, AMP2), or you can use discrete components following the schematics (R4, R5, R8, R9, C9 ~ 12).  
   <img src="doc/8002a.jpg" width="20%">  
   https://www.nz-electronics.co.nz/products/4pcs-one-sell-3v-5v-supply-voltage-3w-8002-audio-player-power-amplifier-module-board-pcb-mono  
@@ -99,7 +99,7 @@ It's CC-NC. So DIY for yourself and for your friend, don't make money from it.
 * If you're using 8002A boards, leave R4, R5, R8, R9, C9 ~ 12, U3, U4 empty.
 * Leave U2 empty, it only provides placebo effect for better ADC reference voltage.
 
-* This is how it looks after soldering. Please note that the two circular daughter PCBs are fully wired, so you can test them before cutting them off.  
+* This is how it looks after soldering.  
   <img src="doc/pcb_solder_1.png" width="90%">  
   <img src="doc/pcb_solder_2.png" width="90%">
 * Becareful of 2 pin holes. It's a common oversight to either forget to solder them or to leave air bubbles during the process. To avoid this, solder slowly from one side of the hole, using minimal solder wire and a generous amount of flux.  
@@ -174,7 +174,7 @@ You need to rotate 135 degrees on Z axis to fit the bed.
     <img src="doc/almost_done.jpg" width="80%">
   11. Now it's the perfect chance to adjust the lever resistance. Slowly and gently turn the M2 screws to adjust the tension on the sliding surface. You may need to turn all the screws evenly.
   12. Put the support part on the bottom part, then put the top part on the support part.
-  13. Align these parts and use M3\*20mm screws to fix them together. You may need to carefully adjust the position of the ToF sensors so the IR covers fit into the windows on the support part.
+  13. Align these parts and use M3\*20mm screws to fix them together. You may need to carefully adjust the position of the ToF sensors so the IR cover (or the tiny sensor chip) fit into the windows on the support part.
   14. Finally screw the lever handle into the lever shaft.  
     <img src="doc/finally_done.jpg" width="80%">
 
