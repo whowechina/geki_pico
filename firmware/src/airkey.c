@@ -34,8 +34,8 @@ static struct {
     uint16_t out_low;
     uint16_t out_high;
 } key_defs[] = {
-    { 0, 50, 200, 30, 220 },
-    { 1, 50, 200, 30, 220 },
+    { 0, 50, 200, 20, 230 },
+    { 1, 50, 200, 20, 230 },
     { 0, 300, 400, 280, 430 },
     { 1, 300, 400, 280, 430 }
 };
@@ -77,9 +77,9 @@ void airkey_init()
             tof_models[i] = TOF_VL53L1X;
             tof_init_ok[i] = vl53l1x_init_tof();
 
+            vl53l1x_setROISize(4, 4);
             vl53l1x_setDistanceMode(Short);
             vl53l1x_setMeasurementTimingBudget(20000);
-
             vl53l1x_startContinuous(20);
         } else {
             tof_models[i] = 0;
@@ -92,7 +92,7 @@ static bool readings[AIRKEY_NUM];
 
 static void print_tof(const char *name, uint16_t mm)
 {
-    //printf("\t%s: %3d", name, mm > 1000 ? 0 : mm);
+    printf("\t%s: %3d", name, mm > 1000 ? 0 : mm);
 }
 
 static void tof_read()
