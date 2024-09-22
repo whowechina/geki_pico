@@ -25,6 +25,7 @@ static i2c_inst_t *tof_ports[] = TOF_PORT_DEF;
 #define TOF_NUM (count_of(tof_ports))
 enum { TOF_VL53L0X = 1, TOF_VL53L1X = 2 };
 uint8_t tof_models[TOF_NUM] = { 0 };
+bool tof_init_ok[TOF_NUM] = { 0 };
 
 static struct {
     uint8_t port_id;
@@ -70,11 +71,15 @@ void airkey_init()
 
         if (vl53l0x_is_present()) {
             tof_models[i] = TOF_VL53L0X;
-            vl53l0x_init_tof();
+            tof_init_ok[i] = vl53l0x_init_tof();
             vl53l0x_start_continuous();
         } else if (vl53l1x_is_present()) {
             tof_models[i] = TOF_VL53L1X;
-            vl53l1x_init_tof();
+            tof_init_ok[i] = vl53l1x_init_tof();
+
+            vl53l1x_setDistanceMode(Short);
+            vl53l1x_setMeasurementTimingBudget(20000);
+
             vl53l1x_startContinuous(20);
         } else {
             tof_models[i] = 0;
@@ -85,17 +90,25 @@ void airkey_init()
 static uint16_t tof_dist[count_of(tof_ports)];
 static bool readings[AIRKEY_NUM];
 
+static void print_tof(const char *name, uint16_t mm)
+{
+    //printf("\t%s: %3d", name, mm > 1000 ? 0 : mm);
+}
+
 static void tof_read()
 {
     for (int i = 0; i < TOF_NUM; i++) {
         if (tof_models[i] == TOF_VL53L0X) {
             vl53l0x_use(i);
             tof_dist[i] = readRangeContinuousMillimeters();
+            print_tof("L0x", tof_dist[i]);
         } else if (tof_models[i] == TOF_VL53L1X) {
             vl53l1x_use(i);
             tof_dist[i] = vl53l1x_readContinuousMillimeters();
+            print_tof("L1x", tof_dist[i]);
         }
     }
+    printf("\n");
 }
 
 #define BETWEEN(x, a, b) (((x) >= (a)) && ((x) <= (b)))

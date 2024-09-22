@@ -1291,10 +1291,6 @@ static struct {
     i2c_inst_t *port;
     uint8_t addr;
 
-    uint16_t io_timeout;
-    bool did_timeout;
-    uint16_t timeout_start_ms;
-
     uint16_t fast_osc_frequency;
     uint16_t osc_calibrate_val;
 
@@ -1415,9 +1411,6 @@ bool vl53l1x_is_present()
 // VL53L1_StaticInit().
 bool vl53l1x_init_tof()
 {
-    // check model ID and module type registers (values specified in datasheet)
-    if (read_reg16(IDENTIFICATION__MODEL_ID) != 0xEACC) { return false; }
-
     // VL53L1_software_reset() begin
 
     write_reg(SOFT_RESET, 0x00);
@@ -1445,7 +1438,7 @@ bool vl53l1x_init_tof()
     // VL53L1_DataInit() begin
 
     // sensor uses 1V8 mode for I/O by default; switch to 2V8 mode
-      write_reg(PAD_I2C_HV__EXTSUP_CONFIG, read_reg(PAD_I2C_HV__EXTSUP_CONFIG) | 0x01);
+    write_reg(PAD_I2C_HV__EXTSUP_CONFIG, read_reg(PAD_I2C_HV__EXTSUP_CONFIG) | 0x01);
 
     // store oscillator info for later use
     INSTANCE.fast_osc_frequency = read_reg16(OSC_MEASURED__FAST_OSC__FREQUENCY);
@@ -1816,6 +1809,11 @@ void vl53l1x_stopContinuous()
     // VL53L1_low_power_auto_data_stop_range() end
 }
 
+static bool dataReady()
+{
+    return (read_reg(GPIO__TIO_HV_STATUS) & 0x01) == 0;
+}
+
 // Returns a range reading in millimeters when continuous mode is active. If
 // blocking is true (the default), this function waits for a new measurement to
 // be available. If blocking is false, it will try to return data immediately.
@@ -1823,20 +1821,12 @@ void vl53l1x_stopContinuous()
 // measurement)
 uint16_t vl53l1x_readContinuousMillimeters()
 {
-/*
-    if (blocking)
-    {
-      startTimeout();
-      while (!dataReady())
-      {
-        if (checkTimeoutExpired())
-        {
-          did_timeout = true;
-          return 0;
-        }
-      }
+    static uint16_t cached = 0;
+
+    while (!dataReady()) {
+        return cached;
     }
-*/
+
     readResults();
 
     if (!INSTANCE.calibrated) {
@@ -1848,7 +1838,8 @@ uint16_t vl53l1x_readContinuousMillimeters()
     getRangingData();
     write_reg(SYSTEM__INTERRUPT_CLEAR, 0x01); // sys_interrupt_clear_range
 
-    return INSTANCE.result.range_mm;
+    cached = INSTANCE.result.range_mm;
+    return cached;
 }
 
 // "Setup ranges after the first one in low power auto mode by turning off
