@@ -23,6 +23,8 @@
 
 static i2c_inst_t *tof_ports[] = TOF_PORT_DEF;
 #define TOF_NUM (count_of(tof_ports))
+enum { TOF_VL53L0X = 1, TOF_VL53L1X = 2 };
+uint8_t tof_models[TOF_NUM] = { 0 };
 
 static struct {
     uint8_t port_id;
@@ -62,9 +64,21 @@ void airkey_init()
         gpio_pull_up(sda);
 
         vl53l0x_init(i, tof_ports[i], 0);
+        vl53l1x_init(i, tof_ports[i], 0);
         vl53l0x_use(i);
-        vl53l0x_init_tof();
-        vl53l0x_start_continuous();
+        vl53l1x_use(i);
+
+        if (vl53l0x_is_present()) {
+            tof_models[i] = TOF_VL53L0X;
+            vl53l0x_init_tof();
+            vl53l0x_start_continuous();
+        } else if (vl53l1x_is_present()) {
+            tof_models[i] = TOF_VL53L1X;
+            vl53l1x_init_tof();
+            vl53l1x_startContinuous(20);
+        } else {
+            tof_models[i] = 0;
+        }
     }
 }
 
@@ -74,8 +88,13 @@ static bool readings[AIRKEY_NUM];
 static void tof_read()
 {
     for (int i = 0; i < TOF_NUM; i++) {
-        vl53l0x_use(i);
-        tof_dist[i] = readRangeContinuousMillimeters(i);
+        if (tof_models[i] == TOF_VL53L0X) {
+            vl53l0x_use(i);
+            tof_dist[i] = readRangeContinuousMillimeters();
+        } else if (tof_models[i] == TOF_VL53L1X) {
+            vl53l1x_use(i);
+            tof_dist[i] = vl53l1x_readContinuousMillimeters();
+        }
     }
 }
 
@@ -116,7 +135,31 @@ unsigned airkey_num()
     return AIRKEY_NUM;
 }
 
-bool airkey_get(int id)
+bool airkey_get(unsigned id)
 {
+    if (id >= AIRKEY_NUM) {
+        return false;
+    }
+
     return readings[id];
+}
+
+unsigned airkey_tof_num()
+{
+    return TOF_NUM;
+}
+
+const char *airkey_tof_model(unsigned tof_id)
+{
+    if (tof_id >= TOF_NUM) {
+        return "Unknown";
+    }
+
+    if (tof_models[tof_id] == TOF_VL53L0X) {
+        return "VL53L0X";
+    } else if (tof_models[tof_id] == TOF_VL53L1X) {
+        return "VL53L1X";
+    } else {
+        return "Unknown";
+    }
 }

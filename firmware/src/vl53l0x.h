@@ -13,8 +13,8 @@
 
 #include "hardware/i2c.h"
 
-void vl53l0x_init(unsigned index, i2c_inst_t *i2c_port, uint8_t i2c_addr);
-void vl53l0x_use(unsigned index);
+void vl53l0x_init(unsigned instance, i2c_inst_t *i2c_port, uint8_t i2c_addr);
+void vl53l0x_use(unsigned instance);
 bool vl53l0x_is_present();
 bool vl53l0x_init_tof();
 

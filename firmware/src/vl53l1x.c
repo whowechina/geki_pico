@@ -1338,21 +1338,6 @@ static uint32_t calcMacroPeriod(uint8_t vcsel_period);
 
 // Convert count rate from fixed point 9.7 format to float
 static float countRateFixedToFloat(uint16_t count_rate_fixed);
-  
-void vl53l1x_init(unsigned index, i2c_inst_t *i2c_port, uint8_t i2c_addr)
-{
-    if (index < INSTANCE_NUM) {
-        instances[index].port = i2c_port;
-        instances[index].addr = i2c_addr ? i2c_addr : VL53L1X_DEF_ADDR;
-    }
-}
-
-void vl53l1x_use(unsigned index)
-{
-    if (index < INSTANCE_NUM) {
-        current_instance = index;
-    }
-}
 
 static void write_reg(uint16_t reg, uint8_t value)
 {
@@ -1404,6 +1389,26 @@ static void read_many(uint16_t reg, uint8_t *dst, uint8_t len)
                              true, time_us_64() + IO_TIMEOUT_US);
     i2c_read_blocking_until(I2C_PORT, I2C_ADDR, dst, len,
                             false, time_us_64() + IO_TIMEOUT_US * len);
+}
+
+void vl53l1x_init(unsigned instance, i2c_inst_t *i2c_port, uint8_t i2c_addr)
+{
+    if (instance < INSTANCE_NUM) {
+        instances[instance].port = i2c_port;
+        instances[instance].addr = i2c_addr ? i2c_addr : VL53L1X_DEF_ADDR;
+    }
+}
+
+void vl53l1x_use(unsigned instance)
+{
+    if (instance < INSTANCE_NUM) {
+        current_instance = instance;
+    }
+}
+
+bool vl53l1x_is_present()
+{
+    return read_reg16(IDENTIFICATION__MODEL_ID) == 0xeacc;
 }
 
 // Initialize sensor using settings taken mostly from VL53L1_DataInit() and

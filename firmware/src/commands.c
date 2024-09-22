@@ -18,6 +18,8 @@ extern uint8_t RING_DATA[];
 #include "nfc.h"
 #include "aime.h"
 
+#include "airkey.h"
+
 #include "usb_descriptors.h"
 
 #define SENSE_LIMIT_MAX 9
@@ -51,6 +53,15 @@ static void disp_hid()
            geki_cfg->hid.nkro ? "on" : "off" );
 }
 
+static void disp_tof()
+{
+    printf("[TOF]\n");
+    for (int i = 0; i < airkey_tof_num(); i++) {
+        printf("  TOF %d: %s", i, airkey_tof_model(i));
+    }
+    printf("\n");
+}
+
 static void disp_aime()
 {
     printf("[AIME]\n");
@@ -61,7 +72,7 @@ static void disp_aime()
 
 void handle_display(int argc, char *argv[])
 {
-    const char *usage = "Usage: display [light|sound|hid|lever|aime]\n";
+    const char *usage = "Usage: display [light|sound|hid|lever|tof|aime]\n";
     if (argc > 1) {
         printf(usage);
         return;
@@ -72,11 +83,12 @@ void handle_display(int argc, char *argv[])
         disp_lever();
         disp_sound();
         disp_hid();
+        disp_tof();
         disp_aime();
         return;
     }
 
-    const char *choices[] = {"light", "lever", "sound", "hid", "aime"};
+    const char *choices[] = {"light", "lever", "sound", "hid", "tof", "aime"};
     switch (cli_match_prefix(choices, count_of(choices), argv[0])) {
         case 0:
             disp_light();
@@ -91,6 +103,9 @@ void handle_display(int argc, char *argv[])
             disp_hid();
             break;
         case 4:
+            disp_tof();
+            break;
+        case 5:
             disp_aime();
             break;
         default:

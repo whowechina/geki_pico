@@ -216,18 +216,18 @@ const uint16_t reg_tuning[] = { 80,
         0xff00, 0x8001, 0x01f8, 0xff01, 0x8e01, 0x0001, 0xff00, 0x8000,
     };
 
-void vl53l0x_init(unsigned index, i2c_inst_t *i2c_port, uint8_t i2c_addr)
+void vl53l0x_init(unsigned instance, i2c_inst_t *i2c_port, uint8_t i2c_addr)
 {
-    if (index < INSTANCE_NUM) {
-        instances[index].port = i2c_port;
-        instances[index].addr = i2c_addr ? i2c_addr : VL53L0X_DEF_ADDR;
+    if (instance < INSTANCE_NUM) {
+        instances[instance].port = i2c_port;
+        instances[instance].addr = i2c_addr ? i2c_addr : VL53L0X_DEF_ADDR;
     }
 }
 
-void vl53l0x_use(unsigned index)
+void vl53l0x_use(unsigned instance)
 {
-    if (index < INSTANCE_NUM) {
-        current_instance = index;
+    if (instance < INSTANCE_NUM) {
+        current_instance = instance;
     }
 }
 
