@@ -2,7 +2,7 @@
  * VL53L0X Distance measurement sensor
  * WHowe <github.com/whowechina>
  * 
- * Most of this VL53L0X code is from https://github.com/pololu/vl53l0x-arduino
+ * Most of this code is from https://github.com/pololu/vl53l0x-arduino
  */
 
 #ifndef VL53L0X_H

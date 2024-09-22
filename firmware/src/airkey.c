@@ -16,6 +16,8 @@
 #include "hardware/i2c.h"
 
 #include "vl53l0x.h"
+#include "vl53l1x.h"
+
 #include "config.h"
 #include "board_defs.h"
 

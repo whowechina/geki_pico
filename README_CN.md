@@ -17,7 +17,7 @@
 特别感谢社区项目和开发者的帮助。
 * Robin Grosset (https://github.com/rgrosset/pico-pwm-audio)
 * GEEKiDoS (https://github.com/GEEKiDoS/ongeeki-firmware)
-* Pololu (https://github.com/pololu/vl53l0x-arduino)
+* Pololu (https://github.com/pololu/vl53l0x-arduino, https://github.com/pololu/vl53l1x-arduino)
 * RP_Silicon_KiCad: https://github.com/HeadBoffin/RP_Silicon_KiCad
 * Type-C: https://github.com/ai03-2725/Type-C.pretty
 
