@@ -1821,10 +1821,8 @@ static bool dataReady()
 // measurement)
 uint16_t vl53l1x_readContinuousMillimeters()
 {
-    static uint16_t cached = 0;
-
     while (!dataReady()) {
-        return cached;
+        return INSTANCE.result.range_mm;
     }
 
     readResults();
@@ -1838,8 +1836,7 @@ uint16_t vl53l1x_readContinuousMillimeters()
     getRangingData();
     write_reg(SYSTEM__INTERRUPT_CLEAR, 0x01); // sys_interrupt_clear_range
 
-    cached = INSTANCE.result.range_mm;
-    return cached;
+    return INSTANCE.result.range_mm;
 }
 
 // "Setup ranges after the first one in low power auto mode by turning off
