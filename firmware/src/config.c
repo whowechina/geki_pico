@@ -19,6 +19,10 @@ static geki_cfg_t default_cfg = {
         .level = 128,
         .reserved = { 0 },
     },
+    .tof = {
+        .roi = 12,
+        .reserved = { 0 },
+    },
     .sound = {
         .volume = 127,
         .reserved = { 0 },

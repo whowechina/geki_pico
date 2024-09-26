@@ -18,4 +18,6 @@ bool airkey_get(unsigned id);
 unsigned airkey_tof_num();
 const char *airkey_tof_model();
 
+void airkey_tof_update_roi();
+
 #endif

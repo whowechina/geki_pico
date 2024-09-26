@@ -60,6 +60,8 @@ static void disp_tof()
         printf("  TOF %d: %s", i, airkey_tof_model(i));
     }
     printf("\n");
+    printf("  ROI: %d (only for VL53L1X)", geki_cfg->tof.roi);
+    printf("\n");
 }
 
 static void disp_aime()
@@ -244,6 +246,28 @@ static void handle_lever(int argc, char *argv[])
     disp_lever();
 }
 
+static void handle_tof(int argc, char *argv[])
+{
+    const char *usage = "Usage: tof roi <4..16>\n";
+
+    if ((argc != 2) || (strncasecmp(argv[0], "roi", strlen(argv[0])) != 0)) {
+        printf(usage);
+        return;
+    }
+
+    int roi = cli_extract_non_neg_int(argv[1], 0);
+    if ((roi < 4) || (roi > 16)) {
+        printf(usage);
+        return;
+    }
+
+    geki_cfg->tof.roi = roi;
+    airkey_tof_update_roi();
+
+    config_changed();
+    disp_tof();
+}
+
 static void handle_save()
 {
     save_request(true);
@@ -349,6 +373,7 @@ void commands_init()
     cli_register("level", handle_level, "Set LED brightness level.");
     cli_register("hid", handle_hid, "Set HID mode.");
     cli_register("lever", handle_lever, "Lever related settings.");
+    cli_register("tof", handle_tof, "Tof tweaks.");
     cli_register("volume", handle_volume, "Sound feedback volume settings.");
     cli_register("save", handle_save, "Save config to flash.");
     cli_register("factory", handle_factory_reset, "Reset everything to default.");

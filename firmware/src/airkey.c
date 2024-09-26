@@ -77,7 +77,7 @@ void airkey_init()
             tof_models[i] = TOF_VL53L1X;
             tof_init_ok[i] = vl53l1x_init_tof();
 
-            vl53l1x_setROISize(4, 4);
+            vl53l1x_setROISize(geki_cfg->tof.roi, geki_cfg->tof.roi);
             vl53l1x_setDistanceMode(Short);
             vl53l1x_setMeasurementTimingBudget(20000);
             vl53l1x_startContinuous(20);
@@ -92,7 +92,7 @@ static bool readings[AIRKEY_NUM];
 
 static void print_tof(const char *name, uint16_t mm)
 {
-    printf("\t%s: %3d", name, mm > 1000 ? 0 : mm);
+    //printf("\t%s: %3d", name, mm > 1000 ? 0 : mm);
 }
 
 static void tof_read()
@@ -108,7 +108,7 @@ static void tof_read()
             print_tof("L1x", tof_dist[i]);
         }
     }
-    printf("\n");
+    //printf("\n");
 }
 
 #define BETWEEN(x, a, b) (((x) >= (a)) && ((x) <= (b)))
@@ -174,5 +174,15 @@ const char *airkey_tof_model(unsigned tof_id)
         return "VL53L1X";
     } else {
         return "Unknown";
+    }
+}
+
+void airkey_tof_update_roi()
+{
+    for (int i = 0; i < TOF_NUM; i++) {
+        if (tof_models[i] == TOF_VL53L1X) {
+            vl53l1x_use(i);
+            vl53l1x_setROISize(geki_cfg->tof.roi, geki_cfg->tof.roi);
+        }
     }
 }

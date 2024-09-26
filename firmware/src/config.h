@@ -31,6 +31,10 @@ typedef struct __attribute__((packed)) {
         uint8_t reserved[3];
     } sound;
     struct {
+        uint8_t roi;
+        uint8_t reserved[7];
+    } tof;
+    struct {
         uint8_t joy : 4;
         uint8_t nkro : 4;
     } hid;

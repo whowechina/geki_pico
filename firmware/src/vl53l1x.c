@@ -1686,7 +1686,7 @@ uint32_t vl53l1x_getMeasurementTimingBudget()
 // reading that document carefully.
 void vl53l1x_setROISize(uint8_t width, uint8_t height)
 {
-    if ( width > 16) {
+    if (width > 16) {
         width = 16;
     }
     if (height > 16) {
