@@ -69,9 +69,10 @@
   https://www.nz-electronics.co.nz/products/4pcs-one-sell-3v-5v-supply-voltage-3w-8002-audio-player-power-amplifier-module-board-pcb-mono  
   https://www.ebay.com.au/itm/225481264605
 
-* 2x VL53L0x ToF 距离传感器, 最好也把光学盖片买上。  
+* 2x VL53L0x 或者 VL53L1x ToF 距离传感器, 最好也把光学盖片买上。VL53L1x 的性能更好，但是价格也更高。  
   https://kuriosity.sg/products/time-of-flight-tof-distance-sensor-vl53l0x-200cm-with-optical-cover  
-  https://www.smart-prototyping.com/VL53L0X-ToF-Distance-Sensor
+  https://www.smart-prototyping.com/VL53L0X-ToF-Distance-Sensor  
+  https://www.amazon.com/Soaying-VL53L1X-Distance-Measurement-Extension/dp/B0CTHC43SV
 
 * 2x 小扬声器，不要大于 20mm\*20mm\*5mm, 8ohm 或者相近的阻抗, (SPK1, SPK2), 买不到的话也可以从旧的电子玩具里拆。  
   可以在搜索引擎里试试搜索 “贴片 扬声器 1540”。
