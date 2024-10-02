@@ -133,8 +133,8 @@
 * 需要的零件
   * PTFE 或者 UHMW 胶带, >=10mm 宽度, >=0.3mm (0.5mm 最好) 厚度, 单面自粘。  
     https://www.3m.com/3M/en_US/p/d/b40072069/
-  * 2x 6700zz 轴承 (10mm 内径, 15mm 外径, 4mm 厚度).  
-    https://www.amazon.com/Bearing-10x15x4-6700ZZ-MOCHU-Bearings/dp/B081Z6419H
+  * 2x MR117ZZ 轴承 (7mm 内径, 11mm 外径, 3mm 厚度)，买便宜的就行，一样好用。  
+    https://www.amazon.com/s?k=mr117zz
   * 1x 双头螺栓，M4 螺纹，80mm 总长度。  
     https://www.amazon.com/METALLIXITY-Double-Screws-Stainless-Threaded/dp/B0B7BX3CYH
   * 1x **5mm\*2mm** 或者 **5mm\*3mm** 圆形小磁铁，必须是径向充磁的，也就是磁铁两极是在圆弧面上。  

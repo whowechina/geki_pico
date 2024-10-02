@@ -133,8 +133,8 @@ You need to rotate 135 degrees on Z axis to fit the bed.
 * Required components
   * PTFE or UHMW Film Tape, >=10mm wide, >=0.3mm (0.5mm is best) thick, one-side adhesive.  
     https://www.3m.com/3M/en_US/p/d/b40072069/
-  * 2x 6700zz bearings (10mm inner diameter, 15mm outer diameter, 4mm thickness).  
-    https://www.amazon.com/Bearing-10x15x4-6700ZZ-MOCHU-Bearings/dp/B081Z6419H
+  * 2x MR117ZZ bearings (7mm inner diameter, 11mm outer diameter, 3mm thickness), go with cheap ones, they work just as great.  
+    https://www.amazon.com/s?k=mr117zz
   * 1x Double-ended stud screws, M4 thread, 80mm length.  
     https://www.amazon.com/METALLIXITY-Double-Screws-Stainless-Threaded/dp/B0B7BX3CYH
   * 1x **5mm\*2mm** or **5mm\*3mm** magnet, MUST be radially/diametrically magnetized (N-S poles on the curved side).  
