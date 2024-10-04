@@ -114,7 +114,7 @@ It's CC-NC. So DIY for yourself and for your friend, don't make money from it. A
 
 #### Lever Parts
 * Lever Base: `Production\3DPrint\geki_pico_lever_base.stl`, white.
-* Lever Shaft: `Production\3DPrint\geki_pico_lever_shaft.stl`, white.
+* Lever Shaft: `Production\3DPrint\geki_pico_lever_shaft_*mm.stl`, white, choose the one that matches your magnet diameter.
 * 2x Lever Fixer: `Production\3DPrint\geki_pico_lever_fixer.stl`, white.
 * Lever Handle: `Production\3DPrint\geki_pico_lever_handle.stl`, red.
 
@@ -137,7 +137,7 @@ You need to rotate 135 degrees on Z axis to fit the bed.
     https://www.amazon.com/s?k=mr117zz
   * 1x Double-ended stud screws, M4 thread, 80mm length.  
     https://www.amazon.com/METALLIXITY-Double-Screws-Stainless-Threaded/dp/B0B7BX3CYH
-  * 1x **5mm\*2mm** or **5mm\*3mm** magnet, MUST be radially/diametrically magnetized (N-S poles on the curved side).  
+  * 1x round magnet with **5mm** or **6mm** diameter, **2mm** to **3.5mm** tall, MUST be radially/diametrically magnetized (N-S poles on the curved side).  
     https://wargameportal.com/products/special-diametrically-magnetized-50pcs-5mm-x-2mm-3-16-x-1-16-disc-magnets?variant=49014932209942
   * 6x **M2*5mm regular screws** for resistance adjustment.
   * 4x **M2*16mm regular screws** for fixing the bearings.

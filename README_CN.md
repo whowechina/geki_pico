@@ -108,15 +108,15 @@
 
 ### 3D Printing
 * 打印参数
-  * PLA, PETG 都可以.
+  * PLA, PETG 都可以
   * 层高：0.2 毫米
   * 支撑：始终需要
 
 #### 摇杆部分
-* 摇杆底座: `Production\3DPrint\geki_pico_lever_base.stl`, 白色.
-* 摇杆转轴: `Production\3DPrint\geki_pico_lever_shaft.stl`, 白色.
-* 2x 轴承固定器: `Production\3DPrint\geki_pico_lever_fixer.stl`, 白色.
-* 摇杆手柄: `Production\3DPrint\geki_pico_lever_handle.stl`, 红色.
+* 摇杆底座: `Production\3DPrint\geki_pico_lever_base.stl`, 白色。
+* 摇杆转轴: `Production\3DPrint\geki_pico_lever_shaft_*mm.stl`, 白色，根据你的磁铁直径选择合适的文件。
+* 2x 轴承固定器: `Production\3DPrint\geki_pico_lever_fixer.stl`, 白色。
+* 摇杆手柄: `Production\3DPrint\geki_pico_lever_handle.stl`, 红色。
 
 #### 外壳部分
 你需要在 Z 轴上旋转 135 度来适应热床。
@@ -137,7 +137,7 @@
     https://www.amazon.com/s?k=mr117zz
   * 1x 双头螺栓，M4 螺纹，80mm 总长度。  
     https://www.amazon.com/METALLIXITY-Double-Screws-Stainless-Threaded/dp/B0B7BX3CYH
-  * 1x **5mm\*2mm** 或者 **5mm\*3mm** 圆形小磁铁，必须是径向充磁的，也就是磁铁两极是在圆弧面上。  
+  * 1x 圆形小磁铁，直径 **5mm** 或者 **6mm**，厚度 **2mm** 到 **3.5mm**，必须是径向充磁的，也就是磁铁两极是在圆弧面上。  
     https://wargameportal.com/products/special-diametrically-magnetized-50pcs-5mm-x-2mm-3-16-x-1-16-disc-magnets?variant=49014932209942
   * 6x **M2*5mm 螺丝** 用于阻尼调整。
   * 4x **M2*16mm 螺丝** 用于固定轴承。
