@@ -490,7 +490,7 @@
       "plot": "../../Production/PCB/geki_main/",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "geki_main_3d_v11.step",
+      "step": "geki_main_3d_v13.step",
       "svg": "",
       "vrml": "iidx_pico.wrl"
     },

@@ -83,7 +83,8 @@ It's CC-NC. So DIY for yourself and for your friend, don't make money from it. A
   https://www.digikey.com/short/fmm54dzq
 
 * 1x Small 3V to 5V DC-DC step up or up-down converter (U6). Make sure its output is 5V and input range covers 3.3V. If the one you get has different pinout, you need to hand wire it.  
-  https://www.dfrobot.com/product-1766.html
+  https://www.dfrobot.com/product-1766.html  
+  Alternatively, on PCB version v1.3 or later, there's an option for discrete components to replace the DC-DC module. You need an HT7750A in SOT23-5 (SOT25) package, a 22uH or 33uH inductor no larger than 5020, a Schottky diode (SS14, SS24, SS34, etc), and 2x 22uF 1206 capacitors.
 
 * 8x 0603 0.1uF (0.1~1uF all fine) capacitors (C1 to C8), OPTIONAL but strongly recommended.
 * 2x 0603 5.1kohm resistors (R1, R2) for the USB.
