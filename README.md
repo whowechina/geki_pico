@@ -157,7 +157,7 @@ You need to rotate 135 degrees on Z axis to fit the bed.
 ### Assembly
 * Other components needed
   * 4x **M3\*8mm regular screws** for fixing the lever to the bottom.
-  * 8x **M3\*20mm regular screws** for the housing.
+  * 8x **M3\*16mm regular screws** for the housing.
   * Some VHB double-sided tape to fix the speakers and the ToF sensors.
   * Some thin soft wires for the speakers and the ToF sensors.
 
