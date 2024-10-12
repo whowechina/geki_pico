@@ -175,8 +175,8 @@ static void handle_hid(int argc, char *argv[])
 
 static void calibrate_range(uint32_t seconds)
 {
-    uint32_t mins = 2048;
-    uint32_t maxs = 2048;
+    uint32_t mins = lever_raw();
+    uint32_t maxs = lever_raw();
 
     uint64_t start = time_us_64();
 
