@@ -64,8 +64,8 @@ void airkey_init()
         gpio_pull_up(scl);
         gpio_pull_up(sda);
 
-        vl53l0x_init(i, tof_ports[i], 0);
-        vl53l1x_init(i, tof_ports[i], 0);
+        vl53l0x_init(i, tof_ports[i]);
+        vl53l1x_init(i, tof_ports[i]);
         vl53l0x_use(i);
         vl53l1x_use(i);
 

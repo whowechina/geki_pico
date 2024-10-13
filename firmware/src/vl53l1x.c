@@ -1387,12 +1387,21 @@ static void read_many(uint16_t reg, uint8_t *dst, uint8_t len)
                             false, time_us_64() + IO_TIMEOUT_US * len);
 }
 
-void vl53l1x_init(unsigned instance, i2c_inst_t *i2c_port, uint8_t i2c_addr)
+void vl53l1x_init(unsigned instance, i2c_inst_t *i2c_port)
 {
     if (instance < INSTANCE_NUM) {
-        instances[instance].port = i2c_port;
-        instances[instance].addr = i2c_addr ? i2c_addr : VL53L1X_DEF_ADDR;
+        current_instance = instance;
+        INSTANCE.port = i2c_port;
+        INSTANCE.addr = VL53L1X_DEF_ADDR;
     }
+}
+
+bool vl53l1x_change_addr(uint8_t i2c_addr)
+{
+    write_reg(I2C_SLAVE__DEVICE_ADDRESS, i2c_addr);
+    INSTANCE.addr = i2c_addr;
+    read_reg(I2C_SLAVE__DEVICE_ADDRESS); // dummy read
+    return read_reg(I2C_SLAVE__DEVICE_ADDRESS) == I2C_ADDR;
 }
 
 void vl53l1x_use(unsigned instance)
@@ -1421,6 +1430,7 @@ bool vl53l1x_init_tof()
     // call below and the Arduino 101 doesn't seem to handle that well
     sleep_us(1000);
 
+    vl53l1x_change_addr(VL53L1X_DEF_ADDR + 1 + current_instance);
     // VL53L1_poll_for_boot_completion() begin
 
     uint64_t start = time_us_64();

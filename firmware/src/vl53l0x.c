@@ -148,6 +148,7 @@ static int current_instance = 0;
 #define INSTANCE_NUM (sizeof(instances) / sizeof(instances[0]))
 #define I2C_PORT instances[current_instance].port
 #define I2C_ADDR instances[current_instance].addr
+#define INSTANCE instances[current_instance]
 
 static void write_reg(uint8_t reg, uint8_t value)
 {
@@ -216,12 +217,22 @@ const uint16_t reg_tuning[] = { 80,
         0xff00, 0x8001, 0x01f8, 0xff01, 0x8e01, 0x0001, 0xff00, 0x8000,
     };
 
-void vl53l0x_init(unsigned instance, i2c_inst_t *i2c_port, uint8_t i2c_addr)
+void vl53l0x_init(unsigned instance, i2c_inst_t *i2c_port)
 {
     if (instance < INSTANCE_NUM) {
-        instances[instance].port = i2c_port;
-        instances[instance].addr = i2c_addr ? i2c_addr : VL53L0X_DEF_ADDR;
+        current_instance = instance;
+        INSTANCE.port = i2c_port;
+        INSTANCE.addr = VL53L0X_DEF_ADDR;
+        vl53l0x_change_addr(VL53L0X_DEF_ADDR + 1 + instance);
     }
+}
+
+bool vl53l0x_change_addr(uint8_t i2c_addr)
+{
+    write_reg(I2C_SLAVE_DEVICE_ADDRESS, i2c_addr);
+    INSTANCE.addr = i2c_addr;
+    read_reg(I2C_SLAVE_DEVICE_ADDRESS); // Dummy read
+    return read_reg(I2C_SLAVE_DEVICE_ADDRESS) == i2c_addr;
 }
 
 void vl53l0x_use(unsigned instance)
