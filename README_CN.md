@@ -140,14 +140,14 @@
     https://www.amazon.com/METALLIXITY-Double-Screws-Stainless-Threaded/dp/B0B7BX3CYH
   * 1x 圆形小磁铁，直径 **5mm** 或者 **6mm**，厚度 **2mm** 到 **3.5mm**，必须是径向充磁的，也就是磁铁两极是在圆弧面上。  
     https://wargameportal.com/products/special-diametrically-magnetized-50pcs-5mm-x-2mm-3-16-x-1-16-disc-magnets?variant=49014932209942
-  * 6x **M2*5mm 螺丝** 用于阻尼调整。
+  * 6x **M2*6mm 螺丝** 用于阻尼调整。
   * 4x **M2*16mm 螺丝** 用于固定轴承。
-  * 可选: 键轴润滑剂。
+  * 可选: 阻尼脂。
 
 * 组装过程
   1. 打印相关的零件  
     <img src="doc/lever_print_1.jpg" width="40%"> <img src="doc/lever_print_2.jpg" width="40%"> 
-  2. 把 PTFE/UHMW 胶带贴在摇杆和轴的滑动表面上，然后大致修剪成相应的形状。如果你有键盘轴润滑剂，可以在滑动表面涂一丁点。然后把 M2*5mm 螺丝半拧入轴承固定器，注意不要拧紧。  
+  2. 把 PTFE/UHMW 胶带贴在摇杆和轴的滑动表面上，然后大致修剪成相应的形状。如果你有中或中高粘度的阻尼脂，可以在滑动表面涂一丁点。然后把 M2*6mm 螺丝半拧入轴承固定器，注意不要拧紧。  
     <img src="doc/sliding_surface_1.jpg" width="30%"> <img src="doc/sliding_surface_2.jpg" width="30%"> <img src="doc/sliding_surface_3.jpg" width="15%">
   3. 把 2 个轴承固定器固定在底座上，然后用 M2*16mm 螺丝固定轴承。  
     <img src="doc/install_shaft_1.jpg" width="25%"> <img src="doc/install_shaft_2.jpg" width="25%">

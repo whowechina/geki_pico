@@ -140,13 +140,13 @@ You need to rotate 135 degrees on Z axis to fit the bed.
     https://www.amazon.com/METALLIXITY-Double-Screws-Stainless-Threaded/dp/B0B7BX3CYH
   * 1x round magnet with **5mm** or **6mm** diameter, **2mm** to **3.5mm** tall, MUST be radially/diametrically magnetized (N-S poles on the curved side).  
     https://wargameportal.com/products/special-diametrically-magnetized-50pcs-5mm-x-2mm-3-16-x-1-16-disc-magnets?variant=49014932209942
-  * 6x **M2*5mm regular screws** for resistance adjustment.
+  * 6x **M2*6mm regular screws** for resistance adjustment.
   * 4x **M2*16mm regular screws** for fixing the bearings.
-  * Optional: Some keyboard switch lubricant.
+  * Optional: Some damping grease.
 * Assemble Steps
   1. Print out the parts.  
     <img src="doc/lever_print_1.jpg" width="40%"> <img src="doc/lever_print_2.jpg" width="40%"> 
-  2. Stick PTFE/UHMW tape to the sliding surfaces of the fixer and the shaft. Then trim the tape to match the surface shape. If you have some keyboard switch lubricant, apply a tiny bit on the sliding surfaces. Turn the M2*5mm screws into the bearing fixers halfway, don’t and never tighten them.  
+  2. Stick PTFE/UHMW tape to the sliding surfaces of the fixer and the shaft. Then trim the tape to match the surface shape. If you have some damping grease (medium or medium-high stickiness), apply a tiny bit on the sliding surfaces. Turn the M2*6mm screws into the bearing fixers halfway, don’t and never tighten them.  
     <img src="doc/sliding_surface_1.jpg" width="30%"> <img src="doc/sliding_surface_2.jpg" width="30%"> <img src="doc/sliding_surface_3.jpg" width="15%">
   3. Install the 2 bearings on both sides of the shaft and put it in the base, then use M2*16mm screws to fix the two bearing fixers on the base.  
     <img src="doc/install_shaft_1.jpg" width="25%"> <img src="doc/install_shaft_2.jpg" width="25%">
