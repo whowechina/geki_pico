@@ -54,7 +54,7 @@ https://discord.gg/M8f2PPQFEA
 * 1x 树莓派 Pico 或者引脚 1:1 全兼容的克隆版本。  
   https://www.raspberrypi.com/products/raspberry-pi-pico
 * 1x USB Type-C 插座 (918-418K2023S40001 或 KH-TYPE-C-16P)
-* 35x WS2812B-4020 侧向发光 RGB LED (D2-D36)。焊接的时候注意朝向，D2 ~ D44 和 D34 ~ D36 是朝侧面发光，其他的则都是朝上发光。  
+* 35x WS2812B-4020 侧向发光 RGB LED (D2-D36)。焊接的时候注意朝向，D2 ~ D4 和 D34 ~ D36 是朝侧面发光，其他的则都是朝上发光。  
   https://www.lcsc.com/product-detail/Light-Emitting-Diodes-LED_Worldsemi-WS2812B-4020_C965557.html
 * 2x WS2812B-3528 RGB LED (D1, D37).
 * 2x 8002A 迷你音频功放板 (AMP1, AMP2), 如果买不到现成的模块，你也可以对照电路图使用全分立元件 (R4, R5, R8, R9, C9 ~ 12)。  
