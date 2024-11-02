@@ -174,6 +174,9 @@ void cli_run()
     if (c == 0) {
         return;
     }
+    if (!isprint(c) && c != '\b' && c != '\n' && c != '\r') {
+        return;
+    }
 
     if (c == '\b' || c == 127) { // both backspace and delete
         if (cmd_len > 0) {
@@ -182,9 +185,7 @@ void cli_run()
         }
         return;
     }
-
     if ((c != '\n') && (c != '\r')) {
-
         if (cmd_len < sizeof(cmd_buf) - 2) {
             cmd_buf[cmd_len] = c;
             printf("%c", c);
