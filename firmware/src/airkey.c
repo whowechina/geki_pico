@@ -99,6 +99,8 @@ void airkey_init()
 }
 
 static uint16_t tof_dist[TOF_NUM];
+static uint16_t tof_mix[2];
+
 static bool readings[AIRKEY_NUM];
 
 static void print_tof(const char *name, uint16_t mm)
@@ -118,11 +120,14 @@ static void tof_read()
             tof_dist[i] = vl53l1x_readContinuousMillimeters();
             print_tof("L1x", tof_dist[i]);
         }
+        if (tof_dist[i] > 1000) { // treat >= 1M as invalid
+            tof_dist[i] = 0;
+        }
     }
     //printf("\n");
 }
 
-static uint16_t mix_tof(airkey_side_t side, uint16_t primary, uint16_t secondary)
+static uint16_t mix_dist(airkey_side_t side, uint16_t primary, uint16_t secondary)
 {
     tof_mix_algo_t algo = geki_cfg->tof.mix[side].algo;
 
@@ -155,7 +160,7 @@ static uint16_t mix_tof(airkey_side_t side, uint16_t primary, uint16_t secondary
     if (algo == MIX_MIN) {
         return primary < secondary ? primary : secondary;
     }
-    
+
     if (algo == MIX_AVG) {
         int delta = primary - secondary;
         int max = primary;
@@ -164,35 +169,37 @@ static uint16_t mix_tof(airkey_side_t side, uint16_t primary, uint16_t secondary
             max = secondary;
         }
     
+        window *= 5; // *5 percentage
         if ((window == 0) || (window >= delta * 100 / max)) {
             return (primary + secondary) / 2;
         }
     }
-
     return 0;
+}
+
+static void calc_mix()
+{
+    for (int side = 0; side < 2; side++) {
+        int a = side * 2;
+        int b = side * 2 + 1;
+        if ((tofs[a].init_ok && tofs[b].init_ok) && 
+            (tofs[a].model == tofs[b].model)) {
+            tof_mix[side] = mix_dist(side, tof_dist[a], tof_dist[b]);
+        } else if (tofs[a].init_ok) {
+            tof_mix[side] = tof_dist[a];
+        } else if (tofs[b].init_ok) {
+            tof_mix[side] = tof_dist[b];
+        } else {
+            tof_mix[side] = 0;
+        }
+    }
 }
 
 #define BETWEEN(x, a, b) (((x) >= (a)) && ((x) <= (b)))
 static bool airkey_read(unsigned index)
 {
     airkey_side_t side = key_defs[index].side;
-    
-    int a_id = side * 2;
-    int b_id = side * 2 + 1;
-
-    uint16_t dist;
-
-    if ((tofs[a_id].init_ok && tofs[b_id].init_ok) && 
-        (tofs[a_id].model == tofs[b_id].model)) {
-        dist = mix_tof(side, tof_dist[a_id], tof_dist[b_id]);
-    } else if (tofs[a_id].init_ok) {
-        dist = tof_dist[a_id];
-    } else if (tofs[b_id].init_ok) {
-        dist = tof_dist[b_id];
-    } else {
-        return false;
-    }
-
+    uint16_t dist = tof_mix[side];
     if (readings[index]) { // currently triggered
         return BETWEEN(dist, key_defs[index].out_low, key_defs[index].out_high);
     } else {
@@ -207,6 +214,9 @@ void airkey_update()
     uint64_t now = time_us_64();
 
     tof_read();
+    calc_mix();
+
+    //printf("%5d,%4d->%d | %5d,%5d->%5d\n", tof_dist[0], tof_dist[1], tof_mix[0], tof_dist[2], tof_dist[3], tof_mix[1]);
 
     for (int i = 0; i < AIRKEY_NUM; i++) {
         bool triggered = airkey_read(i);
