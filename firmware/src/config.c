@@ -9,9 +9,11 @@
 #include "config.h"
 #include "save.h"
 
+#include "airkey.h"
+
 geki_cfg_t *geki_cfg;
 
-static geki_cfg_t default_cfg = {
+geki_cfg_t default_cfg = {
     .lever = {
          2000, 2500, 0,
     },
@@ -21,6 +23,10 @@ static geki_cfg_t default_cfg = {
     },
     .tof = {
         .roi = 12,
+        .mix = {
+            { .strict = 0, .algo = MIX_MAX, .window = 0 },
+            { .strict = 0, .algo = MIX_MAX, .window = 0 },
+        },
         .reserved = { 0 },
     },
     .sound = {

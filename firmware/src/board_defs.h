@@ -11,7 +11,12 @@
 
 #define BUTTON_DEF { 12, 11, 10, 5, 4, 3, 13, 2 }
 #define SOUND_DEF { 8, 6 }
-#define TOF_PORT_DEF { i2c1, i2c0 }
+
+#define TOF_LEFT_PORT i2c1
+#define TOF_RIGHT_PORT i2c0
+#define TOF_LEFT_SECOND_GPIO 9
+#define TOF_RIGHT_SECOND_GPIO 7
+
 #define TOF_GPIO_DEF { 18, 19, 0, 1 }
 #define TOF_I2C_FREQ 400*1000
 

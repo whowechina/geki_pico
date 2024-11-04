@@ -32,7 +32,12 @@ typedef struct __attribute__((packed)) {
     } sound;
     struct {
         uint8_t roi;
-        uint8_t reserved[7];
+        struct {
+            uint8_t strict:1;
+            uint8_t algo:4;
+            uint8_t window:3;
+        } mix[2];
+        uint8_t reserved[5];
     } tof;
     struct {
         uint8_t joy : 4;
@@ -50,6 +55,7 @@ typedef struct {
 } geki_runtime_t;
 
 extern geki_cfg_t *geki_cfg;
+extern geki_cfg_t default_cfg;
 extern geki_runtime_t geki_runtime;
 
 void config_init();

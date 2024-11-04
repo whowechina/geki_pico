@@ -60,8 +60,23 @@ static void disp_tof()
         printf("  TOF %d: %s", i, airkey_tof_model(i));
     }
     printf("\n");
-    printf("  ROI: %d (only for VL53L1X)", geki_cfg->tof.roi);
-    printf("\n");
+    for (int i = 0; i < 2; i++) {
+        if (geki_cfg->tof.mix[i].algo > 4) {
+            geki_cfg->tof.mix[i].algo = default_cfg.tof.mix[i].algo;
+            config_changed();
+        }
+        const char *algos[] = { "Primary", "Secondary", "Max", "Min", "Avg" };
+        printf("  %s: %s", i == 0 ? "Left Mix" : "Right Mix",
+                           algos[geki_cfg->tof.mix[i].algo]);
+        if (geki_cfg->tof.mix[i].algo == MIX_AVG) {
+            const char *windows[] = { "No", "5%", "10%", "15%", "20%", "25%", "30%", "35%" };
+            printf(", %s Window", windows[geki_cfg->tof.mix[i].window]);
+        } else {
+            printf("%s", geki_cfg->tof.mix[i].strict ? ", Strict" : "");
+        }
+        printf("\n");
+    }
+    printf("  ROI: %d (only for VL53L1X)\n", geki_cfg->tof.roi);
 }
 
 static void disp_aime()
@@ -246,19 +261,15 @@ static void handle_lever(int argc, char *argv[])
     disp_lever();
 }
 
-static void handle_tof(int argc, char *argv[])
+static bool handle_tof_roi(int argc, char *argv[])
 {
-    const char *usage = "Usage: tof roi <4..16>\n";
-
-    if ((argc != 2) || (strncasecmp(argv[0], "roi", strlen(argv[0])) != 0)) {
-        printf(usage);
-        return;
+    if (argc != 1) {
+        return false;
     }
 
-    int roi = cli_extract_non_neg_int(argv[1], 0);
+    int roi = cli_extract_non_neg_int(argv[0], 0);
     if ((roi < 4) || (roi > 16)) {
-        printf(usage);
-        return;
+        return false;
     }
 
     geki_cfg->tof.roi = roi;
@@ -266,6 +277,76 @@ static void handle_tof(int argc, char *argv[])
 
     config_changed();
     disp_tof();
+    return true;
+}
+
+static bool handle_tof_mix(int side, int argc, char *argv[])
+{
+    if ((argc < 1) || (argc > 2)) {
+        printf("%d, %d\n", __LINE__, argc);
+        return false;
+    }
+
+    const char *algos[] = { "primary", "secondary", "max", "min", "avg" };
+    int algo = cli_match_prefix(algos, 5, argv[0]);
+    if (algo < 0) {
+        printf("%d\n", __LINE__);
+        return false;
+    }
+
+    if (algo == MIX_AVG) {
+        int window = 0;
+        if (argc == 2) {
+            window = cli_extract_non_neg_int(argv[1], 0);
+            if ((window < 1) || (window > 7)) {
+        printf("%d\n", __LINE__);
+                return false;
+            }
+        }
+        geki_cfg->tof.mix[side].window = window;
+        geki_cfg->tof.mix[side].strict = (window > 0);
+    } else {
+        geki_cfg->tof.mix[side].window = 0;
+        geki_cfg->tof.mix[side].strict = false;
+        if ((argc == 2) &&
+            (strncasecmp(argv[1], "strict", strlen(argv[1])) == 0)) {
+            geki_cfg->tof.mix[side].strict = true;
+        }
+    }
+    geki_cfg->tof.mix[side].algo = algo;
+    config_changed();
+    disp_tof();
+    return true;
+}
+
+static void handle_tof(int argc, char *argv[])
+{
+    const char *usage = "Usage: tof roi <4..16>\n"
+                        "       tof <left|right> <primary|secondary>\n"
+                        "       tof <left|right> <max|min> [strict]\n"
+                        "       tof <left|right> <avg> [window]\n"
+                        " window: 1..7 (5% ~ 35%)\n";
+
+    if (argc < 1) {
+        printf(usage);
+        return;
+    }
+
+    const char *commands[] = { "left", "right", "roi" };
+    int match = cli_match_prefix(commands, 2, argv[0]);
+
+    if (match == 2) {
+        if (handle_tof_roi(argc - 1, argv + 1)) {
+            return;
+        }
+    } else if (match >= 0) {
+        if (handle_tof_mix(match, argc - 1, argv + 1)) {
+            return;
+        }
+    }
+
+    printf("%d\n", __LINE__);
+    printf(usage);
 }
 
 static void handle_save()
