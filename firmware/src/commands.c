@@ -48,9 +48,7 @@ static void disp_sound()
 static void disp_hid()
 {
     printf("[HID]\n");
-    printf("  Joy: %s, NKRO: %s.\n", 
-           geki_cfg->hid.joy ? "on" : "off",
-           geki_cfg->hid.nkro ? "on" : "off" );
+    printf("  IO4: %s.\n", geki_cfg->hid.joy ? "ON" : "OFF");
 }
 
 static void disp_tof()
@@ -169,21 +167,20 @@ static void handle_level(int argc, char *argv[])
 
 static void handle_hid(int argc, char *argv[])
 {
-    const char *usage = "Usage: hid <joy|nkro|both>\n";
+    const char *usage = "Usage: hid <io4|off>\n";
     if (argc != 1) {
         printf(usage);
         return;
     }
 
-    const char *choices[] = {"joy", "nkro", "both"};
-    int match = cli_match_prefix(choices, 3, argv[0]);
+    const char *choices[] = {"io4", "off"};
+    int match = cli_match_prefix(choices, count_of(choices), argv[0]);
     if (match < 0) {
         printf(usage);
         return;
     }
 
-    geki_cfg->hid.joy = ((match == 0) || (match == 2)) ? 1 : 0;
-    geki_cfg->hid.nkro = ((match == 1) || (match == 2)) ? 1 : 0;
+    geki_cfg->hid.joy = (match == 0) ? 1 : 0;
     config_changed();
     disp_hid();
 }
@@ -283,14 +280,12 @@ static bool handle_tof_roi(int argc, char *argv[])
 static bool handle_tof_mix(int side, int argc, char *argv[])
 {
     if ((argc < 1) || (argc > 2)) {
-        printf("%d, %d\n", __LINE__, argc);
         return false;
     }
 
     const char *algos[] = { "primary", "secondary", "max", "min", "avg" };
     int algo = cli_match_prefix(algos, 5, argv[0]);
     if (algo < 0) {
-        printf("%d\n", __LINE__);
         return false;
     }
 
@@ -299,7 +294,6 @@ static bool handle_tof_mix(int side, int argc, char *argv[])
         if (argc == 2) {
             window = cli_extract_non_neg_int(argv[1], 0);
             if ((window < 1) || (window > 7)) {
-        printf("%d\n", __LINE__);
                 return false;
             }
         }
@@ -345,7 +339,6 @@ static void handle_tof(int argc, char *argv[])
         }
     }
 
-    printf("%d\n", __LINE__);
     printf(usage);
 }
 
