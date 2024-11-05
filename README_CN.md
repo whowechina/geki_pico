@@ -62,9 +62,10 @@ https://discord.gg/M8f2PPQFEA
   https://www.nz-electronics.co.nz/products/4pcs-one-sell-3v-5v-supply-voltage-3w-8002-audio-player-power-amplifier-module-board-pcb-mono  
   https://www.ebay.com.au/itm/225481264605
 
-* 2x VL53L0x 或者 VL53L1x ToF 距离传感器, 最好也把光学盖片买上。VL53L1x 的性能更好，但是价格也更高。  
+* 4x VL53L0x ToF 距离传感器（左右每边两个）, 把光学盖片买上。  
   https://kuriosity.sg/products/time-of-flight-tof-distance-sensor-vl53l0x-200cm-with-optical-cover  
   https://www.smart-prototyping.com/VL53L0X-ToF-Distance-Sensor  
+  你也可以只用 2x VL53L0x 或者 VL53L1x，也就是每边各一个，这样稳定性稍弱。  
   https://www.amazon.com/Soaying-VL53L1X-Distance-Measurement-Extension/dp/B0CTHC43SV
 
 * 2x 小扬声器，不要大于 20mm\*20mm\*5mm, 8ohm 或者相近的阻抗, (SPK1, SPK2), 买不到的话也可以从旧的电子玩具里拆。  
@@ -116,7 +117,7 @@ https://discord.gg/M8f2PPQFEA
 你需要在 Z 轴上旋转 135 度来适应热床。
 
 * 外壳底部: `Production\3DPrint\geki_pico_bottom.stl`, 我用了樱花粉，你选什么颜色？
-* 外壳支撑: `Production\3DPrint\geki_pico_support.stl`, 半透明，如果你没有 ToF 的光学盖片，或者你对盖片的性能不满意，那用这个文件代替： `geki_pico_support_no_cover.stl`。
+* 外壳支撑: `Production\3DPrint\geki_pico_support_*.stl`, 半透明，选择匹配你的 ToF 配置的那个。
 * 外壳上部: `Production\3DPrint\geki_pico_top.*`, 白色。如果你有多色打印的设备和技巧，那用 3mf 后缀那个，按钮框和 Logo 是黑色的。
 
 #### 按钮帽

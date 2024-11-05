@@ -64,9 +64,10 @@ https://discord.gg/M8f2PPQFEA
   https://www.nz-electronics.co.nz/products/4pcs-one-sell-3v-5v-supply-voltage-3w-8002-audio-player-power-amplifier-module-board-pcb-mono  
   https://www.ebay.com.au/itm/225481264605
 
-* 2x VL53L0x or VL53L1x ToF sensors, get the optical covers too if possible. VL53L1x is more expensive but has better performance.  
+* 4x VL53L0x ToF sensors (two sensors on each side), get the optical covers too.  
   https://kuriosity.sg/products/time-of-flight-tof-distance-sensor-vl53l0x-200cm-with-optical-cover  
   https://www.smart-prototyping.com/VL53L0X-ToF-Distance-Sensor  
+  You can also use 2x VL53L0x or VL53L1x, meaning each side only has one sensor. The performance is slightly worse.  
   https://www.amazon.com/Soaying-VL53L1X-Distance-Measurement-Extension/dp/B0CTHC43SV
 
 * 2x Small speakers no larger than 20mm\*20mm\*5mm, 8ohm or close, (SPK1, SPK2), you can even harvest similar sized ones from old broken toys.  
@@ -117,7 +118,7 @@ https://discord.gg/M8f2PPQFEA
 You need to rotate 135 degrees on Z axis to fit the bed.
 
 * Housing Bottom: `Production\3DPrint\geki_pico_bottom.stl`, I chose sakura pink, what's your choice?
-* Housing Support: `Production\3DPrint\geki_pico_support.stl`, semi-transparent. If you don't have ToF optical cover, or you're not happy with the cover's performance, use the `geki_pico_support_no_cover.stl` instead.
+* Housing Support: `Production\3DPrint\geki_pico_support_*.stl`, semi-transparent. Choose the one that matches your ToF sensor configuration.
 * Housing Top: `Production\3DPrint\geki_pico_top.*`, white. If you have multi-color printing equipment and skill, use the 3mf one (button outlines and logo are black).
 
 #### Button Caps
