@@ -100,13 +100,7 @@ void airkey_init()
 
 static uint16_t tof_dist[TOF_NUM];
 static uint16_t tof_mix[2];
-
-static bool readings[AIRKEY_NUM];
-
-static void print_tof(const char *name, uint16_t mm)
-{
-    //printf("\t%s: %3d", name, mm > 1000 ? 0 : mm);
-}
+static bool airkeys[AIRKEY_NUM];
 
 static void tof_read()
 {
@@ -114,17 +108,14 @@ static void tof_read()
         if (tofs[i].model == TOF_VL53L0X) {
             vl53l0x_use(i);
             tof_dist[i] = readRangeContinuousMillimeters();
-            print_tof("L0x", tof_dist[i]);
         } else if (tofs[i].model == TOF_VL53L1X) {
             vl53l1x_use(i);
             tof_dist[i] = vl53l1x_readContinuousMillimeters();
-            print_tof("L1x", tof_dist[i]);
         }
-        if (tof_dist[i] > 1000) { // treat >= 1M as invalid
+        if (tof_dist[i] >= 1000) { // treat >= 1M as invalid
             tof_dist[i] = 0;
         }
     }
-    //printf("\n");
 }
 
 static uint16_t mix_dist(airkey_side_t side, uint16_t primary, uint16_t secondary)
@@ -200,11 +191,26 @@ static bool airkey_read(unsigned index)
 {
     airkey_side_t side = key_defs[index].side;
     uint16_t dist = tof_mix[side];
-    if (readings[index]) { // currently triggered
+    if (airkeys[index]) { // currently triggered
         return BETWEEN(dist, key_defs[index].out_low, key_defs[index].out_high);
     } else {
         return BETWEEN(dist, key_defs[index].in_low, key_defs[index].in_high);
     }
+}
+
+static void tof_diag()
+{
+    if (!geki_runtime.tof_diag) {
+        return;
+    }
+
+    const char *models[] = { "NA", "0X", "1X" };
+    printf("TOF:");
+    for (int i = 0; i < 2; i++) {
+        printf("\t%s-%3d, %s-%3d->%4d", models[tofs[i * 2].model], tof_dist[i * 2],
+               models[tofs[i * 2 + 1].model], tof_dist[i * 2 + 1], tof_mix[i]);
+    }
+    printf("\n");
 }
 
 /* If a switch flips, it freezes for a while */
@@ -215,8 +221,7 @@ void airkey_update()
 
     tof_read();
     calc_mix();
-
-    //printf("%5d,%4d->%d | %5d,%5d->%5d\n", tof_dist[0], tof_dist[1], tof_mix[0], tof_dist[2], tof_dist[3], tof_mix[1]);
+    tof_diag();
 
     for (int i = 0; i < AIRKEY_NUM; i++) {
         bool triggered = airkey_read(i);
@@ -226,7 +231,7 @@ void airkey_update()
                 sw_freeze_time[i] = now + DEBOUNCE_FREEZE_TIME_US;
             }
         }
-        readings[i] = sw_val[i];
+        airkeys[i] = sw_val[i];
     }
 }
 
@@ -241,7 +246,7 @@ bool airkey_get(unsigned id)
         return false;
     }
 
-    return readings[id];
+    return airkeys[id];
 }
 
 unsigned airkey_tof_num()

@@ -313,12 +313,32 @@ static bool handle_tof_mix(int side, int argc, char *argv[])
     return true;
 }
 
+static bool handle_tof_diag(int argc, char *argv[])
+{
+    if (argc == 0) {
+        geki_runtime.tof_diag = !geki_runtime.tof_diag;
+    } else if (argc == 1) {
+        const char *on_off[] = { "on", "off" };
+        int choice = cli_match_prefix(on_off, 2, argv[0]);
+        if (choice < 0) {
+            return false;
+        }
+        geki_runtime.tof_diag = (choice == 0);
+    } else {
+        return false;
+    }
+
+    printf("TOF diagnose %s.\n", geki_runtime.tof_diag ? "enabled" : "disabled");
+    return true;
+}
+
 static void handle_tof(int argc, char *argv[])
 {
     const char *usage = "Usage: tof roi <4..16>\n"
                         "       tof <left|right> <primary|secondary>\n"
                         "       tof <left|right> <max|min> [strict]\n"
                         "       tof <left|right> <avg> [window]\n"
+                        "       tof diagnose [on|off]\n"
                         " window: 1..7 (5% ~ 35%)\n";
 
     if (argc < 1) {
@@ -326,11 +346,15 @@ static void handle_tof(int argc, char *argv[])
         return;
     }
 
-    const char *commands[] = { "left", "right", "roi" };
-    int match = cli_match_prefix(commands, 2, argv[0]);
+    const char *commands[] = { "left", "right", "roi", "diagnose" };
+    int match = cli_match_prefix(commands, count_of(commands), argv[0]);
 
     if (match == 2) {
         if (handle_tof_roi(argc - 1, argv + 1)) {
+            return;
+        }
+    } else if (match == 3) {
+        if (handle_tof_diag(argc - 1, argv + 1)) {
             return;
         }
     } else if (match >= 0) {

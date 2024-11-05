@@ -52,6 +52,7 @@ typedef struct __attribute__((packed)) {
 typedef struct {
     uint16_t fps[2];
     bool key_stuck;
+    bool tof_diag;
 } geki_runtime_t;
 
 extern geki_cfg_t *geki_cfg;
