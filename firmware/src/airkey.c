@@ -38,21 +38,8 @@ static struct {
 
 #define TOF_NUM (count_of(tofs))
 
-static struct {
-    airkey_side_t side;
-    uint16_t in_low;
-    uint16_t in_high;
-    uint16_t out_low;
-    uint16_t out_high;
-} key_defs[] = {
-    { SIDE_LEFT, 50, 200, 20, 230 },
-    { SIDE_RIGHT, 50, 200, 20, 230 },
-    { SIDE_LEFT, 300, 400, 280, 430 },
-    { SIDE_RIGHT, 300, 400, 280, 430 }
-};
-
-#define AIRKEY_NUM (count_of(key_defs))
-
+#define AIRKEY_NUM 3
+static bool airkeys[AIRKEY_NUM];
 static bool sw_val[AIRKEY_NUM]; /* true if triggered */
 static uint64_t sw_freeze_time[AIRKEY_NUM];
 
@@ -100,7 +87,6 @@ void airkey_init()
 
 static uint16_t tof_dist[TOF_NUM];
 static uint16_t tof_mix[2];
-static bool airkeys[AIRKEY_NUM];
 
 static void tof_read()
 {
@@ -186,15 +172,23 @@ static void calc_mix()
     }
 }
 
-#define BETWEEN(x, a, b) (((x) >= (a)) && ((x) <= (b)))
+static inline bool in_bound(uint16_t value, uint16_t low, uint16_t high)
+{
+    return ((value >= low) && (value <= high));
+}
+
 static bool airkey_read(unsigned index)
 {
-    airkey_side_t side = key_defs[index].side;
-    uint16_t dist = tof_mix[side];
+    uint16_t dist = (index == 0) ? tof_mix[SIDE_LEFT] : tof_mix[SIDE_RIGHT];
+    if (dist == 0) {
+        return false;
+    }
+
+    typeof(geki_cfg->tof.trigger[0]) trigger = geki_cfg->tof.trigger[index];
     if (airkeys[index]) { // currently triggered
-        return BETWEEN(dist, key_defs[index].out_low, key_defs[index].out_high);
+        return in_bound(dist, trigger.out_low, trigger.out_high);
     } else {
-        return BETWEEN(dist, key_defs[index].in_low, key_defs[index].in_high);
+        return in_bound(dist, trigger.in_low, trigger.in_high);
     }
 }
 
@@ -235,18 +229,19 @@ void airkey_update()
     }
 }
 
-unsigned airkey_num()
+bool airkey_get_left()
 {
-    return AIRKEY_NUM;
+    return airkeys[0];
 }
 
-bool airkey_get(unsigned id)
+bool airkey_get_right()
 {
-    if (id >= AIRKEY_NUM) {
-        return false;
-    }
+    return airkeys[1];
+}
 
-    return airkeys[id];
+bool airkey_get_shift()
+{
+    return airkeys[2];
 }
 
 unsigned airkey_tof_num()

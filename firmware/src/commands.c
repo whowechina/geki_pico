@@ -51,13 +51,27 @@ static void disp_hid()
     printf("  IO4: %s.\n", geki_cfg->hid.joy ? "ON" : "OFF");
 }
 
-static void disp_tof()
+static void disp_tof_status()
 {
-    printf("[TOF]\n");
     for (int i = 0; i < airkey_tof_num(); i++) {
         printf("  TOF %d: %s", i, airkey_tof_model(i));
     }
     printf("\n");
+}
+
+static void disp_tof_trigger()
+{
+    const char *names[3] = { "WAD Left", "WAD Right", "Shift (Right)" };
+
+    for (int i = 0; i < 3; i++) {
+        typeof(geki_cfg->tof.trigger[0]) trigger = geki_cfg->tof.trigger[i];
+        printf("  %s: in[%d-%d], out[%d-%d]\n", names[i],
+            trigger.in_low, trigger.in_high, trigger.out_low, trigger.out_high);
+    }
+}
+
+static void disp_tof_mix()
+{
     for (int i = 0; i < 2; i++) {
         if (geki_cfg->tof.mix[i].algo > 4) {
             geki_cfg->tof.mix[i].algo = default_cfg.tof.mix[i].algo;
@@ -74,7 +88,20 @@ static void disp_tof()
         }
         printf("\n");
     }
+}
+
+static void disp_tof_roi()
+{
     printf("  ROI: %d (only for VL53L1X)\n", geki_cfg->tof.roi);
+}
+
+static void disp_tof()
+{
+    printf("[TOF]\n");
+    disp_tof_status();
+    disp_tof_mix();
+    disp_tof_trigger();
+    disp_tof_roi();
 }
 
 static void disp_aime()
@@ -273,7 +300,7 @@ static bool handle_tof_roi(int argc, char *argv[])
     airkey_tof_update_roi();
 
     config_changed();
-    disp_tof();
+    disp_tof_roi();
     return true;
 }
 
@@ -309,7 +336,55 @@ static bool handle_tof_mix(int side, int argc, char *argv[])
     }
     geki_cfg->tof.mix[side].algo = algo;
     config_changed();
-    disp_tof();
+    disp_tof_mix();
+    return true;
+}
+
+static inline bool out_of_bound(int value, int low, int high)
+{
+    return ((value < low) || (value > high));
+}
+
+static bool handle_tof_trigger(int argc, char *argv[])
+{
+    if ((argc < 3) || (argc > 5)) {
+        return false;
+    }
+
+    const char *names[] = { "left", "right", "shift" };
+    int side = cli_match_prefix(names, 3, argv[0]);
+    if (side < 0) {
+        return false;
+    }
+
+    int in_low = cli_extract_non_neg_int(argv[1], 0);
+    int in_high = cli_extract_non_neg_int(argv[2], 0);
+    if ((in_high < in_low) ||
+         out_of_bound(in_low, 1, 999) || out_of_bound(in_high, 1, 999)) {
+        return false;
+    }
+
+    int out_low = in_low;
+    int out_high = in_high;
+    if (argc >= 4) {
+        out_low = cli_extract_non_neg_int(argv[3], 0);
+        if ((out_low > in_low) || out_of_bound(out_low, 1, 999)) {
+            return false;
+        }
+    }
+    if (argc == 5) {
+        out_high = cli_extract_non_neg_int(argv[4], 0);
+        if ((out_high < in_high) || out_of_bound(out_high, 1, 999)) {
+            return false;
+        }
+    }
+
+    geki_cfg->tof.trigger[side].in_low = in_low;
+    geki_cfg->tof.trigger[side].in_high = in_high;
+    geki_cfg->tof.trigger[side].out_low = out_low;
+    geki_cfg->tof.trigger[side].out_high = out_high;
+    config_changed();
+    disp_tof_trigger();
     return true;
 }
 
@@ -338,15 +413,18 @@ static void handle_tof(int argc, char *argv[])
                         "       tof <left|right> <primary|secondary>\n"
                         "       tof <left|right> <max|min> [strict]\n"
                         "       tof <left|right> <avg> [window]\n"
+                        "       tof trigger <left|right|shift> <in_low> <in_high> [<out_low> [out_high]]\n"
                         "       tof diagnose [on|off]\n"
-                        " window: 1..7 (5% ~ 35%)\n";
+                        "   window: 1..7 (5% ~ 35%)\n"
+                        "   in_low, in_high, out_low, out_high: 1..999\n"
+                        "   in_high>=in_low, out_low<=in_low, out_high>=in_high\n";
 
     if (argc < 1) {
         printf(usage);
         return;
     }
 
-    const char *commands[] = { "left", "right", "roi", "diagnose" };
+    const char *commands[] = { "left", "right", "roi", "trigger", "diagnose" };
     int match = cli_match_prefix(commands, count_of(commands), argv[0]);
 
     if (match == 2) {
@@ -354,6 +432,10 @@ static void handle_tof(int argc, char *argv[])
             return;
         }
     } else if (match == 3) {
+        if (handle_tof_trigger(argc - 1, argv + 1)) {
+            return;
+        }
+    } else if (match == 4) {
         if (handle_tof_diag(argc - 1, argv + 1)) {
             return;
         }

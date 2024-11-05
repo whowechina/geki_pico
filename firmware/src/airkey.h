@@ -12,8 +12,10 @@
 
 void airkey_init();
 void airkey_update();
-unsigned airkey_num();
-bool airkey_get(unsigned id);
+
+bool airkey_get_left();
+bool airkey_get_right();
+bool airkey_get_shift();
 
 unsigned airkey_tof_num();
 const char *airkey_tof_model();

@@ -52,7 +52,7 @@ static void gen_hid_buttons()
     hid_joy.buttons[0] = 0;
     hid_joy.buttons[1] = 0;
 
-    if (airkey_get(3)) {
+    if (airkey_get_shift()) {
         if (buttons & 0x40) {
             hid_joy.buttons[key_test.group] |= (1 << key_test.bit);
         }
@@ -70,10 +70,10 @@ static void gen_hid_buttons()
         }
     }
 
-    if (!airkey_get(0)) {
+    if (!airkey_get_left()) {
         hid_joy.buttons[wad_left.group] |= (1 << wad_left.bit);
     }
-    if (!airkey_get(1)) {
+    if (!airkey_get_right()) {
         hid_joy.buttons[wad_right.group] |= (1 << wad_right.bit);
     }
 }
@@ -84,7 +84,7 @@ static void gen_hid_coins()
     uint8_t lever = lever_read();
     static int dec_count = 0;
 
-    if (airkey_get(3)) {
+    if (airkey_get_shift()) {
         if (lever < last_lever) {
             dec_count++;
         } else if (lever > last_lever) {

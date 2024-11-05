@@ -37,7 +37,12 @@ typedef struct __attribute__((packed)) {
             uint8_t algo:4;
             uint8_t window:3;
         } mix[2];
-        uint8_t reserved[5];
+        struct {
+            uint16_t in_low;
+            uint16_t in_high;
+            uint16_t out_low;
+            uint16_t out_high;
+        } trigger[3];
     } tof;
     struct {
         uint8_t joy : 4;

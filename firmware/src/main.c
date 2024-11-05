@@ -50,16 +50,15 @@ static void run_lights()
 
     uint32_t phase = time_us_32() >> 15;
 
-    if (airkey_get(3)) {
+    if (airkey_get_shift()) {
         uint32_t phase = (time_us_32() >> 15) % 3;
         for (int i = 0; i < 3; i++) {
             light_set(1 + i, phase % 3 == i ? 0x808080 : 0);
             light_set(33 + i, phase % 3 == i ? 0x808080 : 0);
         }
     } else {
-        for (int i = 0; i < 2; i++) {
-            light_set_wad(i, airkey_get(i) ? rgb32(0x80, 0, 0xff, false) : 0);
-        }
+        light_set_wad(0, airkey_get_left() ? rgb32(0x80, 0, 0xff, false) : 0);
+        light_set_wad(1, airkey_get_right() ? rgb32(0x80, 0, 0xff, false) : 0);
     }
 
     for (int i = 0; i < 6; i++) {
@@ -70,14 +69,14 @@ static void run_lights()
 
 static void run_sound()
 {
-    if (airkey_get(3)) {
+    if (airkey_get_shift()) {
         sound_set(0, false);
         sound_set(1, false);
         return;
     }
 
-    sound_set(0, airkey_get(0));
-    sound_set(1, airkey_get(1));
+    sound_set(0, airkey_get_left());
+    sound_set(1, airkey_get_right());
 }
 
 const int aime_intf = 1;

@@ -24,10 +24,14 @@ geki_cfg_t default_cfg = {
     .tof = {
         .roi = 12,
         .mix = {
-            { .strict = 0, .algo = MIX_MAX, .window = 0 },
-            { .strict = 0, .algo = MIX_MAX, .window = 0 },
+            { .strict = 1, .algo = MIX_MAX, .window = 0 },
+            { .strict = 1, .algo = MIX_MAX, .window = 0 },
         },
-        .reserved = { 0 },
+        .trigger = {
+            { 100, 260, 60, 300 },
+            { 100, 260, 60, 300 },
+            { 400, 500, 380, 530 },
+        },
     },
     .sound = {
         .volume = 127,
@@ -43,6 +47,21 @@ geki_runtime_t geki_runtime;
 
 static void config_loaded()
 {
+    for (int i = 0; i < 2; i++) {
+        if (geki_cfg->tof.mix[i].algo > MIX_AVG) {
+            geki_cfg->tof.mix[i].algo = default_cfg.tof.mix[i].algo;
+            config_changed();
+        }
+    }
+
+    for (int i = 0; i < 3; i++) {
+        typeof(geki_cfg->tof.trigger[0]) trigger = geki_cfg->tof.trigger[i];
+        if ((trigger.in_low == 0) || (trigger.in_high == 0) ||
+            (trigger.out_low == 0) || (trigger.out_high == 0)) {
+            geki_cfg->tof.trigger[i] = default_cfg.tof.trigger[i];
+            config_changed();
+        }
+    }
 }
 
 void config_changed()
