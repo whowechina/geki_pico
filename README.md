@@ -158,7 +158,8 @@ You need to rotate 135 degrees on Z axis to fit the bed.
 
 * Steps
   1. Install the lever to the bottom part, using M3\*8mm screws.
-  2. Wire (solder) the ToF sensors to the main PCB, each needs 4 wires.
+  2. Wire (solder) the ToF sensors to the main PCB, each needs 4 wires.  
+     If you're using an older PCB that only supports one sensor on each side, you can manually wire the secondary sensor. The secondary sensor uses the same SDA, SCL and GND pins as the primary sensor, but the VCC pin should be directly connected to the pins of the Pico, GP7 is for the right secondary sensor, GP9 is for the left secondary sensor.
   3. Use VHB tape to fix the ToF sensors on the ToF seats on the bottom part.
   4. Wire (solder) the speakers to the main PCB, each needs 2 wires.
   5. Use VHB tape to fix the speakers on the floor of the bottom part.
@@ -190,6 +191,12 @@ You need to rotate 135 degrees on Z axis to fit the bed.
   <img src="doc/tof_view_1.png" width="40%"> <img src="doc/tof_view_2.png" width="45%">
 * To emulate IO4 TEST/SERVICE/COIN, you can put your hand in SHIFT zone. When you see the WAD lights flashing, the AUX buttons become TEST and SERVICE, and swinging the lever for "INSERT COINS".
 * AIME is on a secondary COM port. You can set mode or toggle virtual AIC function.
+* ToF mixing algorithms in dual sensor each side configuration.
+  * `primary` and `secondary`: always use primary or secondary sensor, fallback to the other one if the chosen one has no reading, `strict` option means no fallback.
+  * `max` and `min`: use the larger or smaller reading of the two sensors, `strict` option means if one sensor has no reading, result will be no reading.
+  * `average`: use the average of the two sensors, `window` option means readings from both sensors must be within a certain range, otherwise result will be no reading. `window` set to 0 means no range check.
+* You can set trigger window for left WAD, right WAD and shift by `tof trigger <left|right|shift> ...` command. The window is in millimeters. In is the window to trigger, out is the window to release.
+* You can use `tof diagnose [on|off]` command to toggle diagnose mode. In diagnose mode, the ToF sensor will continuously print the raw distance data from all sensors. It's useful for diagnostics.
 
 ## CAD Source File
 I'm using OnShape free subscription. It's powerful but it can't archive original designs to local, so I can only share the link here. STL/DXF/DWG files are exported from this online document.  

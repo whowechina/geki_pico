@@ -410,8 +410,7 @@ static bool handle_tof_diag(int argc, char *argv[])
 static void handle_tof(int argc, char *argv[])
 {
     const char *usage = "Usage: tof roi <4..16>\n"
-                        "       tof <left|right> <primary|secondary>\n"
-                        "       tof <left|right> <max|min> [strict]\n"
+                        "       tof <left|right> <primary|secondary|max|min> [strict]\n"
                         "       tof <left|right> <avg> [window]\n"
                         "       tof trigger <left|right|shift> <in_low> <in_high> [<out_low> [out_high]]\n"
                         "       tof diagnose [on|off]\n"

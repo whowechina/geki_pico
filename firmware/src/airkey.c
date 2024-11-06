@@ -91,6 +91,11 @@ static uint16_t tof_mix[2];
 static void tof_read()
 {
     for (int i = 0; i < TOF_NUM; i++) {
+        if (!tofs[i].init_ok) {
+            tof_dist[i] = 0;
+            continue;
+        }
+    
         if (tofs[i].model == TOF_VL53L0X) {
             vl53l0x_use(i);
             tof_dist[i] = readRangeContinuousMillimeters();
@@ -107,16 +112,17 @@ static void tof_read()
 static uint16_t mix_dist(airkey_side_t side, uint16_t primary, uint16_t secondary)
 {
     tof_mix_algo_t algo = geki_cfg->tof.mix[side].algo;
+    bool strict = geki_cfg->tof.mix[side].strict;
 
     if (algo == MIX_PRIMARY) {
-        return primary;
+        return (strict || (primary != 0)) ? primary : secondary;
     }
 
     if (algo == MIX_SECONDARY) {
-        return secondary;
+        return (strict || (secondary != 0)) ? secondary : primary;
     }
 
-    if (geki_cfg->tof.mix[side].strict && (primary == 0 || secondary == 0)) {
+    if (strict && (primary == 0 || secondary == 0)) {
         return 0;
     }
 

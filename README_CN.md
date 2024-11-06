@@ -158,7 +158,8 @@ https://discord.gg/M8f2PPQFEA
 
 * 步骤
   1. 用 M3\*8mm 螺丝把摇杆总成固定到底部。
-  2. 把 ToF 传感器焊接到主 PCB 上，每个需要 4 根线。
+  2. 把 ToF 传感器焊接到主 PCB 上，每个需要 4 根线。  
+     如果你用的是旧版本 PCB，它很可能只支持每边一个传感器，这时候你需要手动接线。`次 ToF` 使用和 `主 ToF` 使用相同的 SDA, SCL 和 GND 引脚，但 VCC 引脚需要直接从 Pico 上去接，右边的 `次 ToF` 的 VCC 接 GP7，左边的 `次 ToF` 的 VCC 接 GP9。
   3. 用 VHB 胶带把 ToF 传感器固定到底部的两侧座位上。
   4. 把扬声器焊接到主 PCB 上，每个需要 2 根线。
   5. 用 VHB 胶带把扬声器固定到底部的地板上。
@@ -190,6 +191,12 @@ https://discord.gg/M8f2PPQFEA
   <img src="doc/tof_view_1.png" width="40%"> <img src="doc/tof_view_2.png" width="45%">
 * 为了模拟 IO4 的 TEST/SERVICE/COIN 这些按钮和功能，你可以把手放到 SHIFT 区域，当你看到控制器两侧指示灯闪烁的时候，两个辅助按钮就变为了 TEST 和 SERVICE，摇动摇杆则是“投币”。
 * AIME 在第二个串口端口，你可以设置工作模式或者开关虚拟 AIC 功能。
+* 每边两个 ToF 情况下的混合算法。
+  * `primary` 和 `secondary`: 总是使用主 ToF 或者次 ToF，如果选择的那个没有读数，就会使用另一个，`strict` 选项表示即使没有读数也不允许使用另一个。
+  * `max` 和 `min`: 使用两个传感器中的较大或较小读数，`strict` 选项表示如果一个传感器没有读数，结果将是没有读数。
+  * `average`: 使用两个传感器的平均值，`window` 选项表示两个传感器的读数必须在一定范围内，否则结果将是没有读数。当 `window` 为 0 表示不比对范围。
+* 你可以使用 `tof trigger <left|right|shift> ...` 命令来设置左右 ToF 和 SHIFT 的触发窗口。窗口单位是毫米。In 是触发窗口，Out 是释放窗口。
+* 你可以使用 `tof diagnose [on|off]` 命令来切换诊断模式。在诊断模式下，ToF 传感器将持续打印所有传感器的原始距离数据。方便调试。
 
 ## CAD Source File
 我使用的是 OnShape 的免费订阅。它很强大，但是它不能将原始设计存档到本地，所以我只能在这里分享链接。STL/DXF/DWG 文件是从这个在线文档导出的。    
