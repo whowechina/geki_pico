@@ -111,7 +111,7 @@ https://discord.gg/M8f2PPQFEA
 
 #### 摇杆部分
 * 摇杆底座: `Production\3DPrint\geki_pico_lever_base.stl`, 白色。
-* 摇杆转轴: `Production\3DPrint\geki_pico_lever_shaft_*mm.stl`, 白色，根据你的磁铁直径选择合适的文件。
+* 摇杆转轴: `Production\3DPrint\geki_pico_lever_rotator_*mm.stl`, 白色，根据你的磁铁直径选择合适的文件。
 * 2x 轴承固定器: `Production\3DPrint\geki_pico_lever_fixer.stl`, 白色。
 * 摇杆手柄: `Production\3DPrint\geki_pico_lever_handle.stl`, 红色。
 
@@ -146,7 +146,7 @@ https://discord.gg/M8f2PPQFEA
   2. 把 PTFE/UHMW 胶带贴在摇杆和轴的滑动表面上，然后大致修剪成相应的形状。如果你有中或中高粘度的阻尼脂，可以在滑动表面涂一丁点。然后把 M2*6mm 螺丝半拧入轴承固定器，注意不要拧紧。  
     <img src="doc/sliding_surface_1.jpg" width="30%"> <img src="doc/sliding_surface_2.jpg" width="30%"> <img src="doc/sliding_surface_3.jpg" width="15%">
   3. 把 2 个轴承固定器固定在底座上，然后用 M2*16mm 螺丝固定轴承。  
-    <img src="doc/install_shaft_1.jpg" width="25%"> <img src="doc/install_shaft_2.jpg" width="25%">
+    <img src="doc/install_rotator_1.jpg" width="25%"> <img src="doc/install_rotator_2.jpg" width="25%">
   4. 用 502 等快干胶把磁铁粘到旋转轴的底部。注意磁铁的极性朝向要尽量水平。你可以先把几个磁铁连在一起，然后画一条线穿过所有的磁铁，这样你就知道极性方向了。  
     <img src="doc/magnet_1.jpg" width="43%"> <img src="doc/magnet_2.jpg" width="30%">
   5. 把摇杆的手柄安装到螺栓上，先放到一边，后面等外壳都装好后再拧到轴上。  

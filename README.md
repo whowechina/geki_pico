@@ -111,7 +111,7 @@ https://discord.gg/M8f2PPQFEA
 
 #### Lever Parts
 * Lever Base: `Production\3DPrint\geki_pico_lever_base.stl`, white.
-* Lever Shaft: `Production\3DPrint\geki_pico_lever_shaft_*mm.stl`, white, choose the one that matches your magnet diameter.
+* Lever Rotator: `Production\3DPrint\geki_pico_lever_rotator_*mm.stl`, white, choose the one that matches your magnet diameter.
 * 2x Lever Fixer: `Production\3DPrint\geki_pico_lever_fixer.stl`, white.
 * Lever Handle: `Production\3DPrint\geki_pico_lever_handle.stl`, red.
 
@@ -142,13 +142,13 @@ You need to rotate 135 degrees on Z axis to fit the bed.
 * Assemble Steps
   1. Print out the parts.  
     <img src="doc/lever_print_1.jpg" width="40%"> <img src="doc/lever_print_2.jpg" width="40%"> 
-  2. Stick PTFE/UHMW tape to the sliding surfaces of the fixer and the shaft. Then trim the tape to match the surface shape. If you have some damping grease (medium or medium-high stickiness), apply a tiny bit on the sliding surfaces. Turn the M2*6mm screws into the bearing fixers halfway, don’t and never tighten them.  
+  2. Stick PTFE/UHMW tape to the sliding surfaces of the fixer and the rotator. Then trim the tape to match the surface shape. If you have some damping grease (medium or medium-high stickiness), apply a tiny bit on the sliding surfaces. Turn the M2*6mm screws into the bearing fixers halfway, don’t and never tighten them.  
     <img src="doc/sliding_surface_1.jpg" width="30%"> <img src="doc/sliding_surface_2.jpg" width="30%"> <img src="doc/sliding_surface_3.jpg" width="15%">
-  3. Install the 2 bearings on both sides of the shaft and put it in the base, then use M2*16mm screws to fix the two bearing fixers on the base.  
-    <img src="doc/install_shaft_1.jpg" width="25%"> <img src="doc/install_shaft_2.jpg" width="25%">
-  4. Use some instant glue to stick the magnet to the bottom of the shaft. Make sure the poles are placed horizontally. A little trick is you connect several magnets together and draw a line to cross all the magnets, and then you know the poles.  
+  3. Install the 2 bearings on both sides of the rotator and put it in the base, then use M2*16mm screws to fix the two bearing fixers on the base.  
+    <img src="doc/install_rotator_1.jpg" width="25%"> <img src="doc/install_rotator_2.jpg" width="25%">
+  4. Use some instant glue to stick the magnet to the bottom of the rotator. Make sure the poles are placed horizontally. A little trick is you connect several magnets together and draw a line to cross all the magnets, and then you know the poles.  
     <img src="doc/magnet_1.jpg" width="43%"> <img src="doc/magnet_2.jpg" width="30%">
-  5. Install the lever handle onto the double-ended stud screw, put aside. Later when the housing is ready we need to screw it into the lever shaft.  
+  5. Install the lever handle onto the double-ended stud screw, put aside. Later when the housing is ready we need to screw it into the lever rotator.  
 
 ### Assembly
 * Other components needed
@@ -165,7 +165,7 @@ You need to rotate 135 degrees on Z axis to fit the bed.
   4. Wire (solder) the speakers to the main PCB, each needs 2 wires.
   5. Use VHB tape to fix the speakers on the floor of the bottom part.
   6. Install the main PCB to the bottom part, no screws needed.
-  7. Bend the hall-effect sensor (SS49E) so it stays on top of the lever magnets. Remember to leave a tiny gap so the shaft can move freely.  
+  7. Bend the hall-effect sensor (SS49E) so it stays on top of the lever magnets. Remember to leave a tiny gap so the rotator can move freely.  
     <img src="doc/lever_hall_1.jpg" width="40%"> <img src="doc/lever_hall_2.jpg" width="48%">
   8. Solder the PN532 module, 8002A modules to the main PCB if you haven't done it yet.
   9. Install the main button caps and the aux button caps onto the switches.
@@ -174,7 +174,7 @@ You need to rotate 135 degrees on Z axis to fit the bed.
   11. Now it's the perfect chance to adjust the lever resistance. Slowly and gently turn the M2 screws to adjust the tension on the sliding surface. You may need to turn all the screws evenly.
   12. Put the support part on the bottom part, then put the top part on the support part.
   13. Align these parts and use M3\*20mm screws to fix them together. You may need to carefully adjust the position of the ToF sensors so the IR cover (or the tiny sensor chip) fit into the windows on the support part.
-  14. Finally screw the lever handle into the lever shaft.  
+  14. Finally screw the lever handle into the lever rotator.  
     <img src="doc/finally_done.jpg" width="80%">
 
 ### Firmware
