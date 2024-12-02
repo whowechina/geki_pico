@@ -529,7 +529,7 @@ static void handle_aime(int argc, char *argv[])
 
 static void handle_volume(int argc, char *argv[])
 {
-    const char *usage = "Usage: sound <0..255>\n";
+    const char *usage = "Usage: volume <0..255>\n";
     if (argc != 1) {
         printf(usage);
         return;
