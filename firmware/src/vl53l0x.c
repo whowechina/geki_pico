@@ -188,8 +188,12 @@ static uint16_t read_reg16(uint8_t reg)
 
 static void write_many(uint8_t reg, const uint8_t *src, uint8_t len)
 {
-    i2c_write_blocking_until(I2C_PORT, I2C_ADDR, &reg, 1, true, time_us_64() + IO_TIMEOUT_US);
-    i2c_write_blocking_until(I2C_PORT, I2C_ADDR, src, len, false, time_us_64() + IO_TIMEOUT_US);
+    uint8_t cache[32] = { reg, 0 };
+    if (len > sizeof(cache) - 1) {
+        return;
+    }
+    memcpy(cache + 1, src, len);
+    i2c_write_blocking_until(I2C_PORT, I2C_ADDR, cache, len + 1, false, time_us_64() + IO_TIMEOUT_US * len);
 }
 
 static void read_many(uint8_t reg, uint8_t *dst, uint8_t len)
