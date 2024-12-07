@@ -21,7 +21,7 @@
       "dimensions": false,
       "footprints": true,
       "graphics": true,
-      "keepouts": false,
+      "keepouts": true,
       "lockedItems": true,
       "otherItems": false,
       "pads": false,
