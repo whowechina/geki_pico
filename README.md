@@ -132,7 +132,7 @@ You need to rotate 135 degrees on Z axis to fit the bed.
     https://www.3m.com/3M/en_US/p/d/b40072069/
   * 2x MR117ZZ bearings (7mm inner diameter, 11mm outer diameter, 3mm thickness), go with cheap ones, they work just as great.  
     https://www.amazon.com/s?k=mr117zz
-  * 1x Double-ended stud screws, M4 thread, 50mm or 55mm total length.  
+  * 1x Double-ended stud screws, M4 thread, 50mm or 55mm total length. Please note that the threaded length should not exceed 16mm.  
     https://www.amazon.com/METALLIXITY-Double-Screws-Stainless-Threaded/dp/B0B7BM6Y4M
   * 1x round magnet with **5mm** or **6mm** diameter, **2mm** to **3.5mm** tall, MUST be radially/diametrically magnetized (N-S poles on the curved side).  
     https://wargameportal.com/products/special-diametrically-magnetized-50pcs-5mm-x-2mm-3-16-x-1-16-disc-magnets?variant=49014932209942

@@ -132,7 +132,7 @@ https://discord.gg/M8f2PPQFEA
     https://www.3m.com/3M/en_US/p/d/b40072069/
   * 2x MR117ZZ 轴承 (7mm 内径, 11mm 外径, 3mm 厚度)，买便宜的就行，一样好用。  
     https://www.amazon.com/s?k=mr117zz
-  * 1x 双头螺栓，M4 螺纹，50mm 或 55mm 总长度。  
+  * 1x 双头螺栓，M4 螺纹，50mm 或 55mm 总长度，请注意螺纹长度不要超过 16mm。  
     https://www.amazon.com/METALLIXITY-Double-Screws-Stainless-Threaded/dp/B0B7BM6Y4M
   * 1x 圆形小磁铁，直径 **5mm** 或者 **6mm**，厚度 **2mm** 到 **3.5mm**，必须是径向充磁的，也就是磁铁两极是在圆弧面上。  
     https://wargameportal.com/products/special-diametrically-magnetized-50pcs-5mm-x-2mm-3-16-x-1-16-disc-magnets?variant=49014932209942
