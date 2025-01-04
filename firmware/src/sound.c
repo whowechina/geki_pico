@@ -13,7 +13,8 @@
 #include "hardware/irq.h"
 #include "hardware/pwm.h"
 
-#include "ring.h"
+#include "wad_on_wav.h"
+#include "wad_off_wav.h"
 
 #include "config.h"
 #include "board_defs.h"
@@ -21,9 +22,17 @@
 static const uint8_t sound_gpio[2] = SOUND_DEF;
 static int slice_num[2];
 static int wav_pos[2];
-static const int wad_sound_len = sizeof(RING_DATA);
-static const uint8_t *wad_sound = RING_DATA;
-static bool active[2];
+
+typedef struct {
+    const int sound_len;
+    const uint8_t *sound_data;
+} sound_t;
+
+static const sound_t sound_on = { sizeof(wad_on), wad_on };
+static const sound_t sound_off = { sizeof(wad_off), wad_off };
+
+static const sound_t *sound_now[2] = { &sound_on, &sound_off };
+static bool playing[2];
 
 void pwm_interrupt_handler()
 {
@@ -32,21 +41,22 @@ void pwm_interrupt_handler()
 
         uint8_t gpio = sound_gpio[i];
 
-        if (!active[i]) {
+        if (!playing[i]) {
             wav_pos[i] = 0;
             pwm_set_gpio_level(gpio, 0);
             continue;
         }
 
         int pos = wav_pos[i] >> 3;
-        if (pos >= wad_sound_len) {
+        if (pos >= sound_now[i]->sound_len) {
             pos = 0;
             wav_pos[i] = 0;
+            playing[i] = false;
         }
     
         static int amplitude = 0;
         if (wav_pos[i] & 0x07) {
-           amplitude = wad_sound[pos] * geki_cfg->sound.volume / 200;
+           amplitude = sound_now[i]->sound_data[pos] * geki_cfg->sound.volume / 200;
            if (amplitude > 250) {
                amplitude = 250;
            }
@@ -71,7 +81,7 @@ void sound_init()
     irq_set_enabled(PWM_IRQ_WRAP, true);
 
     pwm_config cfg = pwm_get_default_config();
-    pwm_config_set_clkdiv(&cfg, 4.0f); // 8.0f: 11kHz, 4.0f: 22kHz, 2.0f: 44kHz
+    pwm_config_set_clkdiv(&cfg, 5.5f); // 8.0f: 11kHz, 5.5f: 16kHz, 4.0f: 22kHz, 2.0f: 44kHz
     pwm_config_set_wrap(&cfg, 250); 
 
     for (int i = 0; i < 2; i++) {
@@ -89,13 +99,21 @@ void sound_toggle(bool on)
 
 void sound_set(int id, bool on)
 {
+    static bool was_on[2] = { false, false };
     if (!geki_cfg->sound.volume) {
-        active[id] = false;
+        playing[id] = false;
         return;
     }
 
     if (id >= 2) {
         return;
     }
-    active[id] = on;
+    
+    bool changed = on != was_on[id];
+    was_on[id] = on;
+    if (changed) {
+        playing[id] = true;
+        wav_pos[id] = 0;
+        sound_now[id] = on ? &sound_on : &sound_off;
+    }
 }
