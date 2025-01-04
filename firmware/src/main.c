@@ -115,6 +115,7 @@ static void core1_loop()
 
 static void core0_loop()
 {
+    uint64_t next_frame = time_us_64();
     while(1) {
         tud_task();
 
@@ -129,7 +130,8 @@ static void core0_loop()
 
         hid_update();
 
-        sleep_us(900);
+        sleep_until(next_frame);
+        next_frame += 1001;
     }
 }
 
