@@ -4471,6 +4471,12 @@
 		(uuid "30657881-f161-4e5f-b9e0-10c35f62684e")
 	)
 	(junction
+		(at 307.34 148.59)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "32ba2841-ccbe-4096-9e15-5f4b8ce7243c")
+	)
+	(junction
 		(at 171.45 170.18)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4763,6 +4769,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7a6fbb93-003e-4dad-bafc-d4156860a40c")
+	)
+	(junction
+		(at 307.34 175.895)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7e9ac763-52cf-4179-a640-aba730958595")
 	)
 	(junction
 		(at 133.35 170.18)
@@ -5250,7 +5262,7 @@
 	)
 	(wire
 		(pts
-			(xy 320.675 175.895) (xy 304.8 175.895)
+			(xy 320.675 175.895) (xy 307.34 175.895)
 		)
 		(stroke
 			(width 0)
@@ -5310,7 +5322,7 @@
 	)
 	(wire
 		(pts
-			(xy 320.675 148.59) (xy 304.8 148.59)
+			(xy 320.675 148.59) (xy 307.34 148.59)
 		)
 		(stroke
 			(width 0)
@@ -5488,6 +5500,16 @@
 			(type default)
 		)
 		(uuid "1146343e-06e3-4529-878e-b7ed48ebf3c5")
+	)
+	(wire
+		(pts
+			(xy 307.34 175.895) (xy 304.8 175.895)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "12a1adeb-b00c-4ab8-873a-1aedd92ab0f0")
 	)
 	(polyline
 		(pts
@@ -6023,6 +6045,16 @@
 	)
 	(wire
 		(pts
+			(xy 307.34 183.515) (xy 314.325 183.515)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4587f5fa-86f6-4f34-afeb-26cf323312ed")
+	)
+	(wire
+		(pts
 			(xy 234.95 185.42) (xy 247.65 185.42)
 		)
 		(stroke
@@ -6483,6 +6515,16 @@
 	)
 	(wire
 		(pts
+			(xy 307.34 156.21) (xy 314.325 156.21)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "73b66e42-08a4-46b8-9aa0-4458867b0871")
+	)
+	(wire
+		(pts
 			(xy 177.8 148.59) (xy 190.5 148.59)
 		)
 		(stroke
@@ -6510,6 +6552,16 @@
 			(type default)
 		)
 		(uuid "76273e35-923d-4178-9861-0b4f86c5d6ec")
+	)
+	(wire
+		(pts
+			(xy 307.34 148.59) (xy 304.8 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "76986050-fde8-409b-93b8-ea14b89a070b")
 	)
 	(wire
 		(pts
@@ -9279,6 +9331,76 @@
 			(project "geki_main"
 				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
 					(reference "TOF2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Polarized")
+		(at 307.34 152.4 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0af67c1d-5c1a-42db-8113-501bb49c6214")
+		(property "Reference" "C16"
+			(at 300.355 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10uF"
+			(at 311.15 152.7809 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:CP_Elec_6.3x3"
+			(at 308.3052 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 307.34 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Polarized capacitor"
+			(at 307.34 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "f0078300-60fe-4056-94d5-7a022836566d")
+		)
+		(pin "1"
+			(uuid "7f3fd87e-06f2-4538-ad8f-32cd39e86654")
+		)
+		(instances
+			(project ""
+				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
+					(reference "C16")
 					(unit 1)
 				)
 			)
@@ -14096,6 +14218,76 @@
 			(project ""
 				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
 					(reference "D16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Polarized")
+		(at 307.34 179.705 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "96fdc9f7-182f-4af1-8870-c09d0a4af7c7")
+		(property "Reference" "C17"
+			(at 300.355 179.705 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10uF"
+			(at 311.15 180.0859 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:CP_Elec_6.3x3"
+			(at 308.3052 183.515 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 307.34 179.705 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Polarized capacitor"
+			(at 307.34 179.705 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "1eb4d9cc-846e-4122-94c2-788dcf2d20bf")
+		)
+		(pin "1"
+			(uuid "4cec784b-1d66-4ebf-af8a-f1888d2ba292")
+		)
+		(instances
+			(project "geki_main"
+				(path "/2e3f5573-c264-4a8b-a2f0-0e6473d39aad"
+					(reference "C17")
 					(unit 1)
 				)
 			)
