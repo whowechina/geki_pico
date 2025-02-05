@@ -12,6 +12,7 @@
 
 void airkey_init();
 void airkey_update();
+bool airkey_available();
 
 bool airkey_get_left();
 bool airkey_get_right();

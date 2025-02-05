@@ -42,6 +42,7 @@ static struct {
 static bool airkeys[AIRKEY_NUM];
 static bool sw_val[AIRKEY_NUM]; /* true if triggered */
 static uint64_t sw_freeze_time[AIRKEY_NUM];
+static bool tof_available = false;
 
 void airkey_init()
 {
@@ -72,6 +73,7 @@ void airkey_init()
             tofs[i].model = TOF_VL53L0X;
             tofs[i].init_ok = vl53l0x_init_tof();
             vl53l0x_start_continuous();
+            tof_available = true;
         } else if (vl53l1x_is_present()) {
             tofs[i].model = TOF_VL53L1X;
             tofs[i].init_ok = vl53l1x_init_tof();
@@ -79,10 +81,16 @@ void airkey_init()
             vl53l1x_setDistanceMode(Short);
             vl53l1x_setMeasurementTimingBudget(20000);
             vl53l1x_startContinuous(20);
+            tof_available = true;
         } else {
             tofs[i].model = TOF_NONE;
         }
     }
+}
+
+bool airkey_available()
+{
+    return tof_available;
 }
 
 static uint16_t tof_dist[TOF_NUM];

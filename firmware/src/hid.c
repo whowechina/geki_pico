@@ -40,7 +40,7 @@ static void gen_hid_buttons()
     } button_to_io4_map[] = {
         { 0, 0 }, { 0, 5 }, { 0, 4 }, // Left ABC
         { 0, 1 }, { 1, 0 }, { 0, 15 }, // Right ABC
-        { 1, 14 }, { 0, 13 }, // AUX 12
+        { 1, 14 }, { 0, 13 }, // L-Menu R-Menu
     },
     wad_left = { 1, 15 },
     wad_right =  { 0, 14 },
@@ -52,7 +52,7 @@ static void gen_hid_buttons()
     hid_joy.buttons[0] = 0;
     hid_joy.buttons[1] = 0;
 
-    if (airkey_get_shift()) {
+    if (airkey_available() && airkey_get_shift()) {
         if (buttons & 0x40) {
             hid_joy.buttons[key_test.group] |= (1 << key_test.bit);
         }
@@ -62,7 +62,7 @@ static void gen_hid_buttons()
         return;
     }
 
-    for (int i = 0; i < button_num(); i++) {
+    for (int i = 0; i < count_of(button_to_io4_map); i++) {
         uint8_t group = button_to_io4_map[i].group;
         uint8_t bit = button_to_io4_map[i].bit;
         if (buttons & (1 << i)) {
@@ -70,11 +70,20 @@ static void gen_hid_buttons()
         }
     }
 
-    if (!airkey_get_left()) {
-        hid_joy.buttons[wad_left.group] |= (1 << wad_left.bit);
-    }
-    if (!airkey_get_right()) {
-        hid_joy.buttons[wad_right.group] |= (1 << wad_right.bit);
+    if (airkey_available()) {
+        if (!airkey_get_left()) {
+            hid_joy.buttons[wad_left.group] |= (1 << wad_left.bit);
+        }
+        if (!airkey_get_right()) {
+            hid_joy.buttons[wad_right.group] |= (1 << wad_right.bit);
+        }
+    } else {
+        if ((buttons & 0x100) == 0) {
+            hid_joy.buttons[wad_left.group] |= (1 << wad_left.bit);
+        }
+        if ((buttons & 0x200) == 0) {
+            hid_joy.buttons[wad_right.group] |= (1 << wad_right.bit);
+        }
     }
 }
 
@@ -120,7 +129,7 @@ static void gen_nkro_report()
         return;
     }
 
-    return;
+    return; // Not implemented yet
     const char keymap[] = "\x1a\x08\x07\x06\x1b\x1d\x04\x14\x20\x3a\x3b\x3c";
     uint16_t buttons = button_read();
     for (int i = 0; i < button_num(); i++) {

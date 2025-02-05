@@ -9,7 +9,8 @@
 
 #define RGB_ORDER GRB // or RGB
 
-#define BUTTON_DEF { 12, 11, 10, 5, 4, 3, 13, 2 }
+/* A, B, C, A', B', C', L-Menu, R-Menu, WAD_FALLBACK_L, WAD_FALLBACK_R*/
+#define BUTTON_DEF { 12, 11, 10, 5, 4, 3, 13, 2, 14, 15 }
 #define SOUND_DEF { 8, 6 }
 
 #define TOF_LEFT_PORT i2c1
