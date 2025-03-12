@@ -81,8 +81,11 @@ static void disp_tof_mix()
         printf("  %s: %s", i == 0 ? "Left Mix" : "Right Mix",
                            algos[geki_cfg->tof.mix[i].algo]);
         if (geki_cfg->tof.mix[i].algo == MIX_AVG) {
-            const char *windows[] = { "No", "5%", "10%", "15%", "20%", "25%", "30%", "35%" };
-            printf(", %s Window", windows[geki_cfg->tof.mix[i].window]);
+            if (geki_cfg->tof.mix[i].window > 0) {
+                printf(", %d%% Window", geki_cfg->tof.mix[i].window * 10);
+            } else {
+                printf(", No Window");
+            }
         } else {
             printf("%s", geki_cfg->tof.mix[i].strict ? ", Strict" : "");
         }
@@ -414,7 +417,7 @@ static void handle_tof(int argc, char *argv[])
                         "       tof <left|right> <avg> [window]\n"
                         "       tof trigger <left|right|shift> <in_low> <in_high> [<out_low> [out_high]]\n"
                         "       tof diagnose [on|off]\n"
-                        "   window: 1..7 (5% ~ 35%)\n"
+                        "   window: 1..7 (10% ~ 70%)\n"
                         "   in_low, in_high, out_low, out_high: 1..999\n"
                         "   in_high>=in_low, out_low<=in_low, out_high>=in_high\n";
 

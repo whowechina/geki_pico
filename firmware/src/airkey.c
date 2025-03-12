@@ -160,7 +160,7 @@ static uint16_t mix_dist(airkey_side_t side, uint16_t primary, uint16_t secondar
             max = secondary;
         }
     
-        window *= 5; // *5 percentage
+        window *= 10; // *10 percentage
         if ((window == 0) || (window >= delta * 100 / max)) {
             return (primary + secondary) / 2;
         }

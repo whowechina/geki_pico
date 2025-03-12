@@ -31,6 +31,11 @@ void lever_init()
     adc_init();
     adc_gpio_init(26 + ADC_CHANNEL);
     adc_select_input(ADC_CHANNEL);
+
+    // pwm mode for lower power ripple
+    gpio_set_function(25, GPIO_FUNC_PWM);
+    gpio_set_dir(25, GPIO_OUT);
+    gpio_put(25, 1);
 }
 
 uint8_t lever_read()
