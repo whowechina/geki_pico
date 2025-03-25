@@ -24,7 +24,7 @@
 ## 其他项目
 你也可以查看我其他的酷炫项目。
 
-<img src="https://github.com/whowechina/popn_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/iidx_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/iidx_teeny/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/chu_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/mai_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/diva_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/aic_pico/raw/main/doc/main.gif" height="100px"> <img src="https://github.com/whowechina/groove_pico/raw/main/doc/main.gif" height="100px">  <img src="https://github.com/whowechina/geki_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/musec_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/ju_pico/raw/main/doc/main.jpg" height="100px">
+<img src="https://github.com/whowechina/popn_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/iidx_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/iidx_teeny/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/chu_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/mai_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/diva_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/aic_pico/raw/main/doc/main.gif" height="100px"> <img src="https://github.com/whowechina/groove_pico/raw/main/doc/main.gif" height="100px">  <img src="https://github.com/whowechina/geki_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/musec_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/ju_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/bishi_pico/raw/main/doc/main.jpg" height="100px">
 
 * Popn Pico: https://github.com/whowechina/popn_pico
 * IIDX Pico: https://github.com/whowechina/iidx_pico
@@ -37,6 +37,7 @@
 * Geki Pico: https://github.com/whowechina/geki_pico
 * Musec Pico: https://github.com/whowechina/musec_pico
 * Ju Pico: https://github.com/whowechina/ju_pico
+* Bishi Pico: https://github.com/whowechina/bishi_pico
 
 ## **声明** ##
 我在个人时间内制作了这个项目，没有任何经济利益或赞助。我将继续改进这个项目。我已尽我所能确保所有内容的准确性和功能性，但总有可能出现错误。如果你因使用这个开源项目而造成时间或金钱的损失，我不能负责。感谢你的理解。
@@ -70,6 +71,8 @@ https://discord.gg/M8f2PPQFEA
   你也可以只用 2x VL53L0x 或者 VL53L1x，也就是每边各一个，这样稳定性稍弱。  
   https://www.amazon.com/Soaying-VL53L1X-Distance-Measurement-Extension/dp/B0CTHC43SV
 
+* 4x SH1.0 4P 卧式贴片插座 (TOF1, TOF2, TOF3, TOF4), 以及一些 SH1.0 4P 插头的线，用来连接 ToF 传感器。这是可选的，你也可以直接焊接信号线。
+
 * 2x 小扬声器，不要大于 20mm\*20mm\*5mm, 8ohm 或者相近的阻抗, (SPK1, SPK2), 买不到的话也可以从旧的电子玩具里拆。  
   可以在搜索引擎里试试搜索 “贴片 扬声器 1540”。
 
@@ -81,11 +84,11 @@ https://discord.gg/M8f2PPQFEA
   https://www.dfrobot.com/product-1766.html  
   在 PCB v1.3 或者更新版本上，你可以选择使用离散元件替代 DC-DC 模块。你需要一个 SOT23-5 (SOT25) 封装的 HT7750A, 一个 22uH 或者 33uH 的电感，一个肖特基二极管 (SS14, SS24, SS34 等)，和 2x 22uF 1206 电容。
 
+* 2x 贴片电解电容，22uF，耐压 10V 或以上，6.3\*5.8mm (直径\*高度) (C16, C17)。
 * 8x 0603 0.1uF (0.1~1uF 都可以) 电容 (C1 to C8), 可选，但是建议都焊上。
-* 2x 0603 5.1kohm 电阻 (R1, R2) ，给 USB 口用的.
-* 1x 0603 10ohm 电阻, (1-20ohm 都可以的) (R3).
-* 1x 0603 10kohm 电阻 (R6).
-* 1x 0603 20kohm 电阻 (R7).
+* 2x 0603 5.1kohm 电阻 (R1, R2, R7)。
+* 1x 0603 10ohm 电阻, (1-20ohm 都可以的) (R3，新的版本里已经去掉了)。
+* 1x 0603 1kohm 电阻 (R6).
 
 * 8x 凯华巧克力 v1 或者 v2 矮键轴（其中 2 个必须是 v1）。记得选线性轴，比如 "Red Pro" 或者最新的洛斐定制的幽灵轴。  
   <img src="doc/choc_v1_red_pro.jpg" width="30%">

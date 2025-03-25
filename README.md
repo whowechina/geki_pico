@@ -25,7 +25,7 @@ Special thanks to community projects and developers.
 ## My Other Projects
 You can check out my other cool projects.
 
-<img src="https://github.com/whowechina/popn_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/iidx_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/iidx_teeny/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/chu_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/mai_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/diva_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/aic_pico/raw/main/doc/main.gif" height="100px"> <img src="https://github.com/whowechina/groove_pico/raw/main/doc/main.gif" height="100px">  <img src="https://github.com/whowechina/geki_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/musec_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/ju_pico/raw/main/doc/main.jpg" height="100px">
+<img src="https://github.com/whowechina/popn_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/iidx_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/iidx_teeny/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/chu_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/mai_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/diva_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/aic_pico/raw/main/doc/main.gif" height="100px"> <img src="https://github.com/whowechina/groove_pico/raw/main/doc/main.gif" height="100px">  <img src="https://github.com/whowechina/geki_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/musec_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/ju_pico/raw/main/doc/main.jpg" height="100px"> <img src="https://github.com/whowechina/bishi_pico/raw/main/doc/main.jpg" height="100px">
 
 * Popn Pico: https://github.com/whowechina/popn_pico
 * IIDX Pico: https://github.com/whowechina/iidx_pico
@@ -38,6 +38,7 @@ You can check out my other cool projects.
 * Geki Pico: https://github.com/whowechina/geki_pico
 * Musec Pico: https://github.com/whowechina/musec_pico
 * Ju Pico: https://github.com/whowechina/ju_pico
+* Bishi Pico: https://github.com/whowechina/bishi_pico
 
 ## **Disclaimer** ##
 I made this project in my personal time with no financial benefit or sponsorship. I will continue to improve the project. I have done my best to ensure that everything is accurate and functional, there's always a chance that mistakes may occur. I cannot be held responsible for any loss of your time or money that may result from using this open source project. Thank you for your understanding.
@@ -71,6 +72,8 @@ https://discord.gg/M8f2PPQFEA
   You can also use 2x VL53L0x or VL53L1x, meaning each side only has one sensor. The performance is slightly worse.  
   https://www.amazon.com/Soaying-VL53L1X-Distance-Measurement-Extension/dp/B0CTHC43SV
 
+* 4x SH1.0 4-pin right angle SMD connectors (TOF1, TOF2, TOF3, TOF4), and some SH1.0 4P cables to connect the ToF sensors. This is optional as you can always hand wire them.
+
 * 2x Small speakers no larger than 20mm\*20mm\*5mm, 8ohm or close, (SPK1, SPK2), you can even harvest similar sized ones from old broken toys.  
   Try search on Google with keywords: "smd speaker 1540"
 
@@ -82,11 +85,11 @@ https://discord.gg/M8f2PPQFEA
   https://www.dfrobot.com/product-1766.html  
   Alternatively, on PCB version v1.3 or later, there's an option for discrete components to replace the DC-DC module. You need an HT7750A in SOT23-5 (SOT25) package, a 22uH or 33uH inductor no larger than 5020, a Schottky diode (SS14, SS24, SS34, etc), and 2x 22uF 1206 capacitors.
 
+* 2x SMD capacitors, 22uF, 10V or higher, 6.3\*5.8mm (diameter\*height) (C16, C17).
 * 8x 0603 0.1uF (0.1~1uF all fine) capacitors (C1 to C8), OPTIONAL but strongly recommended.
-* 2x 0603 5.1kohm resistors (R1, R2) for the USB.
-* 1x 0603 10ohm resistor, (1-20ohm all work fine) (R3).
-* 1x 0603 10kohm resistor (R6).
-* 1x 0603 20kohm resistor (R7).
+* 3x 0603 5.1kohm resistors, (R1, R2, R7).
+* 1x 0603 10ohm resistor, (1-20ohm all work fine) (R3, removed in new versions).
+* 1x 0603 1kohm resistor (R6).
 
 * 8x Kailh Choc v1 or v2 switches (2 of them must be Choc v1). Choose linear ones, such as "Red Pro" or the latest Lofree branded Ghost.  
   <img src="doc/choc_v1_red_pro.jpg" width="30%">
