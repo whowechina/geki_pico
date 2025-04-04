@@ -226,8 +226,15 @@ void vl53l0x_init(unsigned instance, i2c_inst_t *i2c_port)
     if (instance < INSTANCE_NUM) {
         current_instance = instance;
         INSTANCE.port = i2c_port;
+        uint32_t my_addr = VL53L0X_DEF_ADDR + 1 + instance;
+
+        INSTANCE.addr = my_addr;
+        if (vl53l0x_is_present()) { // if already there from last power cycle
+            return;
+        }
+        
         INSTANCE.addr = VL53L0X_DEF_ADDR;
-        vl53l0x_change_addr(VL53L0X_DEF_ADDR + 1 + instance);
+        vl53l0x_change_addr(my_addr);
     }
 }
 
