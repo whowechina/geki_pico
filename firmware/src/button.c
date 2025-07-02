@@ -8,10 +8,10 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "hardware/gpio.h"
 #include "hardware/timer.h"
-#include "hardware/pwm.h"
 
 #include "config.h"
 #include "board_defs.h"
@@ -22,6 +22,7 @@ static const uint8_t button_gpio[] = BUTTON_DEF;
 
 static bool sw_val[BUTTON_NUM]; /* true if pressed */
 static uint64_t sw_freeze_time[BUTTON_NUM];
+static uint32_t keydown_count[BUTTON_NUM];
 
 void button_init()
 {
@@ -45,9 +46,11 @@ uint8_t button_num()
 static uint16_t button_reading;
 
 /* If a switch flips, it freezes for a while */
-#define DEBOUNCE_FREEZE_TIME_US 3000
+#define DEBOUNCE_FREEZE_TIME_US 20000
 void button_update()
 {
+    static uint16_t old_buttons = 0;
+
     uint64_t now = time_us_64();
     uint16_t buttons = 0;
 
@@ -61,16 +64,35 @@ void button_update()
             }
         }
 
-        buttons <<= 1;
         if (sw_val[i]) {
-            buttons |= 1;
+            buttons |= 1 << i;
+            if ((old_buttons & (1 << i)) == 0) {
+                keydown_count[i]++;
+            }
         }
     }
 
+	old_buttons = buttons;
     button_reading = buttons;
 }
 
 uint16_t button_read()
 {
     return button_reading;
+}
+
+uint32_t button_stat_keydown(uint8_t id)
+{
+    if ((id < 0) || (id >= BUTTON_NUM)) {
+        return 0;
+    }
+
+    uint32_t count = keydown_count[id];
+    keydown_count[id] = 0;
+    return count;
+}
+
+void button_clear_stat()
+{
+    memset(keydown_count, 0, sizeof(keydown_count));    
 }

@@ -19,6 +19,7 @@ extern uint8_t RING_DATA[];
 #include "aime.h"
 
 #include "airkey.h"
+#include "button.h"
 
 #include "usb_descriptors.h"
 
@@ -549,6 +550,15 @@ static void handle_volume(int argc, char *argv[])
     }
 }
 
+static void handle_stat(int argc, char *argv[])
+{
+    printf("[STAT]\n");
+    for (int i = 0; i < button_num(); i++) {
+        printf("  Key %2d: %6lu\n", i + 1, button_stat_keydown(i));
+    }
+    button_clear_stat();
+}
+
 void commands_init()
 {
     cli_register("display", handle_display, "Display all config.");
@@ -558,7 +568,8 @@ void commands_init()
     cli_register("tof", handle_tof, "Tof tweaks.");
     cli_register("volume", handle_volume, "Sound feedback volume settings.");
     cli_register("save", handle_save, "Save config to flash.");
-    cli_register("factory", handle_factory_reset, "Reset everything to default.");
     cli_register("nfc", handle_nfc, "NFC debug.");
     cli_register("aime", handle_aime, "AIME settings.");
+    cli_register("stat", handle_stat, "Statistics.");
+    cli_register("factory", handle_factory_reset, "Reset everything to default.");
 }
