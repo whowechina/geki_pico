@@ -64,17 +64,28 @@ void airkey_init()
             gpio_set_function(tofs[i].gpio, GPIO_FUNC_SIO);
             gpio_set_drive_strength(tofs[i].gpio, GPIO_DRIVE_STRENGTH_12MA);
             gpio_set_dir(tofs[i].gpio, GPIO_OUT);
+            gpio_put(tofs[i].gpio, 0);
+        }
+    }
+
+    for (int i = 0; i < TOF_NUM; i++) {
+        if (tofs[i].gpio < 32) { // valid GPIO
             gpio_put(tofs[i].gpio, 1);
         }
-        sleep_ms(1);
+
+        sleep_ms(10);
+
         vl53l0x_init(i, tofs[i].port);
-        vl53l1x_init(i, tofs[i].port);
         if (vl53l0x_is_present()) {
             tofs[i].model = TOF_VL53L0X;
             tofs[i].init_ok = vl53l0x_init_tof();
             vl53l0x_start_continuous();
             tof_available = true;
-        } else if (vl53l1x_is_present()) {
+            continue;
+        }
+
+        vl53l1x_init(i, tofs[i].port);
+        if (vl53l1x_is_present()) {
             tofs[i].model = TOF_VL53L1X;
             tofs[i].init_ok = vl53l1x_init_tof();
             vl53l1x_setROISize(geki_cfg->tof.roi, geki_cfg->tof.roi);
@@ -82,9 +93,10 @@ void airkey_init()
             vl53l1x_setMeasurementTimingBudget(20000);
             vl53l1x_startContinuous(20);
             tof_available = true;
-        } else {
-            tofs[i].model = TOF_NONE;
+            continue;
         }
+
+        tofs[i].model = TOF_NONE;
     }
 }
 
