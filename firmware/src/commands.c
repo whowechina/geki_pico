@@ -120,9 +120,24 @@ static void disp_aime()
     printf("         Mode: %d\n", geki_cfg->aime.mode);
 }
 
+static void disp_extled()
+{
+    printf("[ExtLED]\n");
+    for (int chn = 0; chn < 2; chn++) {
+        printf("  Channel %d Mapping:", chn);
+        for (int i = 0; i < count_of(geki_cfg->extled.map[0]); i++) {
+            if (i % 16 == 0) {
+                printf("\n    %02xH:", i);
+            }
+            printf(" %2d", geki_cfg->extled.map[chn][i]);
+        }
+        printf("\n");
+    }
+}
+
 void handle_display(int argc, char *argv[])
 {
-    const char *usage = "Usage: display [light|sound|hid|lever|tof|aime]\n";
+    const char *usage = "Usage: display [light|sound|hid|lever|tof|aime|extled]\n";
     if (argc > 1) {
         printf(usage);
         return;
@@ -135,10 +150,11 @@ void handle_display(int argc, char *argv[])
         disp_hid();
         disp_tof();
         disp_aime();
+        disp_extled();
         return;
     }
 
-    const char *choices[] = {"light", "lever", "sound", "hid", "tof", "aime"};
+    const char *choices[] = {"light", "lever", "sound", "hid", "tof", "aime", "extled"};
     switch (cli_match_prefix(choices, count_of(choices), argv[0])) {
         case 0:
             disp_light();
@@ -157,6 +173,9 @@ void handle_display(int argc, char *argv[])
             break;
         case 5:
             disp_aime();
+            break;
+        case 6:
+            disp_extled();
             break;
         default:
             printf(usage);
@@ -579,6 +598,44 @@ static void handle_volume(int argc, char *argv[])
     }
 }
 
+static void handle_extled(int argc, char *argv[])
+{
+    const char *usage = "Usage: extled set <chn> <led> <src>\n"
+                        "       extled reset\n"
+                        "  chn: 0..1\n"
+                        "  led: 0..31\n"
+                        "  src: 0..60\n";
+    
+    bool accepted = false;
+
+    if ((argc == 1) && (strncasecmp(argv[0], "reset", strlen(argv[0])) == 0)) {
+        geki_cfg->extled = default_cfg.extled;
+        accepted = true;
+    }
+
+    if ((argc == 4) && (strncasecmp(argv[0], "set", strlen(argv[0])) == 0)) {
+        int chn = cli_extract_non_neg_int(argv[1], 0);
+        int led_index = cli_extract_non_neg_int(argv[2], 0);
+        int data_index = cli_extract_non_neg_int(argv[3], 0);
+        if ((chn < 0) || (chn > 1) ||
+            (led_index < 0) || (led_index >= (int)count_of(geki_cfg->extled.map[0])) ||
+            (data_index < 0) || (data_index > 60)) {
+            printf(usage);
+            return;
+        }
+        geki_cfg->extled.map[chn][led_index] = data_index;
+        accepted = true;
+    }
+
+    if (!accepted) {
+        printf(usage);
+        return;
+    }
+
+    config_changed();
+    disp_extled();
+}
+
 static void handle_stat(int argc, char *argv[])
 {
     printf("[STAT]\n");
@@ -600,6 +657,7 @@ void commands_init()
     cli_register("save", handle_save, "Save config to flash.");
     cli_register("nfc", handle_nfc, "NFC debug.");
     cli_register("aime", handle_aime, "AIME settings.");
+    cli_register("extled", handle_extled, "External LED settings.");
     cli_register("stat", handle_stat, "Statistics.");
     cli_register("factory", handle_factory_reset, "Reset everything to default.");
 }

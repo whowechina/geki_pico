@@ -58,8 +58,14 @@ static void run_lights()
             light_set(33 + i, phase % 3 == i ? 0x808080 : 0);
         }
     } else {
-        light_set_wad(0, airkey_get_left() ? rgb32(0x80, 0, 0xff, false) : 0);
-        light_set_wad(1, airkey_get_right() ? rgb32(0x80, 0, 0xff, false) : 0);
+        if (!extled_is_active()) {
+            uint32_t left = airkey_get_left() ? rgb32(0x80, 0, 0xff, false) : 0;
+            uint32_t right = airkey_get_right() ? rgb32(0x80, 0, 0xff, false) : 0;
+            light_set_wad(0, left);
+            light_set_wad(1, right);
+            light_set_ext_all(0, left);
+            light_set_ext_all(1, right);
+        }
     }
 
     for (int i = 0; i < 6; i++) {

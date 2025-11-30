@@ -229,3 +229,10 @@ void light_set_ext(uint8_t chn, uint8_t index, uint32_t color)
     }
     ext_buf[chn][index] = color;
 }
+
+void light_set_ext_all(uint8_t chn, uint32_t color)
+{
+    for (int i = 0; i < count_of(ext_buf[0]); i++) {
+        ext_buf[chn][i] = color;
+    }
+}
