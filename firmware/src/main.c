@@ -38,6 +38,7 @@
 #include "lever.h"
 #include "airkey.h"
 #include "sound.h"
+#include "extled.h"
 
 static void run_lights()
 {
@@ -105,6 +106,7 @@ static void core1_loop()
         if (mutex_try_enter(&core1_io_lock, NULL)) {
             run_lights();
             run_sound();
+            extled_update();
             light_update();
             mutex_exit(&core1_io_lock);
         }
@@ -178,6 +180,8 @@ void init()
     lever_init();
     airkey_init();
     sound_init();
+
+    extled_init();
 
     nfc_attach_i2c(PN532_I2C_PORT);
     nfc_init();

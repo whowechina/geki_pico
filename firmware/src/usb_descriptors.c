@@ -84,13 +84,15 @@ uint8_t const* tud_hid_descriptor_report_cb(uint8_t itf)
 //--------------------------------------------------------------------+
 
 enum { ITF_NUM_JOY, ITF_NUM_NKRO,
-       ITF_NUM_CLI, ITF_NUM_CLI_DATA, ITF_NUM_AIME, ITF_NUM_AIME_DATA,
+       ITF_NUM_CLI, ITF_NUM_CLI_DATA,
+       ITF_NUM_AIME, ITF_NUM_AIME_DATA,
+       ITF_NUM_LED, ITF_NUM_LED_DATA,
        ITF_NUM_TOTAL };
 
 #define CONFIG_TOTAL_LEN (TUD_CONFIG_DESC_LEN + \
                           TUD_HID_INOUT_DESC_LEN * 1 + \
                           TUD_HID_DESC_LEN * 1 + \
-                          TUD_CDC_DESC_LEN * 2)
+                          TUD_CDC_DESC_LEN * 3)
 
 #define EPNUM_JOY_OUT 0x01
 #define EPNUM_JOY_IN 0x81
@@ -104,6 +106,10 @@ enum { ITF_NUM_JOY, ITF_NUM_NKRO,
 #define EPNUM_AIME_NOTIF 0x8b
 #define EPNUM_AIME_OUT   0x0c
 #define EPNUM_AIME_IN    0x8c
+
+#define EPNUM_LED_NOTIF 0x8d
+#define EPNUM_LED_OUT   0x0e
+#define EPNUM_LED_IN    0x8e
 
 uint8_t const desc_configuration_joy[] = {
     // Config number, interface count, string index, total length, attribute,
@@ -127,6 +133,8 @@ uint8_t const desc_configuration_joy[] = {
     TUD_CDC_DESCRIPTOR(ITF_NUM_AIME, 7, EPNUM_AIME_NOTIF,
                        8, EPNUM_AIME_OUT, EPNUM_AIME_IN, 64),
 
+    TUD_CDC_DESCRIPTOR(ITF_NUM_LED, 8, EPNUM_LED_NOTIF,
+                       8, EPNUM_LED_OUT, EPNUM_LED_IN, 64),
 };
 
 // Invoked when received GET CONFIGURATION DESCRIPTOR
@@ -150,6 +158,7 @@ static const char *string_desc_arr[] = {
     "Geki Pico NKRO",
     "Geki Pico CLI",
     "Geki Pico AIME Port",
+    "Geki Pico LED Port",
 };
 
 // Invoked when received GET STRING DESCRIPTOR request

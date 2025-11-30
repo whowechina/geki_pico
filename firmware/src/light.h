@@ -25,6 +25,8 @@ void light_set_wad(uint8_t index, uint32_t color);
 void light_set_pos(uint8_t pos, uint32_t color);
 void light_set_aime(uint32_t color);
 
+void light_set_ext(uint8_t chn, uint8_t index, uint32_t color);
+
 void light_set(uint8_t index, uint32_t color);
 
 #endif

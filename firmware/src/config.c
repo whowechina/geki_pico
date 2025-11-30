@@ -19,6 +19,9 @@ geki_cfg_t default_cfg = {
     },
     .light = {
         .level = 128,
+        .ext_level = 128,
+        .rgb_order = 0,
+        .ext_rgb_order = 0,
         .reserved = { 0 },
     },
     .tof = {
@@ -40,6 +43,10 @@ geki_cfg_t default_cfg = {
     .hid = {
         .joy = 1,
         .nkro = 0,
+    },
+    .extled.map = {
+        { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
+        { 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45 },
     },
 };
 

@@ -5,9 +5,9 @@
 
 #if defined BOARD_GEKI_PICO
 
-#define RGB_PIN 16
-
-#define RGB_ORDER GRB // or RGB
+#define RGB_INT_PIN 16
+#define RGB_EXT_A_PIN 20
+#define RGB_EXT_B_PIN 21
 
 /* A, B, C, A', B', C', L-Menu, R-Menu, WAD_FALLBACK_L, WAD_FALLBACK_R*/
 #define BUTTON_DEF { 12, 11, 10, 5, 4, 3, 13, 2, 14, 15 }

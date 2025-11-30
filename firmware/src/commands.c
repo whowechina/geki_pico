@@ -29,7 +29,11 @@ extern uint8_t RING_DATA[];
 static void disp_light()
 {
     printf("[Light]\n");
-    printf("  Level: %d.\n", geki_cfg->light.level);
+    printf("  Level: %d (int), %d (ext).\n",
+        geki_cfg->light.level, geki_cfg->light.ext_level);
+    printf("  RGB Order: %s (int), %s (ext).\n",
+           geki_cfg->light.rgb_order == 0 ? "GRB" : "RGB",
+           geki_cfg->light.ext_rgb_order == 0 ? "GRB" : "RGB");
 }
 
 static void disp_lever()
@@ -179,19 +183,44 @@ void fps_count(int core)
 
 static void handle_level(int argc, char *argv[])
 {
-    const char *usage = "Usage: level <0..255>\n";
-    if (argc != 1) {
+    const char *usage = "Usage: level <level_int> <level_ext>\n"
+                        "  level_int / level_ext: 0..255\n";
+    if (argc != 2) {
         printf(usage);
         return;
     }
 
     int level = cli_extract_non_neg_int(argv[0], 0);
-    if ((level < 0) || (level > 255)) {
+    int ext_level = cli_extract_non_neg_int(argv[1], 0);
+    if ((level < 0) || (level > 255) || (ext_level < 0) || (ext_level > 255)) {
+        printf(usage);
+        return;
+    }
+    geki_cfg->light.level = level;
+    geki_cfg->light.ext_level = ext_level;
+    config_changed();
+    disp_light();
+}
+
+static void handle_rgb_order(int argc, char *argv[])
+{
+    const char *usage = "Usage: rgb_order <order_int> <order_ext>\n"
+                        "  order_int/order_ext: rgb|grb\n";
+    if (argc != 2) {
         printf(usage);
         return;
     }
 
-    geki_cfg->light.level = level;
+    const char *orders[] = {"grb", "rgb"};
+    int order_int = cli_match_prefix(orders, count_of(orders), argv[0]);
+    int order_ext = cli_match_prefix(orders, count_of(orders), argv[1]);
+    if ((order_int < 0) || (order_ext < 0)) {
+        printf(usage);
+        return;
+    }
+    geki_cfg->light.rgb_order = order_int;
+    geki_cfg->light.ext_rgb_order = order_ext;
+
     config_changed();
     disp_light();
 }
@@ -563,6 +592,7 @@ void commands_init()
 {
     cli_register("display", handle_display, "Display all config.");
     cli_register("level", handle_level, "Set LED brightness level.");
+    cli_register("rgb_order", handle_rgb_order, "Set RGB order.");
     cli_register("hid", handle_hid, "Set HID mode.");
     cli_register("lever", handle_lever, "Lever related settings.");
     cli_register("tof", handle_tof, "Tof tweaks.");

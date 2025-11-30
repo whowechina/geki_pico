@@ -22,26 +22,21 @@
 
 #define HID_TIMEOUT 300*1000*1000
 
-static uint32_t buf_rgb[37]; // left 3 + right 3 + button 4 * 7 + indicator 5
+static uint32_t int_buf[37]; // left 3 + right 3 + button 4 * 7 + indicator 5
+static uint32_t ext_buf[2][count_of(geki_cfg->extled.map[0])];
 
-static inline uint32_t _rgb32(uint32_t c1, uint32_t c2, uint32_t c3, bool gamma_fix)
-{
-    if (gamma_fix) {
-        c1 = ((c1 + 1) * (c1 + 1) - 1) >> 8;
-        c2 = ((c2 + 1) * (c2 + 1) - 1) >> 8;
-        c3 = ((c3 + 1) * (c3 + 1) - 1) >> 8;
-    }
-
-    return (c1 << 16) | (c2 << 8) | (c3 << 0);
-}
+static uint32_t pio_int[count_of(int_buf)];
+static uint32_t pio_ext[2][count_of(ext_buf[0])];
 
 uint32_t rgb32(uint32_t r, uint32_t g, uint32_t b, bool gamma_fix)
 {
-#if RGB_ORDER == GRB
-    return _rgb32(g, r, b, gamma_fix);
-#else
-    return _rgb32(r, g, b, gamma_fix);
-#endif
+    if (gamma_fix) {
+        r = ((r + 1) * (r + 1) - 1) >> 8;
+        g = ((g + 1) * (g + 1) - 1) >> 8;
+        b = ((b + 1) * (b + 1) - 1) >> 8;
+    }
+
+    return (r << 16) | (g << 8) | (b << 0);
 }
 
 uint32_t rgb32_from_hsv(uint8_t h, uint8_t s, uint8_t v)
@@ -84,10 +79,16 @@ uint32_t load_color(const rgb_hsv_t *color)
     }
 }
 
-static void drive_led()
+static inline uint32_t fix_order(uint32_t color, uint8_t order)
 {
-    for (int i = 0; i < count_of(buf_rgb); i++) { \
-        pio_sm_put_blocking(pio0, 0, buf_rgb[i] << 8u); \
+    uint8_t c1 = (color >> 16) & 0xff;
+    uint8_t c2 = (color >> 8) & 0xff;
+    uint8_t c3 = color & 0xff;
+
+    if (order == 0) { // GRB
+        return c2 << 16 | c1 << 8 | c3;
+    } else {
+        return color;
     }
 }
 
@@ -104,10 +105,37 @@ static inline uint32_t apply_level(uint32_t color)
     return r << 16 | g << 8 | b;
 }
 
+static void prepare_pio_buffer()
+{
+    for (int i = 0; i < count_of(pio_int); i++) {
+        uint32_t color = fix_order(int_buf[i], geki_cfg->light.rgb_order);
+        pio_int[i] = apply_level(color) << 8;
+    }
+    for (int i = 0; i < count_of(pio_ext[0]); i++) {
+        uint32_t color = fix_order(ext_buf[0][i], geki_cfg->light.ext_rgb_order);
+        pio_ext[0][i] = apply_level(color) << 8;
+        color = fix_order(ext_buf[1][i], geki_cfg->light.ext_rgb_order);
+        pio_ext[1][i] = apply_level(color) << 8;
+    }
+}
+
+static void drive_led()
+{
+    for (int i = 0; i < count_of(pio_int); i++) {
+        pio_sm_put_blocking(pio0, 0, pio_int[i]);
+    }
+    for (int i = 0; i < count_of(pio_ext[0]); i++) {
+        pio_sm_put_blocking(pio0, 1, pio_ext[0][i]);
+        pio_sm_put_blocking(pio0, 2, pio_ext[1][i]);
+    }
+}
+
 void light_init()
 {
     uint offset = pio_add_program(pio0, &ws2812_program);
-    ws2812_program_init(pio0, 0, offset, RGB_PIN, 800000, false);
+    ws2812_program_init(pio0, 0, offset, RGB_INT_PIN, 800000, false);
+    ws2812_program_init(pio0, 1, offset, RGB_EXT_A_PIN, 800000, false);
+    ws2812_program_init(pio0, 2, offset, RGB_EXT_B_PIN, 800000, false);
 }
 
 void light_update()
@@ -120,15 +148,16 @@ void light_update()
 
     last = now;
 
+    prepare_pio_buffer();
     drive_led();
 }
 
 void light_set(uint8_t index, uint32_t color)
 {
-    if (index >= count_of(buf_rgb)) {
+    if (index >= count_of(int_buf)) {
         return;
     }
-    buf_rgb[index] = apply_level(color);
+    int_buf[index] = color;
 }
 
 void light_set_main(uint8_t index, uint32_t color, bool hid)
@@ -191,4 +220,12 @@ void light_set_aime(uint32_t color)
     for (int i = 0; i < 5; i++) {
         light_set(16 + i, color);
     }
+}
+
+void light_set_ext(uint8_t chn, uint8_t index, uint32_t color)
+{
+    if ((chn >= 2) || (index >= count_of(ext_buf[0]))) {
+        return;
+    }
+    ext_buf[chn][index] = color;
 }

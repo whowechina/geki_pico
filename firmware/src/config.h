@@ -24,7 +24,10 @@ typedef struct __attribute__((packed)) {
     struct {
         rgb_hsv_t colors[12];
         uint8_t level;
-        uint8_t reserved[15];
+        uint8_t ext_level;
+        uint8_t rgb_order:4;      // 0: RGB, 1: RGB
+        uint8_t ext_rgb_order:4;  //
+        uint8_t reserved[13];
     } light;
     struct {
         uint8_t volume;
@@ -52,6 +55,9 @@ typedef struct __attribute__((packed)) {
         uint8_t mode : 4;
         uint8_t virtual_aic : 4;
     } aime;
+    struct {
+        uint8_t map[2][32];
+    } extled;
 } geki_cfg_t;
 
 typedef struct {
