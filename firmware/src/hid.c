@@ -32,6 +32,7 @@ static void gen_hid_analogs()
 {
     hid_joy.adcs[0] = lever_read() << 8;
 }
+
 static void gen_hid_buttons()
 {
     const static struct {

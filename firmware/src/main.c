@@ -59,12 +59,14 @@ static void run_lights()
         }
     } else {
         if (!extled_is_active()) {
-            uint32_t left = airkey_get_left() ? rgb32(0x80, 0, 0xff, false) : 0;
-            uint32_t right = airkey_get_right() ? rgb32(0x80, 0, 0xff, false) : 0;
-            light_set_wad(0, left);
-            light_set_wad(1, right);
-            light_set_ext_all(0, left);
-            light_set_ext_all(1, right);
+            bool wad_left = airkey_get_left() || (button & 0x100);
+            bool wad_right = airkey_get_right() || (button & 0x200);
+            uint32_t left_color = wad_left ? rgb32(0x80, 0, 0xff, false) : 0;
+            uint32_t right_color = wad_right ? rgb32(0x80, 0, 0xff, false) : 0;
+            light_set_wad(0, left_color);
+            light_set_wad(1, right_color);
+            light_set_ext_all(0, left_color);
+            light_set_ext_all(1, right_color);
         }
     }
 
