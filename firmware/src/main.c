@@ -57,6 +57,10 @@ static void run_lights()
             light_set(1 + i, phase % 3 == i ? 0x808080 : 0);
             light_set(33 + i, phase % 3 == i ? 0x808080 : 0);
         }
+        for (int i = 0; i < 2; i++) {
+            light_set_aux(0, phase % 2 == i ? 0x808080 : 0);
+            light_set_aux(1, phase % 2 == i ? 0x808080 : 0);
+        }
     } else {
         if (!extled_is_active()) {
             bool wad_left = airkey_get_left() || (button & 0x100);
