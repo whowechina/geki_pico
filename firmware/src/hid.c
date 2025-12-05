@@ -178,6 +178,9 @@ void hid_proc(const uint8_t *data, uint8_t len)
 {
     hid_output_t *output = (hid_output_t *)data;
     if (output->report_id == REPORT_ID_OUTPUT) {
+
+        light_hid_heartbeat();
+
         switch (output->cmd) {
             case 0x01: // Set Timeout
             case 0x02: // Set Sampling Count

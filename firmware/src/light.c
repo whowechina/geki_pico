@@ -20,7 +20,7 @@
 #include "board_defs.h"
 #include "config.h"
 
-#define HID_TIMEOUT 300*1000*1000
+#define HID_TIMEOUT 30*1000*1000
 
 static uint32_t int_buf[37]; // left 3 + right 3 + button 4 * 7 + indicator 5
 static uint32_t ext_buf[2][count_of(geki_cfg->extled.map[0])];
@@ -160,16 +160,24 @@ void light_set(uint8_t index, uint32_t color)
     int_buf[index] = color;
 }
 
+static uint64_t hid_timeout = 0;
+
+void light_hid_heartbeat()
+{
+    hid_timeout = time_us_64() + HID_TIMEOUT;
+}
+
+static bool hid_is_active()
+{
+    return (hid_timeout > 0) && (time_us_64() < hid_timeout);
+}
+
 void light_set_main(uint8_t index, uint32_t color, bool hid)
 {
-    static uint64_t hid_timeout = 0;
-    uint64_t now = time_us_64();
-    if (!hid && (now < hid_timeout)) {
-        return;
-    }
-
     if (hid) {
-        hid_timeout = time_us_64() + HID_TIMEOUT;
+        light_hid_heartbeat();
+    } else if (hid_is_active()) {
+        return;
     }
 
     if (index < 3) {
