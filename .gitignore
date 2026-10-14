@@ -1,2 +1,4 @@
 PCB/**/*backups
 Production/PCB/*/*
+*.bak
+.vscode

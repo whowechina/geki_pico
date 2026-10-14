@@ -1,7 +1,7 @@
 (footprint "SS49E_Bend"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(descr "TO-92Flat package, often used for hall sensors, drill 0.75mm (see e.g. http://www.ti.com/lit/ds/symlink/drv5023.pdf)")
 	(tags "to-92Flat hall sensor")
@@ -24,19 +24,6 @@
 			(font
 				(size 1 1)
 				(thickness 0.17)
-			)
-		)
-	)
-	(property "Footprint" ""
-		(at 0 0 0)
-		(unlocked yes)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "88a639fc-5bb9-40d9-8312-ec49a1fc27d9")
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.15)
 			)
 		)
 	)
@@ -68,8 +55,8 @@
 	)
 	(attr through_hole)
 	(fp_line
-		(start -0.86 0.3)
-		(end -0.86 -0.65)
+		(start -2.23 0.5)
+		(end -2.23 -0.45)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -78,8 +65,8 @@
 		(uuid "1889132f-586b-41c6-8023-3acb242abaae")
 	)
 	(fp_line
-		(start -0.71 0.45)
-		(end -0.86 0.3)
+		(start -2.08 0.65)
+		(end -2.23 0.5)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -88,8 +75,8 @@
 		(uuid "026fe702-fdf8-4b64-a81e-2066fcb3bea8")
 	)
 	(fp_line
-		(start -0.01 1.1)
-		(end -0.26 0.85)
+		(start -1.28 1.1)
+		(end -1.53 0.85)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -98,8 +85,8 @@
 		(uuid "8d930f72-4a33-4ac7-9711-2f51e3dac868")
 	)
 	(fp_line
-		(start -0.01 1.1)
-		(end 2.59 1.1)
+		(start -1.28 1.1)
+		(end 1.32 1.1)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -108,8 +95,8 @@
 		(uuid "9fed294a-0470-4f71-b74f-dd517eb968d5")
 	)
 	(fp_line
-		(start 2.59 1.1)
-		(end 2.84 0.85)
+		(start 1.32 1.1)
+		(end 1.57 0.85)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -118,8 +105,8 @@
 		(uuid "4c695640-0bbb-4af4-9dd9-04360adeffa9")
 	)
 	(fp_line
-		(start 3.24 0.45)
-		(end 3.39 0.3)
+		(start 2.07 0.65)
+		(end 2.22 0.5)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -128,8 +115,8 @@
 		(uuid "4f45ec30-19d0-441d-89b8-e5d58c8ab453")
 	)
 	(fp_line
-		(start 3.39 -0.65)
-		(end 3.39 0.3)
+		(start 2.22 -0.45)
+		(end 2.22 0.5)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -138,8 +125,8 @@
 		(uuid "61d9429b-2277-4ccc-9a12-90cd0f92411e")
 	)
 	(fp_line
-		(start -0.98 -0.9)
-		(end 3.52 -0.9)
+		(start -2.25 -0.9)
+		(end 2.25 -0.9)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -148,8 +135,8 @@
 		(uuid "2b15fe29-fd18-4238-a136-36f7c121b54d")
 	)
 	(fp_line
-		(start -0.98 0.39)
-		(end -0.98 -0.9)
+		(start -2.25 0.39)
+		(end -2.25 -0.9)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -158,8 +145,8 @@
 		(uuid "fa6d113a-01ff-42ae-bde7-b4739dcf5ff4")
 	)
 	(fp_line
-		(start -0.14 1.23)
-		(end -0.98 0.39)
+		(start -1.41 1.23)
+		(end -2.25 0.39)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -168,8 +155,8 @@
 		(uuid "01d2f1db-c1a9-4c8a-857c-6dc3dc221da7")
 	)
 	(fp_line
-		(start 2.62 1.23)
-		(end -0.14 1.23)
+		(start 1.35 1.23)
+		(end -1.41 1.23)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -178,8 +165,8 @@
 		(uuid "e8a0fbe2-cee2-435d-bf5b-11dbaeff1c68")
 	)
 	(fp_line
-		(start 3.52 -0.9)
-		(end 3.52 0.33)
+		(start 2.25 -0.9)
+		(end 2.25 0.33)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -188,8 +175,8 @@
 		(uuid "36c2f371-216a-4554-9a68-839783a259b3")
 	)
 	(fp_line
-		(start 3.52 0.33)
-		(end 2.62 1.23)
+		(start 2.25 0.33)
+		(end 1.35 1.23)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -198,74 +185,14 @@
 		(uuid "79863781-e473-491a-a0e2-d1bb2b7a1d73")
 	)
 	(fp_line
-		(start -0.73 -0.5425)
-		(end -0.73 0.2175)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "F.Fab")
-		(uuid "4f8a77b1-1348-438b-ad37-73a3cd9fc301")
-	)
-	(fp_line
-		(start 0.03 0.9775)
-		(end -0.73 0.2175)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "F.Fab")
-		(uuid "2ff1e73a-7ed0-4d09-8292-d444280d1806")
-	)
-	(fp_line
-		(start 2.51 0.9775)
-		(end 0.03 0.9775)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "F.Fab")
-		(uuid "956a729f-45cb-4794-b389-dd1105115803")
-	)
-	(fp_line
-		(start 2.51 0.9775)
-		(end 0.03 0.9775)
+		(start 1.24 0.9775)
+		(end -1.24 0.9775)
 		(stroke
 			(width 0.1)
 			(type solid)
 		)
 		(layer "F.Fab")
 		(uuid "cf6ea5b9-93a8-46bd-b5b5-abbd4a225e8a")
-	)
-	(fp_line
-		(start 3.27 -0.5425)
-		(end -0.73 -0.5425)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "F.Fab")
-		(uuid "bbd8c6e3-fb85-4586-8bc9-dbf483434566")
-	)
-	(fp_line
-		(start 3.27 -0.5425)
-		(end 3.27 0.2175)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "F.Fab")
-		(uuid "bf12556d-4782-4a7c-89c4-39a695e2b1ca")
-	)
-	(fp_line
-		(start 3.27 0.2175)
-		(end 2.51 0.9775)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "F.Fab")
-		(uuid "248bee5b-dc6c-46d2-a211-059261b69439")
 	)
 	(fp_text user "${REFERENCE}"
 		(at 1.27 0.2 0)
@@ -279,7 +206,7 @@
 		)
 	)
 	(pad "1" thru_hole roundrect
-		(at 0 0)
+		(at -1.5 0)
 		(size 1.05 1.3)
 		(drill 0.75)
 		(layers "*.Cu" "*.Mask")
@@ -288,7 +215,7 @@
 		(uuid "8c23ca1f-0c47-4a59-9c65-2786359b4486")
 	)
 	(pad "2" thru_hole oval
-		(at 1.27 0)
+		(at 0 0)
 		(size 1.05 1.3)
 		(drill 0.75)
 		(layers "*.Cu" "*.Mask")
@@ -296,22 +223,23 @@
 		(uuid "e46d5cd7-ccc6-41e1-b353-444534f60e51")
 	)
 	(pad "3" thru_hole oval
-		(at 2.54 0)
+		(at 1.5 0)
 		(size 1.05 1.3)
 		(drill 0.75)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(uuid "764eab16-86d5-463f-8aae-e1aa39f90662")
 	)
+	(embedded_fonts no)
 	(model "D:/Code/geki_pico/PCB/Lib/3dmodels/SS49E.step"
 		(offset
-			(xyz 1.27 0 2)
+			(xyz 0 0 2)
 		)
 		(scale
 			(xyz 1 1 1)
 		)
 		(rotate
-			(xyz 0 0 0)
+			(xyz -0 -0 -0)
 		)
 	)
 )

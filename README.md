@@ -82,16 +82,12 @@ https://discord.gg/M8f2PPQFEA
 * 1x SS49E linear Hall sensor (U5).  
   https://mou.sr/4gDuQKu  
   https://www.digikey.com/short/fmm54dzq
-
-* 1x Small 3V to 5V DC-DC step up or up-down converter (U6). Make sure its output is 5V and input range covers 3.3V. If the one you get has different pinout, you need to hand wire it.  
-  https://www.dfrobot.com/product-1766.html  
-  Alternatively, on PCB version v1.3 or later, there's an option for discrete components to replace the DC-DC module. You need an HT7750A in SOT23-5 (SOT25) package, a 22uH or 33uH inductor no larger than 5020, a Schottky diode (SS14, SS24, SS34, etc), and 2x 22uF 1206 capacitors.
-
-* 2x SMD capacitors, 22uF, 10V or higher, 6.3\*5.8mm (diameter\*height) (C16, C17).
-* 8x 0603 0.1uF (0.1~1uF all fine) capacitors (C1 to C8), OPTIONAL but strongly recommended.
+* 1x LP5907MFX-4.5 or TPS7A2042PDBVR LDO, in SOT23-5 (U7).
+* 2x SMD capacitors, 22uF, 10V or higher, 6.3\*5.8mm (diameter\*height) (C16, C17), MLCC ones work too.
+* 10x 0603 0.1uF (0.1~1uF all fine) capacitors (C1 to C8, CC1 and CC2), OPTIONAL but strongly recommended.
 * 3x 0603 5.1kohm resistors, (R1, R2, R7).
 * 1x 0603 10ohm resistor, (1-20ohm all work fine) (R3, removed in new versions).
-* 1x 0603 1kohm resistor (R6).
+* 1x 0603 2kohm resistor (R6).
 
 * 8x Kailh Choc v1 or v2 switches (2 of them must be Choc v1). Choose linear ones, such as "Red Pro" or the latest Lofree branded Ghost.  
   <img src="doc/choc_v1_red_pro.jpg" width="30%">

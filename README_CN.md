@@ -81,16 +81,12 @@ https://discord.gg/M8f2PPQFEA
 * 1x SS49E 线性霍尔传感器 (U5).  
   https://mou.sr/4gDuQKu  
   https://www.digikey.com/short/fmm54dzq
-
-* 1x 迷你的 3V 到 5V DCDC 转换器，升压或者升降压的都可以 (U6)。注意输出一定要 5V，输入电压范围要能够覆盖 3.3V。如果你买到的模块引脚不对，你需要手工飞线。  
-  https://www.dfrobot.com/product-1766.html  
-  在 PCB v1.3 或者更新版本上，你可以选择使用离散元件替代 DC-DC 模块。你需要一个 SOT23-5 (SOT25) 封装的 HT7750A, 一个 22uH 或者 33uH 的电感，一个肖特基二极管 (SS14, SS24, SS34 等)，和 2x 22uF 1206 电容。
-
-* 2x 贴片电解电容，22uF，耐压 10V 或以上，6.3\*5.8mm (直径\*高度) (C16, C17)。
-* 8x 0603 0.1uF (0.1~1uF 都可以) 电容 (C1 to C8), 可选，但是建议都焊上。
+* 1x LP5907MFX-4.5 或 TPS7A2042PDBVR 低压差稳压器，SOT23-5 封装 (U7)。
+* 2x 贴片电容，22uF，耐压 10V 或以上，6.3\*5.8mm (直径\*高度) (C16, C17)，也可以使用 MLCC 陶瓷电容。
+* 10x 0603 0.1uF (0.1~1uF 都可以) 电容 (C1 to C8, CC1 和 CC2)，可选，但强烈建议安装。
 * 2x 0603 5.1kohm 电阻 (R1, R2, R7)。
 * 1x 0603 10ohm 电阻, (1-20ohm 都可以的) (R3，新的版本里已经去掉了)。
-* 1x 0603 1kohm 电阻 (R6).
+* 1x 0603 2kohm 电阻 (R6).
 
 * 8x 凯华巧克力 v1 或者 v2 矮键轴（其中 2 个必须是 v1）。记得选线性轴，比如 "Red Pro" 或者最新的洛斐定制的幽灵轴。  
   <img src="doc/choc_v1_red_pro.jpg" width="30%">
