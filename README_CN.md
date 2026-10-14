@@ -113,7 +113,7 @@ https://discord.gg/M8f2PPQFEA
 #### 摇杆部分
 * 摇杆底座: `Production\3DPrint\geki_pico_lever_base.stl`, 白色。
 * 摇杆转轴: `Production\3DPrint\geki_pico_lever_rotator_*mm.stl`, 白色，根据你的磁铁直径选择合适的文件。
-* 2x 轴承固定器: `Production\3DPrint\geki_pico_lever_fixer.stl`, 白色。
+* 2x 轴承固定器: `Production\3DPrint\geki_pico_lever_fixer.stl`, 或者 1x 一体式轴承固定器 (`Production\3DPrint\geki_pico_lever_fixer_integral.stl`), 白色。
 * 摇杆手柄: `Production\3DPrint\geki_pico_lever_handle.stl`, 红色。
 
 #### 外壳部分

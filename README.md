@@ -113,7 +113,7 @@ https://discord.gg/M8f2PPQFEA
 #### Lever Parts
 * Lever Base: `Production\3DPrint\geki_pico_lever_base.stl`, white.
 * Lever Rotator: `Production\3DPrint\geki_pico_lever_rotator_*mm.stl`, white, choose the one that matches your magnet diameter.
-* 2x Lever Fixer: `Production\3DPrint\geki_pico_lever_fixer.stl`, white.
+* 2x Lever Fixer: `Production\3DPrint\geki_pico_lever_fixer.stl`, or 1x Intergral Lever Fixer (`Production\3DPrint\geki_pico_lever_fixer_integral.stl`), white. 
 * Lever Handle: `Production\3DPrint\geki_pico_lever_handle.stl`, red.
 
 #### Housing Parts
