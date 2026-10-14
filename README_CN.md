@@ -20,6 +20,7 @@
 * Pololu (https://github.com/pololu/vl53l0x-arduino, https://github.com/pololu/vl53l1x-arduino)
 * RP_Silicon_KiCad: https://github.com/HeadBoffin/RP_Silicon_KiCad
 * Type-C: https://github.com/ai03-2725/Type-C.pretty
+* Chris Veigl (https://github.com/ChrisVeigl/ESP32Sound)
 
 ## 其他项目
 你也可以查看我其他的酷炫项目。

@@ -21,6 +21,7 @@ Special thanks to community projects and developers.
 * Pololu (https://github.com/pololu/vl53l0x-arduino, https://github.com/pololu/vl53l1x-arduino)
 * RP_Silicon_KiCad: https://github.com/HeadBoffin/RP_Silicon_KiCad
 * Type-C: https://github.com/ai03-2725/Type-C.pretty
+* Chris Veigl (https://github.com/ChrisVeigl/ESP32Sound)
 
 ## My Other Projects
 You can check out my other cool projects.
