@@ -8,7 +8,7 @@
 #include "pico/stdlib.h"
 
 #include "config.h"
-#include "save.h"
+#include "savedata.h"
 #include "cli.h"
 
 #include "lever.h"
@@ -501,7 +501,7 @@ static void handle_tof(int argc, char *argv[])
 
 static void handle_save()
 {
-    save_request(true);
+    savedata_save(true);
 }
 
 static void handle_factory_reset()

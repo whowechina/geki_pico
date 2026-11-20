@@ -8,7 +8,7 @@
 #include "pico/stdlib.h"
 #include "pico/bootrom.h"
 #include "cli.h"
-#include "save.h"
+#include "savedata.h"
 
 #define MAX_COMMANDS 32
 #define MAX_PARAMETERS 6
@@ -60,7 +60,7 @@ const char *built_time = __DATE__ " " __TIME__;
 static void handle_help(int argc, char *argv[])
 {
     printf("%s", cli_logo);
-    printf("\tSN: %016llx\n", board_id_64());
+    printf("\tSN: %016llx\n", savedata_id_64());
     printf("\tBuilt: %s\n\n", built_time);
     printf("Available commands:\n");
     for (int i = 0; i < num_commands; i++) {

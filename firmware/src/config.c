@@ -7,7 +7,7 @@
  */
 
 #include "config.h"
-#include "save.h"
+#include "savedata.h"
 
 #include "airkey.h"
 
@@ -47,7 +47,7 @@ geki_cfg_t default_cfg = {
     .extled.map = {
         { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
         { 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45 },
-    },
+},
 };
 
 geki_runtime_t geki_runtime;
@@ -73,16 +73,16 @@ static void config_loaded()
 
 void config_changed()
 {
-    save_request(false);
+    savedata_save(false);
 }
 
 void config_factory_reset()
 {
     *geki_cfg = default_cfg;
-    save_request(true);
+    savedata_save(true);
 }
 
 void config_init()
 {
-    geki_cfg = (geki_cfg_t *)save_alloc(sizeof(*geki_cfg), &default_cfg, config_loaded);
+    geki_cfg = (geki_cfg_t *)savedata_alloc(sizeof(*geki_cfg), &default_cfg, config_loaded);
 }
