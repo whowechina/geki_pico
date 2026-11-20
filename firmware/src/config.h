@@ -58,6 +58,15 @@ typedef struct __attribute__((packed)) {
     struct {
         uint8_t map[2][32];
     } extled;
+    struct {
+        struct {
+            uint16_t src1;
+            uint16_t src2;
+            uint16_t target1;
+            uint16_t target2;
+        } trans[4];
+        uint8_t reserved[24];
+    } tof_ext;
 } geki_cfg_t;
 
 typedef struct {

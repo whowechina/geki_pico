@@ -103,6 +103,18 @@ static void disp_tof_roi()
     printf("  ROI: %d (only for VL53L1X)\n", geki_cfg->tof.roi);
 }
 
+static void disp_tof_adjust()
+{
+    const char *names[] = { "L1", "L2", "R1", "R2" };
+    for (int i = 0; i < count_of(names); i++) {
+        typeof(geki_cfg->tof_ext.trans[0]) trans = geki_cfg->tof_ext.trans[i];
+        if (trans.src1 != trans.src2) {
+            printf("  %s: src[%d~%d] -> target[%d~%d]\n", names[i],
+                trans.src1, trans.src2, trans.target1, trans.target2);
+        }
+    }
+}
+
 static void disp_tof()
 {
     printf("[TOF]\n");
@@ -110,6 +122,7 @@ static void disp_tof()
     disp_tof_mix();
     disp_tof_trigger();
     disp_tof_roi();
+    disp_tof_adjust();
 }
 
 static void disp_aime()
@@ -356,6 +369,38 @@ static bool handle_tof_roi(int argc, char *argv[])
     return true;
 }
 
+static bool handle_tof_adjust(int argc, char *argv[])
+{
+    if (argc != 5) {
+        return false;
+    }
+
+    const char *names[] = { "L1", "L2", "R1", "R2" };
+    int index = cli_match_prefix(names, count_of(names), argv[0]);
+    if (index < 0) {
+        return false;
+    }
+
+    int values[4];
+    for (int i = 0; i < count_of(values); i++) {
+        values[i] = cli_extract_non_neg_int(argv[i + 1], 0);
+        if ((values[i] < 0) || (values[i] > 999)) {
+            return false;
+        }
+    }
+    if (values[0] == values[1]) {
+        memset(values, 0, sizeof(values));
+    }
+
+    geki_cfg->tof_ext.trans[index].src1 = values[0];
+    geki_cfg->tof_ext.trans[index].src2 = values[1];
+    geki_cfg->tof_ext.trans[index].target1 = values[2];
+    geki_cfg->tof_ext.trans[index].target2 = values[3];
+    config_changed();
+    disp_tof_adjust();
+    return true;
+}
+
 static bool handle_tof_mix(int side, int argc, char *argv[])
 {
     if ((argc < 1) || (argc > 2)) {
@@ -467,6 +512,7 @@ static bool handle_tof_diag(int argc, char *argv[])
 static void handle_tof(int argc, char *argv[])
 {
     const char *usage = "Usage: tof roi <4..16>\n"
+                        "       tof adjust <L1|L2|R1|R2> <src1> <src2> <target1> <target2>\n"
                         "       tof <left|right> <primary|secondary|max|min> [strict]\n"
                         "       tof <left|right> <avg> [window]\n"
                         "       tof trigger <left|right|shift> <in_low> <in_high> [<out_low> [out_high]]\n"
@@ -480,28 +526,32 @@ static void handle_tof(int argc, char *argv[])
         return;
     }
 
-    const char *commands[] = { "left", "right", "roi", "trigger", "diagnose" };
+    const char *commands[] = { "adjust", "left", "right", "roi", "trigger", "diagnose" };
     int match = cli_match_prefix(commands, count_of(commands), argv[0]);
 
-    if (match == 2) {
-        if (handle_tof_roi(argc - 1, argv + 1)) {
+    if (match == 0) {
+        if (handle_tof_adjust(argc - 1, argv + 1)) {
             return;
         }
     } else if (match == 3) {
-        if (handle_tof_trigger(argc - 1, argv + 1)) {
+        if (handle_tof_roi(argc - 1, argv + 1)) {
             return;
         }
     } else if (match == 4) {
+        if (handle_tof_trigger(argc - 1, argv + 1)) {
+            return;
+        }
+    } else if (match == 5) {
         if (handle_tof_diag(argc - 1, argv + 1)) {
             return;
         }
-    } else if (match >= 0) {
-        if (handle_tof_mix(match, argc - 1, argv + 1)) {
+    } else if ((match == 1) || (match == 2)) {
+        if (handle_tof_mix(match - 1, argc - 1, argv + 1)) {
             return;
         }
+    } else {
+        printf(usage);
     }
-
-    printf(usage);
 }
 
 static void handle_save()

@@ -69,6 +69,15 @@ static void config_loaded()
             config_changed();
         }
     }
+
+    for (int i = 0; i < 4; i++) {
+        typeof(geki_cfg->tof_ext.trans[0]) trans = geki_cfg->tof_ext.trans[i];
+        if ((trans.src1 > 999) || (trans.src2 > 999) ||
+            (trans.target1 > 999) || (trans.target2 > 999)) {
+            geki_cfg->tof_ext.trans[i] = default_cfg.tof_ext.trans[i];
+            config_changed();
+        }
+    }
 }
 
 void config_changed()

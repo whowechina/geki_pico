@@ -105,27 +105,47 @@ bool airkey_available()
     return tof_available;
 }
 
+static uint16_t tof_raw[TOF_NUM];
 static uint16_t tof_dist[TOF_NUM];
 static uint16_t tof_mix[2];
+
+static uint16_t tof_adjust(unsigned index, uint16_t raw)
+{
+    typeof(geki_cfg->tof_ext.trans[0]) trans = geki_cfg->tof_ext.trans[index];
+    if (trans.src1 == trans.src2) {
+        return raw;
+    }
+
+    int32_t adjusted = trans.target1 +
+        ((int32_t)raw - trans.src1) *
+        ((int32_t)trans.target2 - trans.target1) /
+        ((int32_t)trans.src2 - trans.src1);
+    if ((adjusted < 0) || (adjusted >= 1000)) {
+        return 0;
+    }
+    return adjusted;
+}
 
 static void tof_read()
 {
     for (int i = 0; i < TOF_NUM; i++) {
         if (!tofs[i].init_ok) {
+            tof_raw[i] = 0;
             tof_dist[i] = 0;
             continue;
         }
     
         if (tofs[i].model == TOF_VL53L0X) {
             vl53l0x_use(i);
-            tof_dist[i] = readRangeContinuousMillimeters();
+            tof_raw[i] = readRangeContinuousMillimeters();
         } else if (tofs[i].model == TOF_VL53L1X) {
             vl53l1x_use(i);
-            tof_dist[i] = vl53l1x_readContinuousMillimeters();
+            tof_raw[i] = vl53l1x_readContinuousMillimeters();
         }
-        if (tof_dist[i] >= 1000) { // treat >= 1M as invalid
-            tof_dist[i] = 0;
+        if (tof_raw[i] >= 1000) { // treat >= 1M as invalid
+            tof_raw[i] = 0;
         }
+        tof_dist[i] = tof_adjust(i, tof_raw[i]);
     }
 }
 
@@ -227,8 +247,12 @@ static void tof_diag()
     const char *models[] = { "NA", "0X", "1X" };
     printf("TOF:");
     for (int i = 0; i < 2; i++) {
-        printf("\t%s-%3d, %s-%3d->%4d", models[tofs[i * 2].model], tof_dist[i * 2],
-               models[tofs[i * 2 + 1].model], tof_dist[i * 2 + 1], tof_mix[i]);
+        int left = i * 2;
+        int right = left + 1;
+        printf("\t%s-%3d(%3d), %s-%3d(%3d)->%4d",
+               models[tofs[left].model], tof_raw[left], tof_dist[left],
+               models[tofs[right].model], tof_raw[right], tof_dist[right],
+               tof_mix[i]);
     }
     printf("\n");
 }
