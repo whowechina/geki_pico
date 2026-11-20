@@ -440,6 +440,11 @@ static bool handle_tof_trigger(int argc, char *argv[])
     return true;
 }
 
+void cli_ctrl_c_cb()
+{
+    geki_runtime.tof_diag = false;
+}
+
 static bool handle_tof_diag(int argc, char *argv[])
 {
     if (argc == 0) {

@@ -11,7 +11,7 @@
 #include "savedata.h"
 
 #define MAX_COMMANDS 32
-#define MAX_PARAMETERS 6
+#define MAX_PARAMETERS 10
 #define MAX_PARAMETER_LENGTH 20
 
 const char *cli_prompt = "cli>";
@@ -23,6 +23,9 @@ static cmd_handler_t handlers[MAX_COMMANDS];
 static int max_cmd_len = 0;
 
 static int num_commands = 0;
+__attribute__((weak)) void cli_ctrl_c_cb(void)
+{
+}
 
 void cli_register(const char *cmd, cmd_handler_t handler, const char *help)
 {
@@ -112,7 +115,7 @@ int cli_extract_non_neg_int(const char *param, int len)
     return result;
 }
 
-static char cmd_buf[256];
+static char cmd_buf[1024];
 static int cmd_len = 0;
 
 static void process_cmd()
@@ -169,6 +172,12 @@ void cli_run()
     }
     int c = getchar_timeout_us(0);
     if (c < 0) {
+        return;
+    }
+    if (c == 0x03) { /* Ctrl+C */
+        cli_ctrl_c_cb();
+        cmd_len = 0;
+        printf("^C\n%s", cli_prompt);
         return;
     }
 

@@ -6,8 +6,9 @@
 #ifndef CLI_H
 #define CLI_H
 
-
 typedef void (*cmd_handler_t)(int argc, char *argv[]);
+
+void cli_ctrl_c_cb(void); // callback for Ctrl+C
 
 void cli_init(const char *prompt, const char *logo);
 void cli_register(const char *cmd, cmd_handler_t handler, const char *help);
